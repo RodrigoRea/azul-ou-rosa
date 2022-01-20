@@ -166,6 +166,9 @@ export class IdiomaService {
 
         this.strs['data'] = ['no dia {dd} de {mm} de {yy}','on {mm} {dd}, {yy}','el {dd} de {mm} de {yy}'];
         this.strs['provavelmente'] = ['O nascimento do bebê será próximo da data:','The birth of the baby will be close to the date:','El nacimiento del bebé será cerca a la fecha:'];
+        
+        this.strs['info-cientifico'] = ['Este método não está comprovado cientificamente','Este método no está científicamente probado.','This method is not scientifically proven.']
+        this.strs['info-all-cientifico'] = ['Todos os métodos não são comprovados cientificamente. Os métodos aqui presentes são apenas meios utilizados por cada cultura e não podem ser comprovados.','All methods are not scientifically proven. The methods presented here are only media used by each culture and cannot be proven.','No todos los métodos están científicamente probados. Los métodos presentados aquí son solo medios utilizados por cada cultura y no se pueden probar.']
     }
 
     private refreshLanguageSubject = new Subject<any>();
