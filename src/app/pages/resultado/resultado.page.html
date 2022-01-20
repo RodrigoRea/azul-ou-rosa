@@ -7,14 +7,14 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="background ion-padding">
 
   <div class="ion-padding">
-    <div class="ion-padding ion-text-center">
+    <div class="ion-padding ion-text-center desc-info">
       <h4>{{ mensagem }}</h4>
     </div>
 
-    <ion-card *ngIf="mod !== ''">
+    <ion-card *ngIf="mod !== ''" class="box-image">
       <img src="assets/imgs/{{ imagem }}"/>
       <h4 *ngIf="descricao !== ''" class="ion-padding ion-text-center {{ cssclass }}">{{ descricao }}</h4>
     </ion-card>

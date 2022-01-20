@@ -9,3 +9,17 @@
     font-weight: bold;
     font-size: 2rem;
 }
+
+.box-image{
+    text-align: center;
+    padding-top: 15px;
+    
+    -webkit-margin-start: 0px !important;
+    margin-inline-start: 0px !important;
+    -webkit-margin-end: 0px !important;
+    margin-inline-end: 0px !important;
+
+    h4{ 
+        color: var(--azul);
+    }
+}

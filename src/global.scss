@@ -24,3 +24,27 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+ion-content.background-inverse,
+ion-list.background-inverse{
+    --background: #e9f1fa;
+    background: transparent;
+    ion-item{
+        --background: transparent;
+        color: var(--rosa);
+    }
+}   
+
+ion-content.background{
+    
+    /*--background: url('assets/imgs/kids-things-2-min.jpg') repeat center center / 100%;  */
+    --background: #fae9f5;
+    
+}
+
+.desc-info{
+    border: 2px solid  var(--azul);
+    background-color: #fff;
+    color: var(--azul);
+    border-radius: 5px;
+}

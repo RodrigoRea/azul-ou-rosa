@@ -12,8 +12,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">  
-  <p class="ion-padding ion-text-center">{{ text['cigana-txt-1'] }}</p>
+<ion-content [fullscreen]="true" class="background ion-padding">  
+  <p class="ion-padding ion-text-center desc-info">{{ text['cigana-txt-1'] }}</p>
   <form [formGroup]="forms" (ngSubmit)="submit()">
 
     <ion-item>
@@ -37,5 +37,5 @@
     </div>
   </form>
 
-  <p class="ion-padding ion-text-center">{{ text['cigana-txt-4'] }}</p>  
+  <p class="ion-padding ion-text-center desc-info">{{ text['cigana-txt-4'] }}</p>  
 </ion-content>
