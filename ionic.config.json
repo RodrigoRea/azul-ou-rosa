@@ -1,0 +1,7 @@
+{
+  "name": "babeis",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

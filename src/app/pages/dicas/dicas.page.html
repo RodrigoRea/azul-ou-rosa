@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{ text['dicas'] }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false" *ngIf="!selectedItem"></ion-menu-button> 
+      <ion-button *ngIf="selectedItem" (click)="selectedItem = undefined">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon> 
+      </ion-button> 
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid *ngIf="!selectedItem">
+    <ion-row>      
+      <ion-col size="6" ion-item *ngFor="let item of items">
+        <div class="ion-text-center">
+          <div class="box">
+            <div class="box-window" (click)="itemSelected(item)" style="background-image: url('assets/imgs/{{ item.image }}');" ></div>
+            <div>{{item.title}}</div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-card *ngIf="selectedItem">
+    <img src="assets/imgs/{{ selectedItem.image }}" />
+    <ion-card-header>
+      <ion-card-subtitle>{{ selectedItem.title }}</ion-card-subtitle>
+      <ion-card-title>{{ selectedItem.title }}</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      {{ selectedItem.note }}
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

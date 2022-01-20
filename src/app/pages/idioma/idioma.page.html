@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>idioma</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false"></ion-menu-button>  
+    </ion-buttons>
+  </ion-toolbar>
+  
+</ion-header>
+
+<ion-content>
+
+  <ion-list radio-group>
+    <ion-radio-group value="{{ lg }}">
+      <ion-item *ngFor="let idioma of idiomas">
+        <ion-label>{{idioma.title}}</ion-label>
+        <ion-radio value="{{idioma.value}}" (click)="itemSelected(idioma.value)"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+</ion-content>

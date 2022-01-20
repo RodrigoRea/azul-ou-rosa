@@ -1,0 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      {{ text['chinesa'] }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false"></ion-menu-button>  
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <p class="ion-padding ion-text-center">{{ text['chinesa-txt-1'] }}</p>
+  <form [formGroup]="forms" (ngSubmit)="submit()">
+    <ion-item>
+      <ion-label position="floating">{{ text['chinesa-txt-2'] }}</ion-label>
+      <ion-select formControlName="mesAniverMae" #M1 (ionChange)="setMesAniverMae(M1.value)">
+        <ion-select-option *ngFor="let mes of meses; let i = index" value="{{i}}">{{mes}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <br>
+    <ion-item>
+      <ion-label position="floating">{{ text['chinesa-txt-3'] }}</ion-label>
+      <ion-select formControlName="mesGraviMae" #M2 (ionChange)="setMesGraviMae(M2.value)">
+        <ion-select-option *ngFor="let mes of meses; let i = index" value="{{i}}">{{mes}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <br>
+    <ion-item>
+      <ion-label position="floating">{{ text['chinesa-txt-4'] }}</ion-label>
+      <ion-select formControlName="idadeMae">
+        <ng-container *ngFor="let idade of idades; let i = index">
+          <ion-select-option value="{{idade}}">{{idade}}</ion-select-option>
+        </ng-container>
+      </ion-select>
+    </ion-item>
+    <br>
+    <div class="ion-padding">
+      <ion-button expand="block" type="submit" [disabled]="!forms.valid">{{ text['btn-calcular'] }}</ion-button>
+    </div>
+  </form>
+  <p class="ion-padding ion-text-center">{{ text['chinesa-txt-5'] }}</p>
+
+</ion-content>

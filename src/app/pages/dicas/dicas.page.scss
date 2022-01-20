@@ -1,0 +1,22 @@
+.box{
+    width: 9rem;
+    height: 10.8rem;
+    margin: auto;
+    border: 1px solid #ccc;
+    padding: 7px;
+    border-radius: 5px;
+    margin-top: 20px;
+    background-color: var(--rosa);
+    color: var(--branco);
+}
+
+.box-window{
+    width: 8rem;
+    height: 8rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin: auto;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+}

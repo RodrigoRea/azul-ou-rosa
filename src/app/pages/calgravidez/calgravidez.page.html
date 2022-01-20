@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{ text['calgravidez'] }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false"></ion-menu-button>  
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <p class="ion-padding ion-text-center">{{ text['calgravidez-txt-2'] }}</p>
+        
+  <form [formGroup]="forms" (ngSubmit)="submit()">
+    
+    <ion-item>
+      <ion-label position="floating">{{ text['calgravidez-txt-3'] }}</ion-label>
+      <ion-select formControlName="primeiroDia">
+          <ion-select-option *ngFor="let dia of dias" value="{{ dia }}">{{ dia }}</ion-select-option>
+        </ion-select>
+    </ion-item>
+    <br>
+    <ion-item>
+      <ion-label position="floating">{{ text['calgravidez-txt-4'] }}</ion-label>
+      <ion-select formControlName="mes" #M1 (ionChange)="setMes(M1.value)">
+        <ion-select-option *ngFor="let mes of meses; let i = index" value="{{i}}">{{mes}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <br>
+    <ion-item>
+      <ion-label position="floating">{{ text['calgravidez-txt-5'] }}</ion-label>
+      <ion-select formControlName="ano" [(ngModel)]="YYYY" >
+          <ion-select-option *ngFor="let yy of anos" value="{{yy}}">{{yy}}</ion-select-option>
+        </ion-select>
+    </ion-item>
+
+    <div class="ion-padding">
+      <ion-button expand="block" type="submit" [disabled]="!forms.valid">{{ text['btn-calcular'] }}</ion-button>
+    </div>
+  </form>
+    
+  <p class="ion-padding ion-text-center">{{ text['calgravidez-txt-1'] }}</p>
+
+</ion-content>

@@ -1,0 +1,32 @@
+<ion-app>
+
+  <ion-menu side="start" contentId="main">
+    <ion-header>
+      <ion-toolbar color="secondary">
+        <ion-title>{{ text['app-name'] }}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item (click)="toPage('home')" >{{ text['home'] }}</ion-item>   
+        <ion-item (click)="toPage('calgravidez')" >{{ text['calgravidez'] }}</ion-item>     
+        <ion-item (click)="toPage('dicas')" >{{ text['dicas'] }}</ion-item>
+        <ion-item (click)="toPage('idioma')" >{{ text['idioma'] }}</ion-item>
+
+        <!-- 
+          <ion-item><hr></ion-item>
+
+          <ion-item (click)="toPage('tab1')" >{{ text['maia'] }}</ion-item>
+          <ion-item (click)="toPage('tab2')" >{{ text['chinesa'] }}</ion-item>
+          <ion-item (click)="toPage('tab3')" >{{ text['cigana'] }}</ion-item>
+          <ion-item (click)="toPage('tab4')" >{{ text['numerologia'] }}</ion-item>
+        -->
+
+        
+
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet id="main"></ion-router-outlet>
+</ion-app>
