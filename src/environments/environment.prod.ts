@@ -7,14 +7,19 @@ export const environment = {
 /************************************************************************************ */
 /*
 -- Construir imagens a partir de resources/icon.png
--- https://ionicframework.com/docs/cli/commands/cordova-resources
-ionic cordova resources
-ionic cordova resources ios
-ionic cordova resources android
+-- https://capacitorjs.com/docs/guides/splash-screens-and-icons
+-- https://github.com/ionic-team/capacitor-assets
 
--- com problemas - executar remover e instalar
-npm remove cordova-res
-npm install cordova-res
+$ npm install -g cordova-res
+resources/
+├── icon.png
+└── splash.png
+
+resources/android/
+├── icon-background.png
+└── icon-foreground.png
+
+cordova-res android --skip-config --copy
 */
 /************************************************************************************ */
 /************************************************************************************ */
