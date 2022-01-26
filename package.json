@@ -1,5 +1,5 @@
 {
-  "name": "babeis",
+  "name": "mybabeisapp",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
@@ -19,8 +19,9 @@
     "@angular/platform-browser": "~13.0.0",
     "@angular/platform-browser-dynamic": "~13.0.0",
     "@angular/router": "~13.0.0",
+    "@capacitor/android": "3.4.0",
     "@capacitor/app": "1.0.7",
-    "@capacitor/core": "3.3.4",
+    "@capacitor/core": "3.4.0",
     "@capacitor/haptics": "1.1.3",
     "@capacitor/keyboard": "1.2.0",
     "@capacitor/status-bar": "1.0.6",

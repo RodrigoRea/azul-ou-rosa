@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" *ngIf="item">
+      <ion-button (click)="item = undefined">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon> 
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ text['convites'] }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false"></ion-menu-button>  
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background ion-padding">
+   
+    <ion-row>
+        
+      <ion-col size="6" ion-item *ngFor="let item of items">
+        <div class="ion-text-center">
+          <div class="box" (click)="toSelected(item)" >
+            <div class="box-window" style="background-image: url('assets/imgs/products/{{ item.image }}');" ></div>   
+            <div><small>{{ this.text['convites'] }}</small></div>       
+            <div>{{item.title}}</div>
+          </div>
+        </div>
+      </ion-col>
+
+    </ion-row>
+
+    <div class="ion-padding">
+      <p class="ion-padding ion-text-center desc-info">
+        Nossos convites são feitos para visualização on-line.<br><br>
+        São interativos e ficam disponíveis por um tempo determinado e/ou até a data do evento.<br><br>
+        Os convidados não precisam do aplicativo.<br><br>
+        Selecione o modelo que desejar e após a confirmação de pagamento será gerado um link que deverá ser enviado aos seus convidados.
+      </p>
+    </div>
+
+
+<!-- 
+  <div *ngIf="item">
+    <div class="ion-padding">
+      <h3>{{ item.title }}</h3>
+      <p class="ion-padding ion-text-center desc-info">{{ item.note }}</p>
+      <hr>
+      <h3>Modelos</h3>
+
+      <ion-card>
+        <!-img src="./madison.jpg" /->
+        <ion-card-header>
+          <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+          <ion-card-title>Card Title</ion-card-title>
+        </ion-card-header>
+      
+        <ion-card-content>
+          Keep close to Nature's heart... and break clear away, once in awhile,
+          and climb a mountain or spend a week in the woods. Wash your spirit clean.
+          <br>
+          <button type="button" (click)="isModalOpen = true" ><b>exemplo on-line</b></button>
+        </ion-card-content>
+      </ion-card>
+
+    </div>
+    
+  </div>
+
+  </div>
+
+  <div class="box-frame" [class.hide]="!isModalOpen">
+    <ion-buttons slot="start">
+      <ion-button (click)="comprar(item)">Comprar</ion-button>
+    </ion-buttons>
+
+    <iframe src="https://mybabeis.com.br/site/invite/?id=1" title="description"></iframe>
+  </div>
+-->
+
+
+</ion-content>

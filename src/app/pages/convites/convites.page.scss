@@ -1,0 +1,33 @@
+.box{
+    width: 9rem;
+    height: 11.4rem;
+    margin: auto;
+    border: 1px solid #ccc;
+    padding: 7px;
+    border-radius: 5px;
+    margin-top: 20px;
+    background-color: var(--rosa);
+    color: var(--branco);
+}
+
+.box-window{
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    margin: auto;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.hide{
+    display: none !important;
+}
+
+iframe{
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: 5px;
+}

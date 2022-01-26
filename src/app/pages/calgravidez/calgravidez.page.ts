@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -10,7 +10,7 @@ import { SignosService } from 'src/app/_services/signos.service';
   templateUrl: './calgravidez.page.html',
   styleUrls: ['./calgravidez.page.scss'],
 })
-export class CalgravidezPage implements OnInit {
+export class CalgravidezPage implements OnInit, OnDestroy {
 
   subscription: Subscription | undefined;
   

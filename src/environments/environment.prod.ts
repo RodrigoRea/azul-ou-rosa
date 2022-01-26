@@ -1,5 +1,6 @@
 export const environment = {
-  production: true
+  production: true,
+  cartStorage: 'cart',
 };
 
 /************************************************************************************ */
@@ -26,7 +27,7 @@ cordova-res android --skip-config --copy
 /************************************************************************************ */
 // ## IONIC 
 // ## Build Capacitor
-// ionic cap add android
+// ionic cap add android   <--- Rodar apenas na primeira vez
 
 // ionic cap copy
 // ionic cap sync
@@ -36,3 +37,4 @@ cordova-res android --skip-config --copy
 /************************************************************************************ */
 /************************************************************************************ */
 /************************************************************************************ */
+// Android / app / build.gradle <- versao do app

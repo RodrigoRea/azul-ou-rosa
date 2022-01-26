@@ -169,6 +169,13 @@ export class IdiomaService {
         
         this.strs['info-cientifico'] = ['Este método não está comprovado cientificamente','Este método no está científicamente probado.','This method is not scientifically proven.']
         this.strs['info-all-cientifico'] = ['Todos os métodos não são comprovados cientificamente. Os métodos aqui presentes são apenas meios utilizados por cada cultura e não podem ser comprovados.','All methods are not scientifically proven. The methods presented here are only media used by each culture and cannot be proven.','No todos los métodos están científicamente probados. Los métodos presentados aquí son solo medios utilizados por cada cultura y no se pueden probar.']
+    
+        this.strs['convites'] = ['Convites','Invitaciones','Invitations'];
+        this.strs['cha-revelacao'] = ['Chá revelação','Revelation tea','Té de revelación'];
+        this.strs['cha-revelacao-txt'] = ['Para descobrir se o bebê será um menino ou uma menina de uma forma bem animada e criativa para a família e os amigos! Muitas vezes os pais também só ficam sabendo na hora da revelação, assim a surpresa é para todos.','¡Para saber si el bebé será niño o niña de una manera muy animada y creativa para familiares y amigos! A menudo, los padres también solo se enteran en el momento de la revelación, por lo que la sorpresa es para todos.','To find out if the baby will be a boy or a girl in a very lively and creative way for family and friends! Often parents also only find out at the time of the revelation, so the surprise is for everyone.'];
+
+        this.strs['cha-fraldas'] = ['Chá de fraldas','Bienvenida al bebé','Baby shower'];
+        this.strs['cha-fraldas-txt'] = ['O chá de fraldas se torna uma alternativa para focar mais em receber fraldas como presente para o bebê.','El baby shower se convierte en una alternativa para enfocarse más en recibir pañales como regalo para el bebé.','The baby shower becomes an alternative to focus more on receiving diapers as a gift for the baby.'];
     }
 
     private refreshLanguageSubject = new Subject<any>();
