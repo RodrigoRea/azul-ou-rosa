@@ -9,11 +9,11 @@ const routes: Routes = [
     component: ConvitesPage
   },
   {
-    path: 'modelos/:modelo',
+    path: 'modelos/:modelo_id',
     loadChildren: () => import('./modelos/modelos.module').then( m => m.ModelosPageModule)
   },
   {
-    path: 'produto/:modelo',
+    path: 'produto/:modelo_id',
     loadChildren: () => import('./produto/produto.module').then( m => m.ProdutoPageModule)
   },
   // { path: '', redirectTo: 'convites', pathMatch: 'full' },

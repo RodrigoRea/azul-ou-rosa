@@ -48,3 +48,17 @@ ion-content.background{
     color: var(--azul);
     border-radius: 5px;
 }
+
+.ion-bootstrap-modal-backdrop{
+    opacity: 0.4;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+}
+.modal-backdrop:last-child, .modal-backdrop{
+    display: none !important;
+}

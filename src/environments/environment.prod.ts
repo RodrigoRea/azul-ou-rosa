@@ -1,6 +1,9 @@
 export const environment = {
   production: true,
   cartStorage: 'cart',
+  keytoken: 'mybabeis',
+
+  api: 'https://api.mybabeis.com.br'
 };
 
 /************************************************************************************ */

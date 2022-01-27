@@ -16,12 +16,12 @@
    
     <ion-row>
         
-      <ion-col size="6" ion-item *ngFor="let item of items">
+      <ion-col size="6" ion-item *ngFor="let item of modelos">
         <div class="ion-text-center">
           <div class="box" (click)="toSelected(item)" >
-            <div class="box-window" style="background-image: url('assets/imgs/products/{{ item.image }}');" ></div>   
+            <div class="box-window" style="background-image: url('assets/imgs/products/modelo_{{ item.modelo_id }}.jpeg');" ></div>   
             <div><small>{{ this.text['convites'] }}</small></div>       
-            <div>{{item.title}}</div>
+            <div>{{item.nome}}</div>
           </div>
         </div>
       </ion-col>

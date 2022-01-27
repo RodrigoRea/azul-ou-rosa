@@ -5,15 +5,87 @@
     </ion-buttons>
     <ion-title>Detalhes</ion-title>
     <ion-buttons slot="end">
-      <ion-menu-button autoHide="false"></ion-menu-button>  
+      <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <form>
-    
-  </form>
+  <div *ngIf="template">
+
+    <div class="container">
+
+      <div>
+        <h1 class="text-center" [innerText]="template.titulo"></h1>
+        <ion-icon (click)="toEdit('titulo')" name="create-outline"></ion-icon>
+      </div>
+
+      <div>
+        <h1 class="text-center" [innerText]="template.sub_titulo_1"></h1>
+        <ion-icon (click)="toEdit('sub_titulo_1')" name="create-outline"></ion-icon>
+
+        <div>
+
+          <div class="text-center">
+            <div [innerText]="template.texto_1"></div>
+            <ion-icon (click)="toEdit('texto_1')" name="create-outline"></ion-icon>
+          </div>
+
+          <div class="text-center">
+            <div [innerText]="template.texto_2"></div>
+            <ion-icon (click)="toEdit('texto_2')" name="create-outline"></ion-icon>
+          </div>
+
+          <div class="row">
+            <div class="col-3 text-center">{{ template.data }}</div>
+            <div class="col-6 text-center">{{ template.endereco }}, {{ template.numero }} {{ (template.complemento) ? '- '+template.complemento+' -' : '' }} {{ template.cidade }} - {{ template.estado }}</div>
+            <div class="col-3 text-center">{{ template.hora }}</div>
+          </div>
+
+          <div class="text-center">
+            <div [innerText]="template.texto_3">{{ template.texto_3 }}</div>
+            <ion-icon (click)="toEdit('texto_2')" name="create-outline"></ion-icon>
+          </div>
+
+
+
+          <div>
+            <h3 class="text-center" [innerText]="template.sub_titulo_2"></h3>
+            <ion-icon (click)="toEdit('sub_titulo_2')" name="create-outline"></ion-icon>
+
+            <h5 class="text-center" [innerText]="template.texto_4"></h5>
+            <ion-icon (click)="toEdit('texto_4')" name="create-outline"></ion-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <ion-button (click)="gravar()" >Pagamento</ion-button>
+
+
 
 </ion-content>
+
+<!-- Modal para edicao de horario -->
+
+<div *ngIf="isOpenModal" class="ion-bootstrap-modal-backdrop show"></div>
+<div id="edit-text" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title"></h5>
+              <button type="button" class="btn-close" (click)="closeModal()"></button>
+          </div>
+          <div class="modal-body">
+              
+            <textarea class="form-control" [(ngModel)]="currentText" >{{ currentText }}</textarea>
+
+            <ion-button (click)="updateCurrentText()" >Confirmar</ion-button>
+          </div>
+      </div>
+  </div>
+</div>
