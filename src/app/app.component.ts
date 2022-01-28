@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { MenuController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { AuthService } from './_auth/auth.service';
 import { IdiomaService } from './_services/idioma.service';
 
 @Component({
@@ -11,6 +14,9 @@ import { IdiomaService } from './_services/idioma.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
+  email: string = '';
+  token: any | undefined;
+  isAuth: boolean = false;
   subscription: Subscription | undefined;
 
   text: any = [];
@@ -18,7 +24,8 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private idioma: IdiomaService,
     private router: Router,
-    private menu: MenuController
+    private menu: MenuController,
+    private authService: AuthService
   ) {
     this.idioma.initLanguage();    
   }
@@ -26,6 +33,33 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(){
     this.text = this.idioma.getTexts();
     this.subscription = this.idioma.refreshLanguageState.subscribe(text=>this.text = text);
+
+    this.checkIsAuthenticate();
+  }
+
+  checkIsAuthenticate(){
+    this.isAuth = this.authService.getAuthState();
+    this.subscription = this.authService.authState.subscribe(auth=>{
+      this.isAuth = auth;  
+      this.getSession(this.isAuth);    
+    })
+    this.getSession(this.isAuth);
+  }
+
+  async getSession(autenticado: boolean){
+    if( autenticado ){
+      const helper = new JwtHelperService();
+      let tk = localStorage.getItem(environment.keytoken);
+      if( tk === undefined || tk === null){
+        tk = '';
+      }
+      this.token = helper.decodeToken(tk);    
+      if( this.token !== undefined && this.token !== null){
+        if( this.token.email !== undefined && this.token.email !== null && this.token.email !== ''){
+          this.email = this.token.email;
+        }
+      }
+    }
   }
 
   toPage(page) {

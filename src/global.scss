@@ -62,3 +62,54 @@ ion-content.background{
 .modal-backdrop:last-child, .modal-backdrop{
     display: none !important;
 }
+
+::-webkit-input-placeholder { /* Edge */
+    color: #ccc;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #ccc;
+}
+::placeholder {
+    color: #ccc;
+}
+
+label{
+    color: #666; 
+}
+
+.form-mobi{
+    width: 100%;
+    display: block;
+    height: 2.5rem;
+    font-size: 1.175rem;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #fff;
+    padding-left: 10px;
+    color: #666;
+    background-color: #fff;
+}
+
+.form-mobi:focus, .form-mobi:focus-visible, .form-mobi:focus-within{
+    outline: 0;
+    border: 1px solid var(--azul) !important;
+}
+.form-mobi.ng-touched.ng-invalid{
+    outline: 0;
+    border: 1px solid #e07777  !important;
+}
+
+.group-form-mobi-right{
+    position: absolute;
+    bottom: 17px;
+    font-size: 1.4rem;
+    right: 2px;
+    background-color: transparent;
+    height: 2.3rem;
+    border: 1px solid transparent;
+    border-radius: 3px !important;
+}
+
+i{
+    color: #666;
+}

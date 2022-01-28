@@ -1,8 +1,8 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { Dados, Metodos, PayG, PG, RetornoPG } from './checkout';
 import { PagSeguroService } from 'src/app/_services/pagseguro.service';
+import { Router } from '@angular/router';
 
 declare var PagSeguroDirectPayment: any;
 @Component({
@@ -26,7 +26,6 @@ export class CheckoutPage implements OnInit {
 
   session: string = '';
   cart: any | undefined;
-  formulario: FormGroup | undefined;
 
   pgSeguroURL = PayG.pgSeguroURL;
   tipo: string = '';
@@ -40,7 +39,7 @@ export class CheckoutPage implements OnInit {
 
   constructor(
     private zone: NgZone,
-    private formBuilder: FormBuilder,
+    private router: Router,
     private pagSeguroService: PagSeguroService
   ) { 
     window['angularComponentRef'] = {
@@ -56,6 +55,7 @@ export class CheckoutPage implements OnInit {
     try {
       this.cart = ( cart ) ? JSON.parse(atob(cart)) : undefined;
     } catch (error) {
+      console.log('No cart in storage', error);
       this.cart = {};
     }    
     this.setTotal();    
@@ -221,6 +221,10 @@ export class CheckoutPage implements OnInit {
       this.loading = false;
       this.retornoTransacao = response;
     }, error => { this.loading = false;});
+  }
+
+  toPage(page) {
+    this.router.navigate([`${page}`]);
   }
 
 }

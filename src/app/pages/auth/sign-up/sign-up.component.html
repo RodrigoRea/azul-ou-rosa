@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Criar conta</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false"></ion-menu-button>  
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background ion-padding">
+
+<div class="container content-page" *ngIf="formulario !== undefined">
+  <div class="row mt-5">
+
+    <div class="col-md-6 text-center">
+      <form [formGroup]="formulario" (ngSubmit)="cadastrar()">
+        <div>
+          <div class="row">
+            <div class="col-md-12 text-center">
+              
+              <div class="form-max-input mt-4">
+                <div class="info-text text-start">Email</div>
+                <div class="input-group">
+                <input type="mail" class="form-mobi" (input)="mensagem = ''" placeholder="Ex: meu@email.com.br" formControlName="mail"
+                  [autocomplete]="'off'" required>
+                    <span class="input-group-text group-form-mobi-right"><i class="fa fa-envelope icon-input-motors"></i></span>                  
+                </div>
+              </div>
+
+              <div class="form-max-input mt-5">
+                <div class="info-text text-start">Senha</div>
+                <div class="input-group">
+                  <input class="form-mobi" placeholder="Senha" type="{{ typepass }}"
+                    formControlName="pass" autocomplete="off" required>
+                  <span class="input-group-text group-form-mobi-right">
+                    <i (click)="changeTypePass()" *ngIf="typepass === 'text'" class="fa fa-eye icon-input-motors"></i>
+                    <i (click)="changeTypePass()" *ngIf="typepass === 'password'" class="fa fa-eye-slash icon-input-motors"></i>
+                  </span>
+                  
+                </div>
+                <div class="alert alert-danger mt-1 mb-1 p-1 text-center" *ngIf="mensagem !== ''">{{ mensagem }}</div>
+              </div>
+
+              <div>
+                <div class="row">
+                  <div class="form-max-input">
+                    <div class="col-md-12 text-center mt-5">
+                      <button class="btn-main" [disabled]="!formulario?.valid || enviando" type="submit"
+                        expand="block">Cadastrar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-md-6 not-mobile">
+      <div class="img-login"></div>
+    </div>
+
+  </div>
+
+</div>
+
+</ion-content>

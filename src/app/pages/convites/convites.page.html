@@ -1,10 +1,5 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start" *ngIf="item">
-      <ion-button (click)="item = undefined">
-        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon> 
-      </ion-button>
-    </ion-buttons>
     <ion-title>{{ text['convites'] }}</ion-title>
     <ion-buttons slot="end">
       <ion-menu-button autoHide="false"></ion-menu-button>  
@@ -16,7 +11,7 @@
    
     <ion-row>
         
-      <ion-col size="6" ion-item *ngFor="let item of modelos">
+      <ion-col size="6" *ngFor="let item of modelos">
         <div class="ion-text-center">
           <div class="box" (click)="toSelected(item)" >
             <div class="box-window" style="background-image: url('assets/imgs/products/modelo_{{ item.modelo_id }}.jpeg');" ></div>   

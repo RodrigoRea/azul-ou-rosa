@@ -1,0 +1,188 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Esqueci minha senha</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false"></ion-menu-button>  
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background ion-padding">
+
+  
+  <div class="container mt-5 content-page">
+
+    <div class="row mt-5">
+
+      <div class="col-md-6 text-center mt-3">
+  
+        <div *ngIf="fase === 1 && formulario !== undefined">
+          <form [formGroup]="formulario" (ngSubmit)="gerarChave()" >
+            <div>
+      
+              <div class="row">
+                <div class="col-md-12 mt-4">
+                  <div class="form-max-input">
+                    <div class="info-text text-start">Email</div>
+                    <div class="input-group">
+                      <input type="email" class="form-mobi" readonly="{{ chaveGerada ? true : null }}" placeholder="Ex: meu@email.com.br" formControlName="email" [autocomplete]="'off'" required>
+                      <span class="input-group-text group-form-mobi-right"><i class="fa fa-envelope icon-input-motors"></i></span>    
+                    </div>
+                  </div>
+                </div>
+              </div>
+      
+              <div class="row" *ngIf="chaveGerada">
+                <div class="col-md-12 mt-5">
+                  <div class="form-max-input">
+                    <div class="info-text text-start">Chave</div>
+                    <div class="input-group">
+                      <input class="form-mobi" #_chave type="text" (input)="is32char(_chave.value)" placeholder="Chave de redefinição de senha" formControlName="chave" [autocomplete]="'off'">
+                      <span class="input-group-text group-form-mobi-right"><i class="fa fa-key icon-input-motors"></i></span>  
+                    </div>
+                  </div>
+                </div>
+              </div>
+      
+              <div class="p-2" *ngIf="chaveGerada && !chaveOld">  
+                <div class="row" *ngIf="chaveGerada">
+                  <div class="col-md-12 mt-4"> 
+                    <div class="form-max-input">     
+                      <button class="btn-outline-main btn-small" [disabled]="formulario.get('chave')?.valid" color="secondary" (click)="onPaste()"><small>Clique aqui para inserir sua chave</small></button>
+
+                      <div class="alert alert-primary mt-4 mb-3 text-center">Chave gerada e enviada para seu email.<br>
+                        <strong>Copie sua chave e cole no campo acima para validar</strong>
+                      </div>
+                    </div>   
+                  </div>
+                </div>
+                    
+              </div>
+      
+              <div class="p-2 text-center" *ngIf="chaveGerada && chaveOld">
+                <div class="row" *ngIf="chaveGerada">
+                  <div class="col-md-12 mt-4">  
+                    <div class="form-max-input"> 
+                      <button class="btn-outline-main btn-small " [disabled]="formulario.get('chave')?.valid" color="secondary" (click)="onPaste()"><small>Clique aqui para inserir sua chave</small></button>
+                      
+                      <div class="alert alert-primary mt-3 mb-3 text-center"><strong>Utilize a última chave recebida por email</strong></div>
+                    </div>
+                  </div>
+                </div>                    
+              </div>
+      
+              <div class="p-2" *ngIf="chaveGerada && mensagem !== ''">
+                <div class="alert alert-danger mt-3 mb-3 text-center">
+                  {{ mensagem }}
+                </div>
+              </div>
+      
+              <div *ngIf="(formulario.get('chave')?.value).length === 0 && !chaveGerada">
+                <div class="row mt-5">
+                  <div class="col-md-12">
+                    <div class="form-max-input"> 
+                      <button class="btn-outline-main btn-small" [disabled]="!formulario.valid || gerandoKey" type="submit" expand="block">
+                        Gerar Chave 
+                        <i class="fa fa-key ml-1" *ngIf="!gerandoKey"></i>
+                        <i class="fa fa-spinner fa-spin ml-1" *ngIf="gerandoKey"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="!chaveGerada">
+                  <div class="col-md-12">
+                    <div class="text-center p-2">
+                      <div class="form-max-input"> 
+                        <div class="text-center mt-1 mb-4">ou</div>
+                        <div class="alert alert-danger mt-1 mb1" *ngIf="mensagem !== ''">{{mensagem}}</div>
+                        <a class="link-main mt-3" (click)="jaTenhoChave()">Já tenho uma chave</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+      
+              <div *ngIf="(formulario.get('chave')?.value).length > 0">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-max-input"> 
+                      <button [disabled]="!formulario.valid || validandoKey" type="button" (click)="validarChave()" class="btn-outline-main">
+                        Validar
+                        <i class="fa fa-key ml-1" *ngIf="!validandoKey"></i>
+                        <i class="fa fa-spinner fa-spin ml-1" *ngIf="validandoKey"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+      
+            </div>
+          </form>
+        </div>
+      
+        <div class="mt-5" *ngIf="fase === 2">
+      
+          <div class="p-2" *ngIf="mensagem !== ''">
+            <div class="alert alert-danger mt-3 mb-3 text-center">Chave de redefinição de senha é inválida</div>
+          </div>
+      
+          <div class="p-2" *ngIf="senhaAlterada">
+            <div class="alert alert-primary mt-3 mb-3 text-center">Senha alterada com sucesso</div>
+          </div>
+      
+          <div *ngIf="!senhaAlterada">
+            <div class="row">
+              <div class="col-md-13">
+                <div class="form-max-input"> 
+                  <div class="text-start">Nova Senha <small>(mín. 6 caracteres)</small></div>
+                  <div class="input-group">                  
+                    <input class="form-control" type="{{ typepass }}" placeholder="Nova Senha" [(ngModel)]="senha" [autocomplete]="'off'">
+                    <span class="input-group-text">
+                      <i class="pass fa fa-eye-slash" *ngIf="typepass === 'password'" (click)="changeTypePass()"></i>
+                      <i class="pass fa fa-eye" *ngIf="typepass === 'text'" (click)="changeTypePass()"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+      
+            <div>
+              <div class="row">
+                <div class="col-md-12 mt-2">
+                  <div class="form-max-input"> 
+                    <button class="btn-main" [disabled]="(senha).length < 6" type="button" (click)="alterarSenha()" expand="block">Gravar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+          <div *ngIf="senhaAlterada">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-max-input"> 
+                  <button class="btn-outline-main" type="button" (click)="toLogin()">Entrar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+        </div>
+        
+  
+      </div>
+  
+      <div class="col-md-6 not-mobile">
+        <div class="img-login"></div>
+      </div>
+  
+    </div>
+  
+    
+  
+  </div>
+  
+  </ion-content>

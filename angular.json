@@ -31,8 +31,18 @@
                 "output": "./svg"
               }
             ],
-            "styles": ["src/assets/css/bootstrap.min.css","src/theme/variables.scss", "src/global.scss"],
-            "scripts": ["src/assets/js/jquery.min.js","src/assets/bootstrap-5.1.0-dist/js/bootstrap.bundle.min.js"],
+            "styles": [
+              "src/assets/font-awesome/css/font-awesome.min.css",
+              "src/assets/css/bootstrap.min.css",
+              "src/theme/variables.scss", 
+              "src/global.scss"
+            ],
+            "scripts": [
+              "src/assets/js/jquery.min.js",
+              "src/assets/bootstrap-5.1.0-dist/js/bootstrap.bundle.min.js",
+              "src/assets/js/vanilla-masker.min.js",
+              "src/assets/js/mask.js"
+            ],
             "aot": false,
             "vendorChunk": true,
             "extractLicenses": false,

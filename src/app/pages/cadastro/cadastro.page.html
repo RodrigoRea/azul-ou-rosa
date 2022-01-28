@@ -1,0 +1,128 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Cadastro</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false"></ion-menu-button>  
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background ion-padding">
+
+
+
+
+
+
+
+
+
+
+  <form [formGroup]="formulario" (ngSubmit)="gravar()">
+
+    <div class="mt-5"><h3>Cadastro</h3></div>
+
+    <div class="row">
+      <div class="col-md-6 mt-2">
+        <label><i class="fa fa-user"></i>&nbsp;Nome*</label>
+        <input [type]="'text'" class="form-mobi" formControlName="nome" [autocomplete]="'off'">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mt-2">
+        <label><i class="fa fa-phone"></i>&nbsp;Telefone*</label>
+        <input [type]="'text'" class="form-mobi fone" formControlName="fone1" placeholder="(11) 11111111" [autocomplete]="'off'">
+      </div>
+
+      <div class="col-md-6 mt-2">
+        <label><i class="fa fa-envelope"></i>&nbsp;Email</label>
+        <input [type]="'text'" class="form-mobi" disabled value="{{ email }}">
+      </div>
+
+    </div>
+
+    <!--<hr>
+    <div class="mt-5"><h3>Notificações</h3></div>
+
+    <small>As notificações serão enviadas para <strong>{{ email }}</strong></small><br>
+     
+    <small>Mais emails de notificações</small>
+    <div class="row">
+      <div class="col-md-6 mt-2">
+        <label>Email</label>
+        <app-multi-campo type="email" placeholder="Email" formControlName="email" ></app-multi-campo>
+      </div>
+    </div>
+    -->
+    <hr>
+    <div class="mt-5"><h3>Endereço</h3></div>
+    
+    <div class="row">
+
+      <div class="col-md-4 mt-2">
+        <div class="input-group mb-3">
+          <label><i class="fa fa-map-signs"></i>&nbsp;CEP*</label>
+          <input [type]="'text'" class="form-mobi cep" placeholder="00000-000" formControlName="cep" (keyup)="getCep($event)" [autocomplete]="'off'" [disabled]="loadingCEP">
+          <span class="input-group-text group-form-mobi-right">
+            <i *ngIf="!loadingCEP" class="fa fa-times" style="color: #beb2b2;" (click)="resetCep()"></i>
+            <i *ngIf="loadingCEP" class="fa fa-spinner fa-spin" ></i>
+          </span>
+        </div>            
+      </div>
+
+      <div class="col-md-12 mt-2 disabled-by-cep">
+        <label><i class="fa fa-map-marker"></i>&nbsp;Endereço*</label>
+        <input [type]="'text'" class="form-mobi" formControlName="endereco" [autocomplete]="'off'" >
+      </div>
+
+      <div class="col-md-4 mt-2">
+        <label><i class="fa fa-map-signs"></i>&nbsp;Número*</label>
+        <input [type]="'text'" class="form-mobi" formControlName="numero" [autocomplete]="'off'">
+      </div>
+
+      <div class="col-md-4 mt-2">
+        <label><i class="fa fa-map-signs"></i>&nbsp;Complemento</label>
+        <input [type]="'text'" class="form-mobi" formControlName="complemento" [autocomplete]="'off'">
+      </div>
+
+      <div class="col-md-4 mt-2 disabled-by-cep">
+        <label><i class="fa fa-map-signs"></i>&nbsp;Bairro*</label>
+        <input [type]="'text'" class="form-mobi" formControlName="bairro" [autocomplete]="'off'">
+      </div>
+
+      <div class="col-md-2 mt-2 disabled-by-cep">
+        <label><i class="fa fa-map-signs"></i>&nbsp;Estado*</label>
+        <input [type]="'text'" class="form-mobi" formControlName="estado" [autocomplete]="'off'">
+      </div>
+
+      <div class="col-md-6 mt-2 disabled-by-cep">
+        <label><i class="fa fa-map-signs"></i>&nbsp;Cidade*</label>
+        <input [type]="'text'" class="form-mobi" formControlName="cidade" [autocomplete]="'off'">
+      </div>
+    </div>
+
+    <ion-button (click)="toPage('alterar-senha')">Alterar Senha</ion-button>
+
+    <hr>
+
+    <div class="text-center mt-5 mb-5">
+      <button class="mt-5 mb-2" [disabled]="!formulario.valid || loading" class="btn-main" type="submit">
+        Atualizar
+        <i *ngIf="loading" class="fa fa-spinner fa-spin mr-2"></i>
+        <i *ngIf="!loading" class="fa fa-floppy-o mr-2"></i>
+      </button>
+      <div class="mb-2"><small>Campos marcados com * são obrigatórios</small></div>
+    </div>
+
+  </form>
+
+
+
+
+
+
+
+
+
+</ion-content>

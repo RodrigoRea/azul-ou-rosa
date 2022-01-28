@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/_auth/auth.service';
 import { ProdutoService } from 'src/app/_services/produto.service';
 import { environment } from 'src/environments/environment';
 
@@ -10,6 +11,8 @@ import { environment } from 'src/environments/environment';
 })
 export class ModelosPage implements OnInit {
 
+  isAuth: boolean = false;
+
   loading: boolean = false;
   modelo_id: any | undefined;
 
@@ -18,10 +21,12 @@ export class ModelosPage implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private produtoService: ProdutoService
+    private produtoService: ProdutoService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
+    this.isAuth = this.authService.getAuthState();
     this.modelo_id = this.activatedRoute.snapshot.paramMap.get('modelo_id');
     console.log('this.modelo_id', this.modelo_id);
     if( this.modelo_id ){
@@ -39,12 +44,24 @@ export class ModelosPage implements OnInit {
     }, error => this.loading = false);
   }
 
+  // Usuario deve ter cadastro para efetuar compras
   toProduct(produto){
     //console.log('comprar item', item);
     localStorage.setItem(environment.cartStorage, btoa(JSON.stringify(produto)));
+
+    this.isAuth = this.authService.getAuthState();
+
     setTimeout(() => {
-      this.router.navigate([`convites/produto/${produto.produto_id}`]);
+      if( this.isAuth ){
+        this.router.navigate([`convites/produto/${produto.produto_id}`]);
+      }else{
+        this.router.navigate([`/auth/login`],{queryParams: {'redirect':`convites/produto/${produto.produto_id}`}});
+      }
     });
+  }
+
+  toPage(page) {
+    this.router.navigate([`${page}`]);
   }
 
 }

@@ -1,7 +1,9 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-button (click)="toPage('/convites')">  
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon> 
+      </ion-button>
     </ion-buttons>
     <ion-title>Detalhes</ion-title>
     <ion-buttons slot="end">

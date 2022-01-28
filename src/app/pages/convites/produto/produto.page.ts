@@ -93,4 +93,8 @@ export class ProdutoPage implements OnInit {
       this.router.navigate([`checkout`]);
     });
   }
+
+  toPage(page) {
+    this.router.navigate([`${page}`]);
+  }
 }

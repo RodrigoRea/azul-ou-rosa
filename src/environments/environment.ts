@@ -7,7 +7,10 @@ export const environment = {
   cartStorage: 'sandbox_cart',
   keytoken: 'sandbox_mybabeis',
 
-  api: 'http://api.mybabeis.com.br'
+  api: 'http://api.mybabeis.com.br',
+  dominiosComToken: [
+    'api.mybabeis.com.br',
+  ]
 };
 
 /*

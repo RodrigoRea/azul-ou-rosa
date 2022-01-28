@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './_auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -50,8 +51,30 @@ const routes: Routes = [
   },
   {
     path: 'checkout',
-    loadChildren: () => import('./pages/checkout/checkout.module').then( m => m.CheckoutPageModule)
-  }
+    loadChildren: () => import('./pages/checkout/checkout.module').then( m => m.CheckoutPageModule),
+    canActivate: [AuthGuard],
+    canLoad: [AuthGuard]
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('./pages/auth/auth.module').then( m => m.AuthPageModule)
+  },   {
+    path: 'cadastro',
+    loadChildren: () => import('./pages/cadastro/cadastro.module').then( m => m.CadastroPageModule)
+  },
+  {
+    path: 'alterar-senha',
+    loadChildren: () => import('./pages/alterar-senha/alterar-senha.module').then( m => m.AlterarSenhaPageModule),
+    canActivate: [AuthGuard],
+    canLoad: [AuthGuard]
+  },
+  {
+    path: 'excluir-conta',
+    loadChildren: () => import('./pages/excluir-conta/excluir-conta.module').then( m => m.ExcluirContaPageModule),
+    canActivate: [AuthGuard],
+    canLoad: [AuthGuard]
+  },
+
 ];
 @NgModule({
   imports: [

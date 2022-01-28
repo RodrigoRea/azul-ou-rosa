@@ -1,10 +1,26 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>checkout</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar color="primary">
 
-<ion-content>
+        <ion-buttons slot="start">
+            <ion-back-button *ngIf="passo === 1" defaultHref="/"></ion-back-button>
+
+            <ion-button *ngIf="passo === 2" (click)="passo = 1">  
+                <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon> 
+            </ion-button>
+
+            <ion-button *ngIf="passo === 3" (click)="passo = 2">  
+                <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon> 
+            </ion-button>
+        </ion-buttons>
+
+        <ion-title>Checkout</ion-title>
+        <ion-buttons slot="end">
+        <ion-menu-button autoHide="false"></ion-menu-button>  
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content class="background ion-padding">
 
 
 
@@ -44,7 +60,7 @@
                     <div class="col mt-3 text-center">
                         <img [src]="pgSeguroURL+mBoleto.images['MEDIUM']['path']" class="img-rounded img-boleto" >
                         <div class="mt-3">
-                            <small>Taxa de emissão de Boleto R$ 1,00</small>
+                            <!--small>Taxa de emissão de Boleto R$ 1,00</small-->
                             <br>
                             <small>Pagamento com boleto pode levar até 2 dias úteis para ser compensado</small>
                         </div>
@@ -91,20 +107,22 @@
 
 <div class="row" *ngIf="passo === 2 || passo === 3" >
 
+    <!--pre>{{ cart | json }}</pre-->
+
   <ng-container *ngIf="cart && (cart).length > 0">
     <ul class="list-group">
-      <ng-container *ngFor="let produto of cart">
+      <ng-container *ngFor="let item of cart">
         <li class="list-group-item">
-          <h6>{{ produto.modelo }}</h6>
-          <h5>{{ produto.nome }}</h5>
-          <label style="float: right;">{{ produto.valor | currency: 'BRL': true }}</label>
+          <h6>{{ item.produto.modelo }}</h6>
+          <h5>{{ item.produto.nome }}</h5>
+          <label class="price-list">{{ item.produto.valor | currency: 'BRL': true }}</label>
         </li>
       </ng-container>
     </ul>
   </ng-container>
 
   <div class="col-md-5 col-sm-12 mt-2 text-center">
-      <h3>Valor {{ valor_total | currency: 'BRL': true }}</h3>
+      <h3>Valor total {{ valor_total | currency: 'BRL': true }}</h3>
   </div>
 </div>
 

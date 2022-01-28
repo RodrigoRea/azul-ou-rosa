@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewChecked } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { NgZone } from '@angular/core';
@@ -24,13 +24,13 @@ class ResponseParcelas{
   installments: Array<any>;
 }
 
-
+declare var $:any;
 @Component({
   selector: 'app-cartao',
   templateUrl: './cartao.component.html',
   styleUrls: ['./cartao.component.css']
 })
-export class CartaoComponent implements OnInit {
+export class CartaoComponent implements OnInit, AfterViewChecked {
 
   pgSeguroURL = 'https://stc.pagseguro.uol.com.br';
 
@@ -71,6 +71,10 @@ export class CartaoComponent implements OnInit {
   token: string;
   maxInstallmentNoInterest: number = 0;
 
+  meses: string[] = ['01','02','03','04','05','06','07','08','09','10','11','12'];
+  anos: any = [];
+  YYYY: number;
+
   constructor(
     private formBuilder: FormBuilder,
     private zone: NgZone,
@@ -89,8 +93,14 @@ export class CartaoComponent implements OnInit {
     this.parcelas = new ResponseParcelas();
     this.maxInstallmentNoInterest = 0;
 
+    this.YYYY = new Date().getFullYear();
+    let j=0;
+    for( let i = (this.YYYY); i<=(this.YYYY+15); i++ ){
+      this.anos[j++] = i;
+    }
+
     this.formulario = this.formBuilder.group({
-    cardnumber: ['', [Validators.required, Validators.minLength(19)/*,CreditCardValidator.validateCCNumber*/]],
+      cardnumber: ['', [Validators.required, Validators.minLength(19)/*,CreditCardValidator.validateCCNumber*/]],
       name: ['', [Validators.required, Validators.minLength(5)]],
       cvv: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(4),Validators.pattern('^([0-9]*)$')]],
       mes: ['',[Validators.required,Validators.minLength(2),Validators.maxLength(2)]],
@@ -108,6 +118,9 @@ export class CartaoComponent implements OnInit {
     }
   }
 
+  ngAfterViewChecked(){
+    $(document).setMask();
+  }
 
   getMaxInstallmentNoInterest(){
     this.pagSeguroService.mini().subscribe((res: any)=>{
@@ -161,7 +174,20 @@ export class CartaoComponent implements OnInit {
     }
     if( (c).length > 5 ){
       this.getBandeira(c);
-      console.log( c );
+    }
+
+    if( cartao && ((cartao).length > 15) ){
+      let mask = '';
+      let count = 0;
+      for(let i = 0; i < (cartao).length; i++){
+        count++;
+        mask += cartao[i];
+        if(count === 4 && i < (cartao).length){
+          mask += ' ';
+          count = 0;
+        }
+      }
+      this.formulario.get('cardnumber').setValue((mask).trim());
     }
 
     if( this.tipo === 'credito' ){
@@ -173,7 +199,7 @@ export class CartaoComponent implements OnInit {
 
   getBandeira( card: string ){
     const bin = card.substr(0,6);
-    console.log( bin );
+    // console.log( bin );
     PagSeguroDirectPayment['getBrand']({
       cardBin: bin,
       success: (response: Bin) => {

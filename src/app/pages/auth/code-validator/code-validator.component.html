@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Criar conta</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false"></ion-menu-button>  
+    </ion-buttons>
+  </ion-toolbar> 
+</ion-header>
+
+<ion-content class="background ion-padding">
+  
+  <div class="container mt-5 content-page">
+  
+    <form (ngSubmit)="validarCode()">  
+      <div class="text-center">
+        <h4 class="text-uppercase mb-4 mt-2">Código de validação</h4>
+      </div>
+  
+      <div class="group-code">
+        <div class="input-code">  
+            <div><input #_input1 autocomplete="off" type="number" [maskv]="'9'" (input)="_input2.focus()" maxlength="1" [(ngModel)]="input1" required [ngModelOptions]="{standalone: true}"></div>
+            <div><input #_input2 autocomplete="off" type="number" [maskv]="'9'" (input)="_input3.focus()" maxlength="1" [(ngModel)]="input2" required [ngModelOptions]="{standalone: true}"></div>
+            <div><input #_input3 autocomplete="off" type="number" [maskv]="'9'" (input)="_input4.focus()" maxlength="1" [(ngModel)]="input3" required [ngModelOptions]="{standalone: true}"></div>
+  
+            <div><input #_input4 autocomplete="off" type="number" [maskv]="'9'" (input)="_input5.focus()" maxlength="1" [(ngModel)]="input4" required [ngModelOptions]="{standalone: true}"></div>
+            <div><input #_input5 autocomplete="off" type="number" [maskv]="'9'" (input)="_input6.focus()" maxlength="1" [(ngModel)]="input5" required [ngModelOptions]="{standalone: true}"></div>
+            <div><input #_input6 autocomplete="off" type="number" [maskv]="'9'" (input)="_input6.focus()" maxlength="1" [(ngModel)]="input6" required [ngModelOptions]="{standalone: true}"></div>    
+        </div>
+      </div>
+  
+      <div class="mt-5"></div>
+
+      <div class="alert alert-danger mb-2 text-center" *ngIf="mensagem !== ''">{{ mensagem }}</div>
+  
+      <div class="text-center mb-3">
+        <button color="secondary" [disabled]="enviando" type="submit" class="btn-main" >
+          Validar Código<i class="fa fa-spinner fa-spin mr-1" *ngIf="enviando"></i></button>
+      </div>
+      
+      <div class="text-center mt-5 mb-5">
+        <button type="button" [disabled]="enviandoInfo" class="btn-outline-main btn-small" (click)="reenviarCodigo()">
+          <small>Reenviar um novo<br>código para meu email<i class="fa fa-spinner fa-spin mr-1" *ngIf="enviandoInfo"></i></small>
+        </button>
+        <div>{{ email }}</div>
+      </div>
+      <div class="alert alert-info mb-2 text-center" *ngIf="mensagemInfo !== ''">{{ mensagemInfo }}</div>
+    </form>
+  
+    <div class="text-center mt-5">
+      <button type="button"  class="btn-outline-main btn-small" (click)="cancelar()">
+        <small>Cancelar</small>
+      </button>
+    </div>
+  
+  </div>
+  
+  </ion-content>

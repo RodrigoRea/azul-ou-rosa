@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Senha</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false"></ion-menu-button>  
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background ion-padding">
+
+
+  <div *ngIf="formulario !== undefined">
+    <form [formGroup]="formulario" (ngSubmit)="alterarSenha()">
+        
+        <div class="info-text text-start">Senha Atual</div>
+        <div class="input-group">
+            <input class="form-mobi" id="senhaAtual" placeholder="Senha" (keyup)="updatePass()" [type]="(!vpass1)?'password':'text'" formControlName="senhaAtual" autocomplete="off">
+            <span class="input-group-text group-form-mobi-right">
+            <i (click)="vpass1 = !vpass1" *ngIf="vpass1" class="fa fa-eye "></i>
+            <i (click)="vpass1 = !vpass1" *ngIf="!vpass1" class="fa fa-eye-slash "></i>
+            </span>                            
+        </div>
+
+
+        <div class="mt-5">
+            <div class="info-text text-start">Nova Senha</div>
+            <div class="input-group">
+                <input class="form-mobi" id="senhaNova" placeholder="Senha" (keyup)="updatePass()" [type]="(!vpass2)?'password':'text'" formControlName="senhaNova" autocomplete="off">
+                <span class="input-group-text group-form-mobi-right">
+                <i (click)="vpass2 = !vpass2" *ngIf="vpass2" class="fa fa-eye "></i>
+                <i (click)="vpass2 = !vpass2" *ngIf="!vpass2" class="fa fa-eye-slash "></i>
+                </span>                            
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <div class="info-text text-start">Repita a Nova Senha</div>
+            <div class="input-group">
+                <input class="form-mobi" id="reSenhaNova" placeholder="Senha" (keyup)="updatePass()" [type]="(!vpass3)?'password':'text'" formControlName="reSenhaNova" autocomplete="off">
+                <span class="input-group-text group-form-mobi-right">
+                <i (click)="vpass3 = !vpass3" *ngIf="vpass3" class="fa fa-eye "></i>
+                <i (click)="vpass3 = !vpass3" *ngIf="!vpass3" class="fa fa-eye-slash "></i>
+                </span>                            
+            </div>
+        </div>
+
+        <div class="alert alert-danger mb-2 mt-2" *ngIf="mensagemErr !== ''">{{ mensagemErr }}</div>
+        <div class="alert alert-info mb-2 mt-2" *ngIf="mensagemSucces !== ''">{{ mensagemSucces }}</div>
+
+        <div class="text-center mb-5 mt-5">
+            <button [disabled]="!formulario?.valid" type="submit" class="btn-main">Confirmar</button>
+        </div>
+        <br>
+
+    </form>
+</div>
+
+</ion-content>

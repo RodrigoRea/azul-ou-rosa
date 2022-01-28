@@ -1,0 +1,111 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>LOGIN</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false"></ion-menu-button>  
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background ion-padding">
+
+<div class="container content-page">
+  <div class="row">
+
+    <div class="col-md-6 text-center">
+
+      <div *ngIf="formulario !== undefined">
+        <form [formGroup]="formulario" (ngSubmit)="login()">
+          <div>
+            <div class="row">
+              <div class="col-md-12 text-center mt-4">
+                <div class="form-max-input">
+                  <div class="info-text text-start">Email</div>
+                  <div class="input-group">
+                    <input class="form-mobi" placeholder="Ex: meu@email.com.br" type="email"
+                      formControlName="mail" autocomplete="off">
+                      <span class="input-group-text group-form-mobi-right"><i class="fa fa-envelope icon-input-motors"></i></span>                  
+                  </div>
+                </div>
+              </div>
+            </div>
+    
+            <div class="row">
+              <div class="col-md-12 text-center mt-5">
+                <div class="form-max-input">
+                  <div class="info-text text-start">Senha</div>
+                  <div class="input-group">
+                    <input class="form-mobi" placeholder="Senha" type="{{ typepass }}"
+                      formControlName="pass" autocomplete="off">
+                    <span class="input-group-text group-form-mobi-right">
+                      <i (click)="changeTypePass()" *ngIf="typepass === 'text'" class="fa fa-eye icon-input-motors"></i>
+                      <i (click)="changeTypePass()" *ngIf="typepass === 'password'" class="fa fa-eye-slash icon-input-motors"></i>
+                    </span>
+                    
+                  </div>
+                  <div class="alert alert-danger mt-1 mb-1 p-1 text-center" *ngIf="mensagem !== ''">{{ mensagem }}</div>
+                </div>
+              </div>
+    
+            </div>
+          </div>
+    
+    
+          <div>
+            <div class="row">
+              <div class="form-max-input">
+                <div class="col-md-12 text-center mt-5">
+                  <button class="btn-main" [disabled]="!formulario?.valid || enviando" type="submit"
+                    expand="block">
+                      Entrar
+                      <i class="fa fa-spinner fa-spin ml-1" *ngIf="enviando"></i>
+                      <i class="fa fa-sign-in-alt ml-1" *ngIf="!enviando"></i>
+                    </button>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <div>
+            <div class="row">
+              <div class="form-max-input">
+                <div class="col-md-12" class="text-center mt-4">
+                  <a class="btn btn-link link-main" (click)="toPageEsqueciMinhaSenha('/auth/esqueci-minha-senha')">Esqueci minha
+                    senha</a>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <div>
+            <div class="row">
+              <div class="form-max-input">
+                <div class="col-md-12" class="text-center mt-2 mb-3">
+                  <label class="info-desc">ou</label>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <div>
+            <div class="row">
+              <div class="form-max-input">
+                <div class="col-md-12" class="text-center info-desc">
+                  <button type="button" class="btn-outline-main btn-small" (click)="toPage('/auth/sign-up',redirect)">Realizar Cadastro</button>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- pre>{{ formulario.value | json }}</pre -->
+
+</div>
+
+</ion-content>

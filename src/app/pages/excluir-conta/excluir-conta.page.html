@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Excluir conta</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false"></ion-menu-button>  
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background ion-padding">
+
+
+  <div class="row">
+    <div class="col-12">
+      <div class="alert alert-danger" *ngIf="passo < 3">
+        <p>
+          <strong>Atenção</strong><br>
+          Esta ação não poderá ser desfeita.<br>
+          Todas as informações serão excluídas.
+        </p>
+      </div>
+  
+      <ng-container *ngIf="passo === 1">
+        <br>
+        <label>Motivo</label>
+        <textarea [(ngModel)]="motivo" class="form-control text-motivo" maxlength="150"></textarea>
+        <div class="text-end"><small>{{ (motivo).length }} caractere(s) de 150</small></div>
+        <hr>
+        <div class="text-center">
+          <button type="button" [disabled]="(motivo).length < 5" (click)="passo = 2" class="btn-main">Excluir conta</button>
+        </div>
+      </ng-container>
+  
+      <ng-container *ngIf="passo === 2">
+  
+        <div class="row">
+          <div class="col-12 mt-3">
+            <p>
+              <br><br>Você realmente deseja excluir esta conta?
+            </p>
+          </div>
+          <div class="col-6 mt-5">
+            <button type="button" (click)="passo = 1" class="btn-outline-main"><small>Não, voltar</small></button>
+          </div>
+          <div class="col-6 text-end mt-5">
+            <button type="button" [disabled]="(motivo).length < 5" (click)="excluir()" class="btn-main"><small>Sim, excluir</small></button>
+          </div>
+        </div>
+      </ng-container>
+  
+      <ng-container *ngIf="passo === 3">
+        <div class="text-center">
+          <br>
+          <h1><i class="fa fa-spinner fa-spin"></i></h1>
+          <br>
+          <br>
+          <h3>Excluindo conta</h3>
+          <h6>Muito obrigado!</h6>
+        </div>
+      </ng-container>
+  
+      <ng-container *ngIf="passo === 4">
+        <div class="text-center">
+          <br>
+          <h5>Ops! Erro inesperado ao excluir conta!</h5>
+          <br>
+          <h6>Por favor! Tente novamente mais tarde.<br>Obrigado!</h6>
+          <br><br>
+          <button type="button" (click)="passo = 1" class="btn btn-info">Voltar</button>
+        </div>
+      </ng-container>
+  
+    </div>
+  </div>
+
+</ion-content>

@@ -3,7 +3,10 @@ export const environment = {
   cartStorage: 'cart',
   keytoken: 'mybabeis',
 
-  api: 'https://api.mybabeis.com.br'
+  api: 'https://api.mybabeis.com.br',
+  dominiosComToken: [
+    'api.mybabeis.com.br',
+  ]
 };
 
 /************************************************************************************ */
