@@ -18,7 +18,9 @@
 
         <ion-item *ngIf="!isAuth" (click)="toPage('/auth/login')" >Entrar</ion-item>
 
-        <ion-item *ngIf="isAuth" (click)="toPage('/cadastro')" >Cadastro</ion-item>  
+        <ion-item *ngIf="isAuth" (click)="toPage('/meus-pedidos')" >Minhas compras</ion-item>
+        <ion-item *ngIf="isAuth" (click)="toPage('/cadastro')" >Cadastro</ion-item> 
+        <ion-item *ngIf="isAuth" (click)="toPage('/alterar-senha')" >Mudar senha</ion-item> 
         <ion-item *ngIf="isAuth" (click)="toPage('/auth/logout')" >Sair</ion-item>
         <ion-item *ngIf="isAuth" (click)="toPage('/excluir-conta')" >Excluir conta</ion-item>
         <!-- 

@@ -35,7 +35,7 @@ export class CheckoutPage implements OnInit {
   responseBoleto = new RetornoPG();
   responseCredito = new RetornoPG();
   responseDebito = new RetornoPG();
-  retornoTransacao = '';
+  retornoTransacao: any = '';
 
   constructor(
     private zone: NgZone,
@@ -49,16 +49,39 @@ export class CheckoutPage implements OnInit {
     };
   }
 
+  ionViewWillEnter(){
+    console.log('enter page');
+    this.init();
+  }
+
+  ionViewDidEnter(){
+    console.log('exit page');
+  }
+
+  toPasso1(){
+    this.passo = 1;
+    this.getSession();
+  }
+
   ngOnInit() {
+  }
+
+  init() {
+    this.passo = 1;
     this.importScript();
     const cart = localStorage.getItem(environment.cartStorage);
     try {
       this.cart = ( cart ) ? JSON.parse(atob(cart)) : undefined;
     } catch (error) {
       console.log('No cart in storage', error);
-      this.cart = {};
+      this.cart = undefined;
+    }  
+    if( this.cart ){  
+      this.setTotal();
+    }else{
+      console.log('No cart in storage');
+      this.router.navigate(['/convites']);
     }    
-    this.setTotal();    
   }
 
   setTotal(){
@@ -83,14 +106,15 @@ export class CheckoutPage implements OnInit {
   }
 
   getSession(){
+    this.loading = true;
     // this.getSession();
     this.pagSeguroService.get().subscribe((res: any) => {
-        if( res && res.session ){
-          this.session = res.session;
-          this.setSessionID();          
-        }
+      if( res && res.session ){
+        this.session = res.session;
+        this.setSessionID();          
       }
-    )
+      this.loading = false;
+    }, error => this.loading = true );
   }
 
   setSessionID(){
@@ -131,6 +155,7 @@ export class CheckoutPage implements OnInit {
           this.mBalance = metodos.paymentMethods[key]['options'][key];
         }
         if( key === 'CREDIT_CARD' ){
+          this.mCredito = [];
           const m = metodos.paymentMethods[key]['options'];
           for( const k in m ){
             (this.mCredito).push(m[k]);
@@ -189,12 +214,15 @@ export class CheckoutPage implements OnInit {
 
   
   startBoleto(pg: PG){
-    const compra = {...pg, ...{cart: this.cart}};
     this.loading = true;
+    this.passo = 4;
+    const compra = {...pg, ...{cart: this.cart}};
     this.pagSeguroService.post(compra).subscribe((response: any) => {
       this.loading = false;
       this.retornoTransacao = response;
-    });
+      this.passo = 5;
+      localStorage.removeItem(environment.cartStorage);
+    }, error => { this.loading = false; this.passo = 6; });
   }
 
   /*startDebito(pg: PG){
@@ -215,12 +243,15 @@ export class CheckoutPage implements OnInit {
   }*/
 
   startCredito(pg: PG) {
-    const compra = {...pg, ...{cart: this.cart}};
     this.loading = true;
+    this.passo = 4;
+    const compra = {...pg, ...{cart: this.cart}};    
     this.pagSeguroService.post(compra).subscribe((response: any) => {
       this.loading = false;
       this.retornoTransacao = response;
-    }, error => { this.loading = false;});
+      this.passo = 5;
+      localStorage.removeItem(environment.cartStorage);
+    }, error => { this.loading = false; this.passo = 6; });
   }
 
   toPage(page) {

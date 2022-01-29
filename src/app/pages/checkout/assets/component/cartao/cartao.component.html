@@ -1,3 +1,6 @@
+<app-loading [loading]="loading"></app-loading>
+
+<div *ngIf="formulario">
 <form [formGroup]="formulario" (ngSubmit)="submit()">
     
     <div class="row">
@@ -96,7 +99,11 @@
 
     <div class="row">
         <div class="col-12 mt-2 text-center">
-            <button type="submit" [disabled]="!formulario.valid" class="btn btn-success btn-block mt-4">Pagar com cartão de {{ tipo === 'credito' ? 'crédito' : 'débito' }}</button>
+            <button type="submit" [disabled]="!formulario.valid || loading" class="btn btn-success btn-block mt-4">
+                Pagar com cartão de {{ tipo === 'credito' ? 'crédito' : 'débito' }}&nbsp;
+                <i *ngIf="!loading" class="fa fa-credit-card"></i>
+                <i *ngIf="loading"  class="fa fa-spinner fa-spin"></i>
+            </button>
         </div>
 
         <!--div class="col-md-8 col-sm-12 mt-2">
@@ -106,3 +113,4 @@
     </div>
 
 </form>
+</div>

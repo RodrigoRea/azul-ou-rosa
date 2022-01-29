@@ -74,6 +74,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     canLoad: [AuthGuard]
   },
+  {
+    path: 'meus-pedidos',
+    loadChildren: () => import('./pages/meus-pedidos/meus-pedidos.module').then( m => m.MeusPedidosPageModule),
+    canActivate: [AuthGuard],
+    canLoad: [AuthGuard]
+  },
 
 ];
 @NgModule({

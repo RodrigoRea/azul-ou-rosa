@@ -1,44 +1,50 @@
-
+<app-loading [loading]="loading" ></app-loading>
+<div *ngIf="formulario">
 <form [formGroup]="formulario" (ngSubmit)="submit()" >
+
     <div class="row mt-2">
-
-        <div class="col-md-8 col-sm-12 mt-3">
-            <label>Nome Completo</label>
-            <input type="text" class="form-mobi text-uppercase" formControlName="nome" >
+        <div class="col-12 mt-3">
+            <p>Por favor! Preencha os campos para prosseguir com a transação de pagamento</p>
         </div>
 
-        <div class="col-md-4 col-sm-12 mt-3">
-            <label>Data de Nascimento</label>
-            <input type="text" class="form-mobi" formControlName="dtnascimento">
+        <div class="col-12 mt-3" *ngIf="!isNameDefaultValid && !loading">
+            <label *ngIf="isNameValid">Nome Completo *</label>
+            <label class="error" *ngIf="!isNameValid">Escreva seu nome e sobrenome</label>
+            <input type="text" class="form-mobi text-uppercase" formControlName="nome" (keyup)="checkInCompletName($event.target['value'])" >
+        </div>
+
+        <div class="col-12 mt-3">
+            <label>Data de Nascimento *</label>
+            <input type="text" class="form-mobi calendario" formControlName="dtnascimento">
         </div>
     </div>
 
     <div class="row">
 
-        <div class="col-md-5 col-sm-12 mt-3">
-            <label>CPF</label>
-            <input type="text" class="form-mobi" formControlName="CPF">
+        <div class="col-12 mt-3">
+            <label>CPF *</label>
+            <input type="text" class="form-mobi cpf" formControlName="CPF">
         </div>
 
-        <div class="col-md-4 col-sm-12 mt-3">
-            <label>Telefone</label>
-            <input type="text" class="form-mobi" formControlName="telefone">
+        <div class="col-12 mt-3" *ngIf="user && user.fone1 === ''">
+            <label>Telefone *</label>
+            <input type="text" class="form-mobi fone" formControlName="telefone">
         </div>
 
     </div>
 
     <div class="row">
 
-        <div class="col-sm-12 mt-3">
+        <!--div class="col-sm-12 mt-3">
             <label>E-mail</label>
             <input type="text" class="form-mobi text-lowercase" formControlName="email">
-        </div>
+        </div-->
 
-        <div class="col-sm-12 mt-3">
+        <!--div class="col-sm-12 mt-3">
             <label>Mensagem <small>(máx. 500 caracteres)</small></label>
             <textarea class="form-control" formControlName="mensagem"></textarea>
             <small>{{ (formulario.get('mensagem').value == null) ? 0 : (formulario.get('mensagem').value).length }} caractere(s)</small>
-        </div>
+        </div-->
 
     </div>
 
@@ -46,12 +52,18 @@
         
 
         <div class="col-12 mt-2 text-center">
-            <button type="submit" class="btn btn-outline-success btn-block mt-4" [disabled]="!formulario.valid" >Avançar</button>
+            <button type="submit" class="btn btn-success btn-block mt-4" [disabled]="!formulario.valid || !isNameValid" >Avançar&nbsp;<i class="fa fa-arrow-circle-o-right"></i></button>
         </div>
 
         <!--div class="col-md-8 col-sm-12 mt-5">
             <button type="button" class="btn btn-outline-info mt-5" (click)="voltar()">Voltar</button>
         </div-->
+        <div class="col-12 mt-3 text-center">
+            <small>
+                Os campos preenchidos nesta etapa de pagamento não são armazenados em nossas bases de dados. As informações aqui coletadas são de uso exclusivo da operadora financeira de cartão ou boleto bancário.
+            </small>
+        </div>
 
     </div>
 </form>
+</div>

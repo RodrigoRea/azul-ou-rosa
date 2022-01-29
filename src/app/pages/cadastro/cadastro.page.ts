@@ -5,7 +5,7 @@ import { IUser } from 'src/app/_interfaces';
 import { LojaVirtualService } from 'src/app/_services/loja-virtual.service';
 import { ViacepService } from 'src/app/_services/viacep.service';
 import { environment } from 'src/environments/environment';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 declare var $:any;
 
@@ -16,9 +16,10 @@ declare var $:any;
 })
 export class CadastroPage implements OnInit, AfterViewChecked {
 
+  redirect: string = '';
+  isNameValid: boolean = false;
   tab: number = 1;
   loading: boolean = false;
-  loadingCad: boolean = false;
   estado: string = '';
   cidade: string = '';
 
@@ -37,12 +38,21 @@ export class CadastroPage implements OnInit, AfterViewChecked {
     private formBuilder: FormBuilder,
     private lojaVirtualService: LojaVirtualService,
     private viacep: ViacepService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
+  ionViewWillEnter(){
+    this.init();
+  }
 
-  ngOnInit() {
+  ngOnInit(){
+
+  }
+  
+  init(){
     
+    this.redirect = this.route.snapshot.queryParams['redirect'];
 
     this.formulario = this.formBuilder.group({
       nome:           ['',[Validators.required]],
@@ -102,18 +112,21 @@ export class CadastroPage implements OnInit, AfterViewChecked {
     if( this.formulario !== undefined && this.formulario.valid ){
       this.loading = true;
       this.lojaVirtualService.gravar(this.formulario.value).subscribe(gravado=>{
+        this.loading = false;
         if( gravado ){
           this.msgSuccess = 'Gravado com sucesso';
+          if( this.redirect !== '' ){
+            this.router.navigate([`${this.redirect}`]);
+          }
         }else{
           this.msgError = 'Erro: Tente novamente';
-        }
-        this.loading = false;
+        }        
       })
     }
   }
 
   getUser(){
-    this.loadingCad = true;
+    this.loading = true;
     this.lojaVirtualService.get().subscribe(user=>{
       this.user = user;
       this.formulario?.patchValue(user);
@@ -121,8 +134,9 @@ export class CadastroPage implements OnInit, AfterViewChecked {
         if( this.user ){
           this.estado = this.user.estado;
           this.cidade = this.user.cidade;
+          this.checkInCompletName(this.user.nome);
         }
-        this.loadingCad = false;
+        this.loading = false;
       });
     })
   }
@@ -207,6 +221,32 @@ export class CadastroPage implements OnInit, AfterViewChecked {
       
   toPage(page) {
     this.router.navigate([`${page}`]);
+  }
+
+  checkInCompletName(name){
+    console.log('name', name);
+    const nome = (name).trim();
+    if(nome === undefined || nome === null || nome === ''){
+      this.isNameValid = false;
+      return false;
+    }
+    if( (nome).length < 5 ){
+      this.isNameValid = false;
+      return false;
+    }
+    let parts = (nome).split(" ");
+    if( (parts).length <= 1 ){
+      this.isNameValid = false;
+      return false;
+    }
+    for(let i = 0; i < (parts).length; i++){
+      if( (parts[i]).length < 2 ){
+        this.isNameValid = false;
+        return false;
+      }
+    }
+    this.isNameValid = true;
+    return true;
   }
 
 }

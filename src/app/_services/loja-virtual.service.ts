@@ -33,7 +33,6 @@ export class LojaVirtualService {
         return this.authService.get(`${url}`).pipe(
             map(res=>{
                 if( res['status'] === 200 ){
-                    console.log('ok - 200');
                     return res['resposta'];
                 }
                 return undefined;

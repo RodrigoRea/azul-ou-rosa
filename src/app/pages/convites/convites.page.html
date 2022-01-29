@@ -8,7 +8,9 @@
 </ion-header>
 
 <ion-content class="background ion-padding">
-   
+  
+  <app-loading [loading]="loading"></app-loading>
+
     <ion-row>
         
       <ion-col size="6" *ngFor="let item of modelos">

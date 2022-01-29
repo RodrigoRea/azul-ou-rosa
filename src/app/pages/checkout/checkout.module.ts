@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -10,14 +9,14 @@ import { CheckoutPage } from './checkout.page';
 import { CartaoComponent } from './assets/component/cartao/cartao.component';
 import { FormularioComponent } from './assets/component/formulario/formulario.component';
 import { BoletoComponent } from './assets/component/boleto/boleto.component';
+import { SharedModule } from 'src/app/_modulos/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
     IonicModule,
-    CheckoutPageRoutingModule
+    CheckoutPageRoutingModule,
+    SharedModule
   ],
   declarations: [CheckoutPage, CartaoComponent, FormularioComponent, BoletoComponent]
 })

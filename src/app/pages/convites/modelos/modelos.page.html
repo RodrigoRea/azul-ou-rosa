@@ -14,6 +14,8 @@
 
 <ion-content>
 
+  <app-loading [loading]="loading"></app-loading>
+
   <ng-container *ngIf="produtos && (produtos).length > 0">
     <ion-card *ngFor="let produto of produtos">
       <!--img src="./madison.jpg" /-->

@@ -1,0 +1,27 @@
+
+.hide{
+    display: none;
+}
+
+.box-loading{
+    z-index: 1099;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    line-height: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #00000069;
+    .inner-loading{
+        /*margin-top: 40%;*/
+
+        width: 100%;
+        text-align: center;
+        padding: 50% 25px; 
+        i{
+            font-size: 70px;
+            color: #FFF;
+        } 
+    }
+}

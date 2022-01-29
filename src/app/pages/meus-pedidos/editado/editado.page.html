@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="toPage('/meus-pedidos')">  
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon> 
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Convite</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background ion-padding">
+
+  <div class="mt-5 text-center">Convite atualizado com sucesso!</div>
+  <div class="mt-5 text-center">
+    <button (click)="toPage('/meus-pedidos')" type="button" class="btn btn-primary">Voltar</button>
+  </div>
+</ion-content>

@@ -28,4 +28,8 @@ export interface IUser {
     online: boolean;
     promocao: boolean;
     promocoes: any[];
+
+    data_nasc: string;
+    cpf: string;
+
 }

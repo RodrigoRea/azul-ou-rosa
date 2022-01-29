@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-button (click)="toPage('/convites')">  
+      <ion-button (click)="toPage('/meus-pedidos')">  
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon> 
       </ion-button>
     </ion-buttons>
-    <ion-title>Detalhes</ion-title>
+    <ion-title>Convite</ion-title>
     <ion-buttons slot="end">
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
@@ -68,7 +68,7 @@
   </div>
 
 
-  <ion-button (click)="gravar()" >Pagamento</ion-button>
+  <ion-button (click)="gravar()" >Atualizar</ion-button>
 
 
 
@@ -77,7 +77,7 @@
 <!-- Modal para edicao de horario -->
 
 <div *ngIf="isOpenModal" class="ion-bootstrap-modal-backdrop show"></div>
-<div id="edit-text" class="modal" tabindex="-1" role="dialog">
+<div id="{{ $ID }}" class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
       <div class="modal-content">
           <div class="modal-header">

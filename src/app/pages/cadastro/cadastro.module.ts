@@ -7,12 +7,12 @@ import { IonicModule } from '@ionic/angular';
 import { CadastroPageRoutingModule } from './cadastro-routing.module';
 
 import { CadastroPage } from './cadastro.page';
+import { SharedModule } from 'src/app/_modulos/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
+    SharedModule,
     IonicModule,
     CadastroPageRoutingModule
   ],

@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Minhas compras</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false"></ion-menu-button>  
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background ion-padding">
+  
+  <app-loading [loading]="loading"></app-loading>
+
+  <div *ngIf="pedidos && (pedidos).length > 0">
+
+    <ul class="list-group">
+      <ng-container *ngFor="let pedido of pedidos">
+        <li class="list-group-item">
+          {{ pedido.data }} <label>{{ pedido.valor }}</label>
+          <div>{{ pedido.pedido_ref }}</div>
+          <div *ngIf="pedido.itens && (pedido.itens).length > 0">
+            <ng-container *ngFor="let item of pedido.itens">
+              <div>{{ item.produto_nome }}</div>
+              <div>{{ item.modelo_nome }}</div>
+              <div><a (click)="editar(item)">Editar</a></div>
+            </ng-container>
+          </div>
+        </li>
+      </ng-container>
+    </ul>
+
+  </div>
+
+</ion-content>

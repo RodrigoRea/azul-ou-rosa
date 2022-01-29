@@ -11,6 +11,7 @@ declare var PagSeguroDirectPayment: any;
 })
 export class BoletoComponent implements OnInit {
 
+  loading: boolean = false;
   @Input() dados = new Dados();
   @Input() quantidade: number;
 
@@ -33,6 +34,7 @@ export class BoletoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading = true;
     this.setHash();
   }
 
@@ -40,6 +42,7 @@ export class BoletoComponent implements OnInit {
     PagSeguroDirectPayment['onSenderHashReady']((response: any) => {
       if(response['status'] == 'error') {
           console.log(response['message']);
+          this.loading = false;
           return false;
       }
       //response['senderHash']; //Hash estará disponível nesta variável.
@@ -57,7 +60,11 @@ export class BoletoComponent implements OnInit {
 
     pg.pagamento = new Cartao();
     pg.pagamento.tipo = 'boleto';
-    this.finalizar.emit(pg);
+    this.loading = false;
+    setTimeout(() => {
+      this.finalizar.emit(pg);
+    });
+    
   }
 
 }

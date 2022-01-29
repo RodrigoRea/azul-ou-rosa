@@ -32,6 +32,7 @@ declare var $:any;
 })
 export class CartaoComponent implements OnInit, AfterViewChecked {
 
+  loading: boolean = false;
   pgSeguroURL = 'https://stc.pagseguro.uol.com.br';
 
 
@@ -226,7 +227,7 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
   }
 
   getCardToken(){
-
+    this.loading = true;
     const cartao = (`${this.formulario.get('cardnumber').value}`).replace(/[^\d]+/g,'');
     const bandeira = (`${this.formulario.get('brand').value}`).replace(/[^\d]+/g,'');
     const cvv = (`${this.formulario.get('cvv').value}`).replace(/[^\d]+/g,'');
@@ -248,6 +249,7 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
         window['angularComponentRef'].zone.run(() => {
           window['angularComponentRef'].componentFn( ()=>this.setNoToken(response));
         });
+        this.loading = false;
       },
       complete: function(response) {
            // Callback para todas chamadas.
@@ -297,6 +299,7 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
   }
 
   finalizacao(hash: string){
+    this.loading = false;
     let pg = new PG();
     pg.dados     = this.dados;
     this.dados.quantidade = this.quantidade;

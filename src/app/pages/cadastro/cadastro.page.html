@@ -14,18 +14,19 @@
 
 
 
+<app-loading [loading]="loading"></app-loading>
 
 
-
-
+<div *ngIf="formulario">
   <form [formGroup]="formulario" (ngSubmit)="gravar()">
 
-    <div class="mt-5"><h3>Cadastro</h3></div>
+    <div class="mt-2 text-center"><h3>Cadastro</h3></div>
+    <h5 class="text-center"><i class="fa fa-envelope"></i>&nbsp;{{ email }}</h5>
 
     <div class="row">
       <div class="col-md-6 mt-2">
-        <label><i class="fa fa-user"></i>&nbsp;Nome*</label>
-        <input [type]="'text'" class="form-mobi" formControlName="nome" [autocomplete]="'off'">
+        <label [class.error-txt]="!isNameValid && !loading" ><i class="fa fa-user"></i>&nbsp;Nome completo*</label>
+        <input [type]="'text'" class="form-mobi" formControlName="nome" [autocomplete]="'off'" (keyup)="checkInCompletName($event.target['value'])" >
       </div>
     </div>
 
@@ -33,11 +34,6 @@
       <div class="col-md-6 mt-2">
         <label><i class="fa fa-phone"></i>&nbsp;Telefone*</label>
         <input [type]="'text'" class="form-mobi fone" formControlName="fone1" placeholder="(11) 11111111" [autocomplete]="'off'">
-      </div>
-
-      <div class="col-md-6 mt-2">
-        <label><i class="fa fa-envelope"></i>&nbsp;Email</label>
-        <input [type]="'text'" class="form-mobi" disabled value="{{ email }}">
       </div>
 
     </div>
@@ -56,7 +52,7 @@
     </div>
     -->
     <hr>
-    <div class="mt-5"><h3>Endereço</h3></div>
+    <div class="mt-2 text-center"><h3>Endereço</h3></div>
     
     <div class="row">
 
@@ -102,15 +98,15 @@
       </div>
     </div>
 
-    <ion-button (click)="toPage('alterar-senha')">Alterar Senha</ion-button>
+    <!--ion-button (click)="toPage('alterar-senha')">Alterar Senha</ion-button-->
 
     <hr>
 
     <div class="text-center mt-5 mb-5">
-      <button class="mt-5 mb-2" [disabled]="!formulario.valid || loading" class="btn-main" type="submit">
+      <button class="mt-5 mb-2" [disabled]="!formulario.valid || loading || !isNameValid" class="btn btn-success" type="submit">
         Atualizar
         <i *ngIf="loading" class="fa fa-spinner fa-spin mr-2"></i>
-        <i *ngIf="!loading" class="fa fa-floppy-o mr-2"></i>
+        <i *ngIf="!loading" class="fa fa-check-circle mr-2"></i>
       </button>
       <div class="mb-2"><small>Campos marcados com * são obrigatórios</small></div>
     </div>
@@ -118,7 +114,7 @@
   </form>
 
 
-
+</div>
 
 
 
