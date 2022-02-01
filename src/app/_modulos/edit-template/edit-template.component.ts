@@ -21,6 +21,7 @@ export class EditTemplateComponent implements OnInit {
   @Input() template: ITemplate | undefined;
   @Output() templateChange = new EventEmitter<ITemplate>();
   
+  local: any | undefined;
 
   constructor(
   ) { }
@@ -60,6 +61,7 @@ export class EditTemplateComponent implements OnInit {
   }
 
   toEdit(input: string){ 
+    this.local = new Object();
     this.type = '';   
     this.currentInput = `${input}`;
     this.currentText = this.template[`${input}`]; 
@@ -67,7 +69,24 @@ export class EditTemplateComponent implements OnInit {
     switch (this.currentInput) {
       case 'data': this.type = 'date'; break;
       case 'hora': this.type = 'time'; break;
+      case 'cep':
+      case 'endereco':
+      case 'numero':
+      case 'bairro':
+      case 'cidade':
+      case 'estado': this.type = 'local'; break;
       default:     this.type = 'text'; break;
+    }
+
+    
+    if( this.type === 'local' ){
+      this.local['endereco']     = $(`#t-endereco`).text();
+      this.local['numero']       = $(`#t-numero`).text();
+      this.local['bairro']       = $(`#t-bairro`).text();
+      this.local['complemento']  = $(`#t-complemento`).text();
+      this.local['cidade']       = $(`#t-cidade`).text();
+      this.local['estado']       = $(`#t-estado`).text();
+      this.local['cep']          = $(`#t-cep`).text();
     }
 
     if( this.currentInput == 'data' ){
@@ -78,6 +97,25 @@ export class EditTemplateComponent implements OnInit {
   }
 
   updateCurrentText(){
+
+    if( this.type === 'local' ){
+      this.template.endereco    = this.local['endereco'];
+      this.template.numero      = this.local['numero'];
+      this.template.bairro      = this.local['bairro'];
+      this.template.complemento = this.local['complemento'];
+      this.template.cidade      = this.local['cidade'];
+      this.template.estado      = this.local['estado'];
+      this.template.cep         = this.local['cep'];
+
+      for (const key in this.local) {
+        let txt                 = this.local[`${key}`]
+        this.template[`${key}`] = txt;
+        $(`#t-${key}`).html((txt).replace(/\n/g,'<br/>')); 
+      }
+      this.closeModal();
+      return;
+    }
+
     // this.currentText = (this.currentText).replace(/\s/g,'\n');
     console.log('currentInput', this.currentText);
     this.template[`${this.currentInput}`] = this.currentText;

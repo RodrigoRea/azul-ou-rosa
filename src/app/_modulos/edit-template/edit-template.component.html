@@ -23,6 +23,10 @@
             <div *ngIf="type === 'time'">
               <app-select-hour [(horaValue)]="currentText" ></app-select-hour>
             </div>
+
+            <div *ngIf="type === 'local' && local">
+              <app-select-endereco [(local)]="local"></app-select-endereco>
+            </div>
             
           </div>
           <div class="modal-footer">

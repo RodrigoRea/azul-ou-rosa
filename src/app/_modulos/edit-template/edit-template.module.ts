@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SelectDateModule } from '../select-date/select-date.module';
 import { SelectHourModule } from '../select-hour/select-hour.module';
+import { SelectEnderecoModule } from '../select-endereco/select-endereco.module';
 
 
 
@@ -17,7 +18,8 @@ import { SelectHourModule } from '../select-hour/select-hour.module';
     IonicModule,
     ReactiveFormsModule,
     SelectDateModule,
-    SelectHourModule
+    SelectHourModule,
+    SelectEnderecoModule
   ]
 })
 export class EditTemplateModule { }

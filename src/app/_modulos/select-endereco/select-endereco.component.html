@@ -1,3 +1,45 @@
-<p>
-  select-endereco works!
-</p>
+<form [formGroup]="formulario">
+  <div class="row">
+
+    <div class="col-md-4 mt-2">
+      <div class="input-group mb-3">
+        <label><i class="fa fa-map-signs"></i>&nbsp;CEP</label>
+        <input [type]="'text'" class="form-control cep" placeholder="00000-000" formControlName="cep" (keyup)="getCep($event)" [autocomplete]="'off'" [disabled]="loadingCEP">
+        <span class="input-group-text group-form-control-right">
+          <i *ngIf="!loadingCEP" class="fa fa-times" style="color: #beb2b2;" (click)="resetCep()"></i>
+          <i *ngIf="loadingCEP" class="fa fa-spinner fa-spin" ></i>
+        </span>
+      </div>            
+    </div>
+
+    <div class="col-md-12 mt-2 disabled-by-cep">
+      <label><i class="fa fa-map-marker"></i>&nbsp;Endereço*</label>
+      <input [type]="'text'" class="form-control" formControlName="endereco" [autocomplete]="'off'" >
+    </div>
+
+    <div class="col-md-4 mt-2">
+      <label><i class="fa fa-map-signs"></i>&nbsp;Número*</label>
+      <input [type]="'text'" class="form-control" formControlName="numero" [autocomplete]="'off'">
+    </div>
+
+    <div class="col-md-4 mt-2">
+      <label><i class="fa fa-map-signs"></i>&nbsp;Complemento</label>
+      <input [type]="'text'" class="form-control" formControlName="complemento" [autocomplete]="'off'">
+    </div>
+
+    <div class="col-md-4 mt-2 disabled-by-cep">
+      <label><i class="fa fa-map-signs"></i>&nbsp;Bairro*</label>
+      <input [type]="'text'" class="form-control" formControlName="bairro" [autocomplete]="'off'">
+    </div>
+
+    <div class="col-md-2 mt-2 disabled-by-cep">
+      <label><i class="fa fa-map-signs"></i>&nbsp;Estado*</label>
+      <input [type]="'text'" class="form-control" formControlName="estado" [autocomplete]="'off'">
+    </div>
+
+    <div class="col-md-6 mt-2 disabled-by-cep">
+      <label><i class="fa fa-map-signs"></i>&nbsp;Cidade*</label>
+      <input [type]="'text'" class="form-control" formControlName="cidade" [autocomplete]="'off'">
+    </div>
+  </div>
+</form>

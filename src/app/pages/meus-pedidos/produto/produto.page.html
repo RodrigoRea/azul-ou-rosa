@@ -14,14 +14,13 @@
 
 <ion-content>
 
+  <app-loading [loading]="loading"></app-loading>
+
   <div *ngIf="template">
     <app-edit-template [(template)]="template" ></app-edit-template>
+
+    <ion-button (click)="gravar()" >Atualizar</ion-button>
   </div>
-
- 
-
-  <ion-button (click)="gravar()" >Atualizar</ion-button>
-
 
 
 </ion-content>
