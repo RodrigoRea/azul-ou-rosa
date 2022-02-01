@@ -15,14 +15,23 @@
 
     <ul class="list-group">
       <ng-container *ngFor="let pedido of pedidos">
-        <li class="list-group-item">
+        <li class="list-group-item mt-2">
           {{ pedido.data }} <label>{{ pedido.valor }}</label>
           <div>{{ pedido.pedido_ref }}</div>
+          <div>{{ pedido.status }}</div>
+          <div *ngIf="pedido.tipo === 'credito'">Cartão de Crédito</div>
+          <div *ngIf="pedido.tipo === 'boleto'">
+            <div *ngIf="pedido.retorno_transacao && pedido.retorno_transacao.boleto">
+              <a href="{{ pedido.retorno_transacao.boleto }}" target="_blank">Visualizar boleto</a>
+            </div>
+          </div>
+
           <div *ngIf="pedido.itens && (pedido.itens).length > 0">
             <ng-container *ngFor="let item of pedido.itens">
               <div>{{ item.produto_nome }}</div>
-              <div>{{ item.modelo_nome }}</div>
-              <div><a (click)="editar(item)">Editar</a></div>
+              <div>{{ item.modelo_nome }}</div>              
+              <div *ngIf="+pedido.status === 3" ><a (click)="editar(item)">Editar</a></div>
+              <div *ngIf="+pedido.status > 0 && +pedido.status < 3"><a (click)="getTransaction(pedido)">Atualizar status de pagamento</a></div>
             </ng-container>
           </div>
         </li>

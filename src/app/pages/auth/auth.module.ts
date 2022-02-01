@@ -8,9 +8,8 @@ import { EsqueciMinhaSenhaComponent } from './esqueci-minha-senha/esqueci-minha-
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { CodeValidatorComponent } from './code-validator/code-validator.component';
 import { LogoutComponent } from './logout/logout.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { DirectivesModule } from 'src/app/_directive/directives.module';
+import { SharedModule } from 'src/app/_modulos/shared.module';
 
 @NgModule({
   declarations: [
@@ -24,10 +23,9 @@ import { DirectivesModule } from 'src/app/_directive/directives.module';
   imports: [
     CommonModule,
     IonicModule,
-    FormsModule,
-    ReactiveFormsModule,
+    SharedModule,
     AuthPageRoutingModule,
-    DirectivesModule
+    IonicModule
   ],
   
 })

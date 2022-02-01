@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { NgZone } from '@angular/core';
@@ -79,7 +79,8 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
   constructor(
     private formBuilder: FormBuilder,
     private zone: NgZone,
-    private pagSeguroService: PagSeguroService
+    private pagSeguroService: PagSeguroService,
+    private changeDetectorRef: ChangeDetectorRef
   ) {
     window['angularComponentRef'] = {
       zone: this.zone,
@@ -89,6 +90,7 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
+    this.changeDetectorRef.detectChanges(); 
     this.token = '';
     this.bandeira = '';
     this.parcelas = new ResponseParcelas();
@@ -121,6 +123,7 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked(){
     $(document).setMask();
+    this.changeDetectorRef.detectChanges(); 
   }
 
   getMaxInstallmentNoInterest(){
@@ -165,9 +168,11 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
       this.parcelas = parcelas;
       console.log( this.bandeiras );
     }
+    this.changeDetectorRef.detectChanges(); 
   }
 
   validaCartao(cartao: string){
+    this.changeDetectorRef.detectChanges(); 
     // validar cartao e bandeira
     const c = (cartao).replace(/[^\d]+/g,'');
     if( (c).length < 2 ){
@@ -189,6 +194,7 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
         }
       }
       this.formulario.get('cardnumber').setValue((mask).trim());
+      this.changeDetectorRef.detectChanges(); 
     }
 
     if( this.tipo === 'credito' ){
@@ -209,6 +215,11 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
         });
       },
       error: function(response) {
+        console.log('response', response);
+        if(response){
+          alert('Falha na conexão com nossos serviços de pagamento! Por favor, tente novamente');
+          this.router.navigate(['/convites']);
+        }
         //tratamento do erro
       },
       complete: function(response) {
@@ -224,6 +235,7 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
       this.parcela = this.parcelas.installments[this.bandeira];
       this.setQtdParcela(1);
     }
+    this.changeDetectorRef.detectChanges(); 
   }
 
   getCardToken(){
@@ -269,16 +281,19 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
       this.formulario.get('tipo').setValue(this.tipo);
       this.setHash();
     }
+    this.changeDetectorRef.detectChanges(); 
   }
 
   setHash(){
     PagSeguroDirectPayment['onSenderHashReady']((response: any) => {
       if(response['status'] === 'error') {
           alert(response['message']);
+          this.changeDetectorRef.detectChanges(); 
           return false;
       }
       //response['senderHash']; //Hash estará disponível nesta variável.
       this.finalizacao(response['senderHash']);
+      this.changeDetectorRef.detectChanges(); 
     });
   }
 

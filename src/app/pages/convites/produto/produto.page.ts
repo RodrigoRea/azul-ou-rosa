@@ -12,7 +12,10 @@ declare var $: any;
 })
 export class ProdutoPage implements OnInit {
 
+  phtml: string = '';
+
   loading: boolean = false;
+  pedido: any | undefined;
   template: ITemplate | undefined;
   produto: any = undefined as any;
 
@@ -27,17 +30,7 @@ export class ProdutoPage implements OnInit {
     private templateService: TemplateService
   ) { }
 
-  openModal(){
-    this.isOpenModal = true;
-    $(`#edit-text`).modal('show');
-  }
-
-  closeModal(){
-    this.isOpenModal = false;
-    this.currentText = '';
-    this.currentInput = '';
-    $(`#edit-text`).modal('hide');
-  }
+  
 
   ngOnInit() {
     this.produto = this.getInviteSelected();
@@ -67,19 +60,7 @@ export class ProdutoPage implements OnInit {
       }, error => this.loading = false);
     }
   }
-
-  toEdit(input: string){    
-    this.currentInput = `${input}`
-    this.currentText = this.template[`${input}`];
-    this.openModal();
-  }
-
-  updateCurrentText(){
-    // this.currentText = (this.currentText).replace(/\s/g,'\n');
-    console.log('currentInput', this.currentText);
-    this.template[`${this.currentInput}`] = this.currentText;
-    this.closeModal();
-  }
+   
 
   gravar(){
 
@@ -97,4 +78,6 @@ export class ProdutoPage implements OnInit {
   toPage(page) {
     this.router.navigate([`${page}`]);
   }
+
+  
 }

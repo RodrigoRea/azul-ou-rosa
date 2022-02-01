@@ -1,0 +1,27 @@
+<div class="row" [class.error-box]="error_msg !== ''" >
+  <div class="col-1"></div>
+  <div class="col-5">
+    <small>Hora:</small>
+    <select class="form-control" [(ngModel)]="selectedHora" (change)="sethorario()">
+      <ng-container *ngFor="let hora of horas">
+        <option [value]="hora">{{ hora }}</option>
+      </ng-container>
+    </select>
+  </div>
+  <div class="col-5">
+    <small>Minuto:</small>
+    <select class="form-control" [(ngModel)]="selectedMinu" (change)="sethorario()">
+      <ng-container *ngFor="let minuto of minutos">
+        <option [value]="minuto">{{ minuto }}</option>
+      </ng-container>
+    </select>
+  </div>
+  <div class="col-1"></div>
+</div>
+<div class="mt-3 text-center error-msg" *ngIf="error_msg !== ''">
+  {{ error_msg }}
+</div>
+
+<!--
+<pre>horaValue: {{ horaValue }}</pre>
+ -->

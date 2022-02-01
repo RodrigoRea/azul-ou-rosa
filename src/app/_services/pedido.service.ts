@@ -52,4 +52,16 @@ export class PedidoService {
             })
         );
     }
+
+    getTransaction(pedido_id: any):Observable<any> {
+        let url = `${environment.api}/consulta/pagamento/${pedido_id}`;
+        return this.authService.get(`${url}`).pipe(
+            map(res=>{
+                if( res['status'] === 200 ){
+                    return res['resposta'];
+                }
+                return undefined;
+            })
+        );
+    }
 }

@@ -6,6 +6,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { IconLogoModule } from './icon-logo/icon-logo.module';
 import { DirectivesModule } from '../_directive/directives.module';
 import { LoadingModule } from './loading/loading.module';
+import { EditTemplateModule } from './edit-template/edit-template.module';
 
 @NgModule({
   imports: [    
@@ -14,7 +15,8 @@ import { LoadingModule } from './loading/loading.module';
     FormsModule, 
     RouterModule,
     IconLogoModule,
-    LoadingModule
+    LoadingModule,
+    EditTemplateModule
   ],
   declarations: [
   ],
@@ -24,7 +26,8 @@ import { LoadingModule } from './loading/loading.module';
     RouterModule,
     IconLogoModule,
     DirectivesModule,
-    LoadingModule
+    LoadingModule,
+    EditTemplateModule
   ],
   providers: []
 })

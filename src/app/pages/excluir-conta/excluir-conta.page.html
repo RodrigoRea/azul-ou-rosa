@@ -30,7 +30,7 @@
         <div class="text-end"><small>{{ (motivo).length }} caractere(s) de 150</small></div>
         <hr>
         <div class="text-center">
-          <button type="button" [disabled]="(motivo).length < 5" (click)="passo = 2" class="btn-main">Excluir conta</button>
+          <button type="button" [disabled]="(motivo).length < 5" (click)="passo = 2" class="btn btn-primary">Excluir conta</button>
         </div>
       </ng-container>
   
@@ -43,10 +43,10 @@
             </p>
           </div>
           <div class="col-6 mt-5">
-            <button type="button" (click)="passo = 1" class="btn-outline-main"><small>Não, voltar</small></button>
+            <button type="button" (click)="passo = 1" class="btn btn-outline-primary"><small>Não, voltar</small></button>
           </div>
           <div class="col-6 text-end mt-5">
-            <button type="button" [disabled]="(motivo).length < 5" (click)="excluir()" class="btn-main"><small>Sim, excluir</small></button>
+            <button type="button" [disabled]="(motivo).length < 5" (click)="excluir()" class="btn btn-primary"><small>Sim, excluir</small></button>
           </div>
         </div>
       </ng-container>

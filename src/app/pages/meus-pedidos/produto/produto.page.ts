@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ITemplate } from 'src/app/_interfaces';
 import { PedidoService } from 'src/app/_services/pedido.service';
 
-declare var $: any;
 @Component({
   selector: 'app-produto',
   templateUrl: './produto.page.html',
@@ -16,6 +15,7 @@ export class ProdutoPage implements OnInit {
   pedido_id: string = '';
   item_id: string = '';
   loading: boolean = false;
+  pedido: any | undefined;
   template: ITemplate | undefined;
   produto: any = undefined as any;
 
@@ -31,18 +31,7 @@ export class ProdutoPage implements OnInit {
     private activatedRoute: ActivatedRoute
   ) { }
 
-  openModal(){
-    this.isOpenModal = true;
-    $(`#${this.$ID}`).modal('show');
-  }
-
-  closeModal(){
-    this.isOpenModal = false;
-    this.currentText = '';
-    this.currentInput = '';
-    $(`#${this.$ID}`).modal('hide');
-  }
-
+  
   ngOnInit() {
     
   }
@@ -61,7 +50,8 @@ export class ProdutoPage implements OnInit {
         this.loading = true;
         this.pedidoService.getItem(this.pedido_id, this.item_id).subscribe((res:any)=>{
           if(res && res.item){
-            this.template = res.item;
+            this.pedido = res;
+            this.template = this.pedido.item;
           }
           this.loading = false
         }, error => this.loading = false);
@@ -69,18 +59,6 @@ export class ProdutoPage implements OnInit {
     });
   }
 
-  toEdit(input: string){    
-    this.currentInput = `${input}`
-    this.currentText = this.template[`${input}`];
-    this.openModal();
-  }
-
-  updateCurrentText(){
-    // this.currentText = (this.currentText).replace(/\s/g,'\n');
-    console.log('currentInput', this.currentText);
-    this.template[`${this.currentInput}`] = this.currentText;
-    this.closeModal();
-  }
 
   gravar(){
     this.loading = true;

@@ -19,16 +19,25 @@
         <h4 class="text-uppercase mb-4 mt-2">Código de validação</h4>
       </div>
   
-      <div class="group-code">
-        <div class="input-code">  
-            <div><input #_input1 autocomplete="off" type="number" [maskv]="'9'" (input)="_input2.focus()" maxlength="1" [(ngModel)]="input1" required [ngModelOptions]="{standalone: true}"></div>
-            <div><input #_input2 autocomplete="off" type="number" [maskv]="'9'" (input)="_input3.focus()" maxlength="1" [(ngModel)]="input2" required [ngModelOptions]="{standalone: true}"></div>
-            <div><input #_input3 autocomplete="off" type="number" [maskv]="'9'" (input)="_input4.focus()" maxlength="1" [(ngModel)]="input3" required [ngModelOptions]="{standalone: true}"></div>
-  
-            <div><input #_input4 autocomplete="off" type="number" [maskv]="'9'" (input)="_input5.focus()" maxlength="1" [(ngModel)]="input4" required [ngModelOptions]="{standalone: true}"></div>
-            <div><input #_input5 autocomplete="off" type="number" [maskv]="'9'" (input)="_input6.focus()" maxlength="1" [(ngModel)]="input5" required [ngModelOptions]="{standalone: true}"></div>
-            <div><input #_input6 autocomplete="off" type="number" [maskv]="'9'" (input)="_input6.focus()" maxlength="1" [(ngModel)]="input6" required [ngModelOptions]="{standalone: true}"></div>    
+      <div class="row code-validator-group">
+        <div class="col-2">  
+          <input #_input1 autocomplete="off" type="number" [maskv]="'9'" (input)="_input2.focus()" maxlength="1" [(ngModel)]="input1" required [ngModelOptions]="{standalone: true}">
         </div>
+        <div class="col-2">   
+          <input #_input2 autocomplete="off" type="number" [maskv]="'9'" (input)="_input3.focus()" maxlength="1" [(ngModel)]="input2" required [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="col-2">
+          <input #_input3 autocomplete="off" type="number" [maskv]="'9'" (input)="_input4.focus()" maxlength="1" [(ngModel)]="input3" required [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="col-2">
+          <input #_input4 autocomplete="off" type="number" [maskv]="'9'" (input)="_input5.focus()" maxlength="1" [(ngModel)]="input4" required [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="col-2"> 
+          <input #_input5 autocomplete="off" type="number" [maskv]="'9'" (input)="_input6.focus()" maxlength="1" [(ngModel)]="input5" required [ngModelOptions]="{standalone: true}">
+        </div>
+          <div class="col-2"> 
+        <input #_input6 autocomplete="off" type="number" [maskv]="'9'" (input)="_input6.focus()" maxlength="1" [(ngModel)]="input6" required [ngModelOptions]="{standalone: true}">   
+      </div>
       </div>
   
       <div class="mt-5"></div>
@@ -36,12 +45,12 @@
       <div class="alert alert-danger mb-2 text-center" *ngIf="mensagem !== ''">{{ mensagem }}</div>
   
       <div class="text-center mb-3">
-        <button color="secondary" [disabled]="enviando" type="submit" class="btn-main" >
+        <button color="secondary" [disabled]="enviando" type="submit" class="btn btn-primary" >
           Validar Código<i class="fa fa-spinner fa-spin mr-1" *ngIf="enviando"></i></button>
       </div>
       
       <div class="text-center mt-5 mb-5">
-        <button type="button" [disabled]="enviandoInfo" class="btn-outline-main btn-small" (click)="reenviarCodigo()">
+        <button type="button" [disabled]="enviandoInfo" class="btn btn-outline-primary" (click)="reenviarCodigo()">
           <small>Reenviar um novo<br>código para meu email<i class="fa fa-spinner fa-spin mr-1" *ngIf="enviandoInfo"></i></small>
         </button>
         <div>{{ email }}</div>
@@ -50,7 +59,7 @@
     </form>
   
     <div class="text-center mt-5">
-      <button type="button"  class="btn-outline-main btn-small" (click)="cancelar()">
+      <button type="button"  class="btn btn-outline-primary" (click)="cancelar()">
         <small>Cancelar</small>
       </button>
     </div>

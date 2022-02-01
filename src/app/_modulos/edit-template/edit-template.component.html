@@ -1,0 +1,33 @@
+<div id="invite-model"></div>
+
+<!-- Modal para edicao de horario -->
+
+<div *ngIf="isOpenModal" class="ion-bootstrap-modal-backdrop show"></div>
+<div id="edit-text" class="modal" tabindex="-1" role="dialog" data-bs-backdrop="static">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title"></h5>
+              <button type="button" class="btn-close" (click)="closeModal()"></button>
+          </div>
+          <div class="modal-body" *ngIf="isOpenModal">
+              
+            <div *ngIf="type === 'text'">
+              <textarea class="form-control" [(ngModel)]="currentText" >{{ currentText }}</textarea>
+            </div>
+
+            <div *ngIf="type === 'date'">
+              <app-select-date [(dateValue)]="currentText" ></app-select-date>
+            </div>
+            
+            <div *ngIf="type === 'time'">
+              <app-select-hour [(horaValue)]="currentText" ></app-select-hour>
+            </div>
+            
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" (click)="updateCurrentText()" >Confirmar</button>
+          </div>
+      </div>
+  </div>
+</div>

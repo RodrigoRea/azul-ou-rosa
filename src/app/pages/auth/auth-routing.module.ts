@@ -17,8 +17,9 @@ const routes: Routes = [
       { path: 'esqueci-minha-senha', component: EsqueciMinhaSenhaComponent },
       { path: 'sign-up', component: SignUpComponent },
       { path: 'code-validator', component: CodeValidatorComponent },
-      { path: 'logout', component: LogoutComponent }
-    ]
+      { path: 'logout', component: LogoutComponent },
+    ],
+    
   },
   
 ];

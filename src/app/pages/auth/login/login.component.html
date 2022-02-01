@@ -55,8 +55,7 @@
             <div class="row">
               <div class="form-max-input">
                 <div class="col-md-12 text-center mt-5">
-                  <button class="btn-main" [disabled]="!formulario?.valid || enviando" type="submit"
-                    expand="block">
+                  <button class="btn btn-primary" [disabled]="!formulario?.valid || enviando" type="submit">
                       Entrar
                       <i class="fa fa-spinner fa-spin ml-1" *ngIf="enviando"></i>
                       <i class="fa fa-sign-in-alt ml-1" *ngIf="!enviando"></i>
@@ -91,7 +90,7 @@
             <div class="row">
               <div class="form-max-input">
                 <div class="col-md-12" class="text-center info-desc">
-                  <button type="button" class="btn-outline-main btn-small" (click)="toPage('/auth/sign-up',redirect)">Realizar Cadastro</button>
+                  <button type="button" class="btn btn-outline-primary" (click)="toPage('/auth/sign-up',redirect)">Realizar Cadastro</button>
                 </div>
               </div>
             </div>

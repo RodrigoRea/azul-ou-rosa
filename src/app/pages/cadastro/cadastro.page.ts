@@ -224,29 +224,32 @@ export class CadastroPage implements OnInit, AfterViewChecked {
   }
 
   checkInCompletName(name){
-    console.log('name', name);
-    const nome = (name).trim();
-    if(nome === undefined || nome === null || nome === ''){
-      this.isNameValid = false;
-      return false;
-    }
-    if( (nome).length < 5 ){
-      this.isNameValid = false;
-      return false;
-    }
-    let parts = (nome).split(" ");
-    if( (parts).length <= 1 ){
-      this.isNameValid = false;
-      return false;
-    }
-    for(let i = 0; i < (parts).length; i++){
-      if( (parts[i]).length < 2 ){
+    if( name ){
+      const nome = (name).trim();
+      if(nome === undefined || nome === null || nome === ''){
         this.isNameValid = false;
         return false;
       }
+      if( (nome).length < 5 ){
+        this.isNameValid = false;
+        return false;
+      }
+      let parts = (nome).split(" ");
+      if( (parts).length <= 1 ){
+        this.isNameValid = false;
+        return false;
+      }
+      for(let i = 0; i < (parts).length; i++){
+        if( (parts[i]).length < 2 ){
+          this.isNameValid = false;
+          return false;
+        }
+      }
+      this.isNameValid = true;
+      return true;
     }
-    this.isNameValid = true;
-    return true;
+    this.isNameValid = false;
+    return false;
   }
 
 }

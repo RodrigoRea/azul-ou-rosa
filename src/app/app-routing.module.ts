@@ -80,7 +80,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     canLoad: [AuthGuard]
   },
-
 ];
 @NgModule({
   imports: [

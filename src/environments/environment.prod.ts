@@ -6,7 +6,12 @@ export const environment = {
   api: 'https://api.mybabeis.com.br',
   dominiosComToken: [
     'api.mybabeis.com.br',
-  ]
+  ],
+
+  jsProducao: 'https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js',
+  jsSandbox: 'https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js',
+
+  pgSeguroURL: 'https://stc.pagseguro.uol.com.br',
 };
 
 /************************************************************************************ */
