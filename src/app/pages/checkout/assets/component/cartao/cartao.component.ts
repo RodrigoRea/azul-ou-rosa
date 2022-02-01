@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewChecked } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { NgZone } from '@angular/core';
@@ -34,7 +34,7 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
 
   loading: boolean = false;
   pgSeguroURL = 'https://stc.pagseguro.uol.com.br';
-
+  senderHash: string = '';
 
   MaskValidade = [/[0-1]/, /[0-9]/, '/', /[2]/, /[0-0]/, /[1-9]/, /[0-9]/];
   MaskCartao = [/[0-9]/,/[0-9]/,/[0-9]/,/[0-9]/,' ',/[0-9]/,/[0-9]/,/[0-9]/,/[0-9]/,' ',/[0-9]/,/[0-9]/,/[0-9]/,/[0-9]/,' ',/[0-9]/,/[0-9]/,/[0-9]/,/[0-9]/,' ',/[0-9]/,/[0-9]/,/[0-9]/,/[0-9]/];
@@ -79,8 +79,7 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
   constructor(
     private formBuilder: FormBuilder,
     private zone: NgZone,
-    private pagSeguroService: PagSeguroService,
-    private changeDetectorRef: ChangeDetectorRef
+    private pagSeguroService: PagSeguroService
   ) {
     window['angularComponentRef'] = {
       zone: this.zone,
@@ -90,7 +89,6 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.changeDetectorRef.detectChanges(); 
     this.token = '';
     this.bandeira = '';
     this.parcelas = new ResponseParcelas();
@@ -123,7 +121,6 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked(){
     $(document).setMask();
-    this.changeDetectorRef.detectChanges(); 
   }
 
   getMaxInstallmentNoInterest(){
@@ -138,20 +135,25 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
 
 
   getParcelamento(valor: number){
+    let self = this;
     let MaxParcSemJuros: any = (this.maxInstallmentNoInterest === 0) ? undefined : this.maxInstallmentNoInterest;
-    PagSeguroDirectPayment['getInstallments']({
+    PagSeguroDirectPayment.getInstallments({
         amount: valor,
         maxInstallmentNoInterest: MaxParcSemJuros,
         //brand: 'visa',
         success: (response: ResponseParcelas)=>{
-            // Retorna as opções de parcelamento disponíveis
-            window['angularComponentRef'].zone.run(() => {
-              window['angularComponentRef'].componentFn( ()=>this.setParcelas(response));
-            });
+          // Retorna as opções de parcelamento disponíveis
+          window['angularComponentRef'].zone.run(() => {
+            window['angularComponentRef'].componentFn( ()=>{ self.setParcelas(response, self); } );
+          }); 
         },
-        error: function(response) {
-          console.log('erro na busca das parcelas');
-            // callback para chamadas que falharam.
+        error: (response) => {
+          console.log('response', response);
+          if(response){
+            window['angularComponentRef'].zone.run(() => {
+              window['angularComponentRef'].componentFn( ()=>{ self.errorPagSeguroConn(self); } );
+            });
+          }
         },
         complete: function(response){
             // Callback para todas chamadas.
@@ -159,20 +161,19 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  setParcelas(parcelas:ResponseParcelas){
-    this.bandeiras = new Array<string>();
+  setParcelas(parcelas:ResponseParcelas, self: any){
+    self.bandeiras = new Array<string>();
     if( !parcelas.error ){
       for( const key in parcelas.installments ){
-        (this.bandeiras).push(key);
+        (self.bandeiras).push(key);
       }
-      this.parcelas = parcelas;
-      console.log( this.bandeiras );
+      self.parcelas = parcelas;
+      console.log('bandeiras', self.bandeiras );
+      console.log('parcelas', self.parcelas );
     }
-    this.changeDetectorRef.detectChanges(); 
   }
 
   validaCartao(cartao: string){
-    this.changeDetectorRef.detectChanges(); 
     // validar cartao e bandeira
     const c = (cartao).replace(/[^\d]+/g,'');
     if( (c).length < 2 ){
@@ -194,7 +195,6 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
         }
       }
       this.formulario.get('cardnumber').setValue((mask).trim());
-      this.changeDetectorRef.detectChanges(); 
     }
 
     if( this.tipo === 'credito' ){
@@ -205,21 +205,20 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
   }
 
   getBandeira( card: string ){
+    let self = this;
     const bin = card.substr(0,6);
     // console.log( bin );
-    PagSeguroDirectPayment['getBrand']({
+    PagSeguroDirectPayment.getBrand({
       cardBin: bin,
       success: (response: Bin) => {
         window['angularComponentRef'].zone.run(() => {
-          window['angularComponentRef'].componentFn( ()=>this.setBandeira(response));
+          window['angularComponentRef'].componentFn( ()=> { self.setBandeira(response); });
         });
       },
       error: function(response) {
-        console.log('response', response);
-        if(response){
-          alert('Falha na conexão com nossos serviços de pagamento! Por favor, tente novamente');
-          this.router.navigate(['/convites']);
-        }
+        window['angularComponentRef'].zone.run(() => {
+          window['angularComponentRef'].componentFn( ()=>{ self.errorPagSeguroConn(self); });
+        });
         //tratamento do erro
       },
       complete: function(response) {
@@ -235,10 +234,10 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
       this.parcela = this.parcelas.installments[this.bandeira];
       this.setQtdParcela(1);
     }
-    this.changeDetectorRef.detectChanges(); 
   }
 
   getCardToken(){
+    let self = this;
     this.loading = true;
     const cartao = (`${this.formulario.get('cardnumber').value}`).replace(/[^\d]+/g,'');
     const bandeira = (`${this.formulario.get('brand').value}`).replace(/[^\d]+/g,'');
@@ -246,7 +245,7 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
     const mes = (`${this.formulario.get('mes').value}`).replace(/[^\d]+/g,'');
     const ano = (`${this.formulario.get('ano').value}`).replace(/[^\d]+/g,'');
 
-    PagSeguroDirectPayment['createCardToken']({
+    PagSeguroDirectPayment.createCardToken({
       cardNumber: cartao, // Número do cartão de crédito
       brand: bandeira, // Bandeira do cartão
       cvv: cvv, // CVV do cartão
@@ -254,14 +253,13 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
       expirationYear: ano, // Ano da expiração do cartão, é necessário os 4 dígitos.
       success: (response: any) => {
         window['angularComponentRef'].zone.run(() => {
-          window['angularComponentRef'].componentFn( ()=>this.setCardToken(response));
+          window['angularComponentRef'].componentFn( ()=> { self.setCardToken(response, self); });
         });
       },
       error: (response) => {
         window['angularComponentRef'].zone.run(() => {
-          window['angularComponentRef'].componentFn( ()=>this.setNoToken(response));
+          window['angularComponentRef'].componentFn( ()=>{ self.setNoToken(self); });
         });
-        this.loading = false;
       },
       complete: function(response) {
            // Callback para todas chamadas.
@@ -269,31 +267,33 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
    });
   }
 
-  setNoToken(response){
-    this.token = '';
-    this.formulario.get('token').setValue(this.token);
-    alert('Dados do cartão incorreto');
+  setNoToken(self){
+    self.loadingOFF();
+    self.token = '';
+    self.formulario.get('token').setValue(self.token);
   }
 
-  setCardToken(response: any){
+  setCardToken(response: any, self: any){
     if( response['card'] !== undefined ){
-      this.token = response['card']['token'];
-      this.formulario.get('tipo').setValue(this.tipo);
-      this.setHash();
+      self.token = response['card']['token'];
+      self.formulario.get('tipo').setValue(self.tipo);
+      self.setHash();
     }
-    this.changeDetectorRef.detectChanges(); 
   }
 
   setHash(){
-    PagSeguroDirectPayment['onSenderHashReady']((response: any) => {
+    let self = this;
+    this.senderHash = '';
+    PagSeguroDirectPayment.onSenderHashReady((response: any) => {
       if(response['status'] === 'error') {
-          alert(response['message']);
-          this.changeDetectorRef.detectChanges(); 
-          return false;
+        window['angularComponentRef'].zone.run(() => {
+          window['angularComponentRef'].componentFn( ()=> { self.errorPagSeguroConn(self); });
+        });
+        return false;
       }
+      self.senderHash = response['senderHash'];
       //response['senderHash']; //Hash estará disponível nesta variável.
-      this.finalizacao(response['senderHash']);
-      this.changeDetectorRef.detectChanges(); 
+      self.finalizacao(response['senderHash'], self);
     });
   }
 
@@ -313,17 +313,17 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  finalizacao(hash: string){
-    this.loading = false;
+  finalizacao(hash: string, self: any){
+    self.loadingOFF();
     let pg = new PG();
-    pg.dados     = this.dados;
-    this.dados.quantidade = this.quantidade;
-    pg.pagamento = this.formulario.value as Cartao;
+    pg.dados     = self.dados;
+    self.dados.quantidade = self.quantidade;
+    pg.pagamento = self.formulario.value as Cartao;
     pg.hash = hash;
-    pg.pagamento.tipo = this.tipo;
-    pg.cardToken = this.token;
-    pg.pagamento.valorparcelado = this.valorparcelado;
-    this.finalizar.emit(pg);
+    pg.pagamento.tipo = self.tipo;
+    pg.cardToken = self.token;
+    pg.pagamento.valorparcelado = self.valorparcelado;
+    self.finalizar.emit(pg);
   }
 
   back(){
@@ -337,4 +337,13 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  loadingOFF(){
+    this.loading = false; 
+  }
+
+  errorPagSeguroConn(self: any){
+    self.loading = false; 
+    alert('Falha na conexão com nossos serviços de pagamento! Por favor, tente novamente');
+    self.router.navigate(['/convites']);
+  }
 }

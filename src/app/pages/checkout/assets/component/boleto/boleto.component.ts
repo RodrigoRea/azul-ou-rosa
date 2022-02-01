@@ -39,32 +39,41 @@ export class BoletoComponent implements OnInit {
   }
 
   setHash(){
-    PagSeguroDirectPayment['onSenderHashReady']((response: any) => {
-      if(response['status'] == 'error') {
-          console.log(response['message']);
-          this.loading = false;
-          return false;
-      }
+    let self = this;
+    PagSeguroDirectPayment.onSenderHashReady((response: any) => {
+      
       //response['senderHash']; //Hash estará disponível nesta variável.
       window['angularComponentRef'].zone.run(() => {
-        window['angularComponentRef'].componentFn( ()=>this.finalizacao(response['senderHash']) );
+        window['angularComponentRef'].componentFn( ()=> {
+          setTimeout(() => {
+            if( response && response.senderHash ){
+              self.finalizacao(response.senderHash, self); 
+            }
+            if( response && response.status === 'error' || response === undefined ){
+              self.errorPagSeguroConn(self);
+            }
+          });  
+        });
       });
     });
   }
 
-  finalizacao(hash: string){
+  finalizacao(hash: string, self: any){
     let pg = new PG();
-    this.dados.quantidade = this.quantidade;
-    pg.dados = this.dados;
+    self.dados.quantidade = self.quantidade;
+    pg.dados = self.dados;
     pg.hash = hash;
 
     pg.pagamento = new Cartao();
     pg.pagamento.tipo = 'boleto';
-    this.loading = false;
-    setTimeout(() => {
-      this.finalizar.emit(pg);
-    });
+    self.loading = false;
+    setTimeout(() => { self.finalizar.emit(pg); });
     
   }
 
+  errorPagSeguroConn(self: any){
+    self.loading = false; 
+    alert('Falha na conexão com nossos serviços de pagamento! Por favor, tente novamente');
+    self.router.navigate(['/convites']);
+  }
 }

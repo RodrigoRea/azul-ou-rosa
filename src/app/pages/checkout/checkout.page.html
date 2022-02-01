@@ -26,14 +26,17 @@
   
   <ion-content class="background ion-padding">
 
-    <app-loading [loading]="loading || (mCredito).length === 0" ></app-loading>
+    <div>{{ session }}</div>
+    <pre>passo: {{ passo }}</pre>
+
+    <app-loading [loading]="loading" ></app-loading>
 
 <div *ngIf="passo === 1" >
     <h3 class="mt-3 text-center" >Escolha um método de pagamento</h3>
     <div class="row mt-3">
-        <div class="col-md col-sm-12 mt-2 text-center box-info-metodo">
-            <button type="button" [disabled]="(mCredito).length === 0" class="btn btn-outline-primary btn-block" (click)="tipo = 'credito'; passo = 2">Crédito</button>
-            <div class=" mt-2 mb-3 text-center">
+        <div class="col-6 mt-2 text-center box-info-metodo">
+            <button type="button" class="btn btn-outline-primary btn-block" (click)="tipo = 'credito'; passo = 2">Crédito</button>
+            <!--div class=" mt-2 mb-3 text-center">
                 <div class="row" *ngIf="(mCredito).length > 0" >
                     <ng-container *ngFor="let cartao of mCredito" >
                         <div class="col-2 mt-3 text-center" *ngIf="cartao.status === 'AVAILABLE'" >
@@ -41,7 +44,7 @@
                         </div>
                     </ng-container>
                 </div>  
-            </div>
+            </div-->
         </div>
         <!--
         <div class="col-md col-sm-12 mt-2 text-center box-info-metodo">
@@ -57,23 +60,24 @@
             </div>
         </div>
         -->
-        <div class="col-md col-sm-12 mt-2 text-center box-info-metodo">
-            <button type="button" [disabled]="mBoleto.images === undefined" class="btn btn-outline-primary btn-block" (click)="tipo = 'boleto'; passo = 2">Boleto</button>
-            <div class=" mt-2 mb-3 text-center">
+        <div class="col-6 mt-2 text-center box-info-metodo">
+            <button type="button" class="btn btn-outline-primary btn-block" (click)="tipo = 'boleto'; passo = 2">Boleto</button>
+            <!--div class=" mt-2 mb-3 text-center">
                 <div class="row" *ngIf="mBoleto.images !== undefined" >
                     <div class="col mt-3 text-center">
                         <img [src]="pgSeguroURL+mBoleto.images['MEDIUM']['path']" class="img-rounded img-boleto" >
                         <div class="mt-3">
-                            <!--small>Taxa de emissão de Boleto R$ 1,00</small-->
+                            <!-*small>Taxa de emissão de Boleto R$ 1,00</small*->
                             <br>
                             <small>Pagamento com boleto pode levar até 2 dias úteis para ser compensado</small>
                         </div>
                     </div> 
                 </div>               
-            </div>
+            </div-->
         </div>
     </div>
-    <div class="row" *ngIf="(mCredito).length === 0" >
+
+    <!--div class="row" *ngIf="(mCredito).length === 0" >
         <div class="col-md mt-5" >
             <div class="text-center">Por favor, aguarde...</div>
             <div class="progress">
@@ -88,7 +92,7 @@
             </div>
             <div class="text-center">Carregando componentes de pagamento...</div>
         </div>
-    </div>
+    </div-->
 
 </div>
 
@@ -200,9 +204,14 @@
 
                 <!-- INICIO COM BOLETO-->
                 <div *ngIf="retornoTransacao.resposta.boleto" class="text-center mb-5">
-                    <a href="{{ retornoTransacao.resposta.boleto }}" class="btn btn-info">Clique aqui para visualiar seu boleto</a>
-                    <p class="mt-4">Em instantes, você receberá seu boleto por email.</p>
-                    <small class="mt-2">link: <a href="{{ retornoTransacao.resposta.boleto }}">{{ retornoTransacao.resposta.boleto }}</a></small>
+                    <a href="{{ retornoTransacao.resposta.boleto }}" class="btn btn-outline-primary">Clique aqui para visualiar seu boleto</a>
+                    <!--p class="mt-4">Em instantes, você receberá seu boleto por email.</p-->
+                    <br>
+                    <br><button type="button" class="btn btn-primary" (click)="toPage('meus-pedidos')">Minhas compras</button><br>
+                    <div class="mt-2 text-center">
+                        <div>link do boleto:</div> 
+                        <a href="{{ retornoTransacao.resposta.boleto }}">{{ retornoTransacao.resposta.boleto }}</a>
+                    </div>
                 </div>
 
                 <div *ngIf="!retornoTransacao.resposta.boleto">
