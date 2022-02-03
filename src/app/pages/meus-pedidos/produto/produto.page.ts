@@ -53,12 +53,22 @@ export class ProdutoPage implements OnInit {
             this.pedido = res;
             this.template = this.pedido.item;
           }
-          this.loading = false
+          this.loading = false;
         }, error => this.loading = false);
       }
     });
   }
 
+  saveInBackGround(template){
+    this.loading = true;
+    console.log('this.template', template);
+    this.pedidoService.post(this.pedido_id,this.item_id, template).subscribe((res: any)=>{
+      if(res && res.status === 201){
+        alert('alterado com sucesso');
+      }
+      this.loading = false;
+    }, error=>{ this.loading = false; });
+  }
 
   gravar(){
     this.loading = true;

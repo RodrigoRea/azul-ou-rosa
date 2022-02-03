@@ -1,16 +1,15 @@
-{{ senderHash }}
 <app-loading [loading]="loading"></app-loading>
 
 <div *ngIf="formulario">
 <form [formGroup]="formulario" (ngSubmit)="submit()">
     
     <div class="row">
-        <div class="col-md-12 col-sm-12 mt-2">
+        <div class="col-12">
             <h5 class="mb-2 mt-2 text-center">Dados do Cartão</h5>
         </div>
-        <div class="col-12 mt-2">
+        <div class="col-12">
 
-            <label>Cartão</label>
+            <label>N° do Cartão</label>
             <div class="input-group">
                 <input type="text" class="form-mobi c-cartao" placeholder="- - - -   - - - -   - - - -   - - - -" formControlName="cardnumber" (keyup)="validaCartao($event.target['value'])" >
                 <span class="input-group-text group-form-mobi-right">
@@ -20,21 +19,21 @@
         </div>
 
         <div class="col-8"></div>
-        <div class="col-4 mt-2">
+        <div class="col-4">
             <label>Cód.</label>
             <input type="number" class="form-mobi c-cvv" formControlName="cvv" placeholder="- - -">
         </div>
     </div>
 
     <div class="row">        
-        <div class="col-md-7 col-sm-12">
+        <div class="col-12">
             <label>Nome <small>&nbsp;(como está no cartão)</small></label>
             <input type="text" class="form-mobi text-uppercase" formControlName="name" >
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-12 col-sm-12 mt-2">
+        <div class="col-12 mt-2">
           <label>Validade</label>
         </div>
 
@@ -59,7 +58,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12 col-sm-12 mt-2">
+        <div class="col-12">
             <div *ngIf="tipo === 'credito'">
                 <label>Parcelas</label>
                 <select class="form-mobi" formControlName="installments" (change)="setQtdParcela($event.target['value'])" [disabled]="(parcela).length === 0" >
@@ -69,30 +68,8 @@
                         </option>
                     </ng-container>
                 </select>
-                <pre>{{ parcela | json }}</pre>
+                <!--pre>{{ parcela | json }}</pre-->
             </div>
-
-            <ng-container *ngIf="tipo === 'debito'">
-
-                <div class="row" *ngIf="(mDebito).length > 0" >
-                    <ng-container *ngFor="let banco of mDebito" >
-                        <div class="col-md col-sm mt-3 text-center" *ngIf="banco.status === 'AVAILABLE'" >
-                            <div><img [src]="pgSeguroURL+banco.images['SMALL']['path']" alt="{{ banco.name }}" ></div>
-                            <label class="mt-2">
-                                <input
-                                    type="radio"
-                                    [value]="banco.name"
-                                    name="banco"
-                                    formContromName="banco"
-                                    (change)="formulario.get('banco').setValue(banco.name)"
-                                    >
-                                {{ banco.displayName }}
-                            </label>
-                        </div>
-                    </ng-container>
-                </div>
-
-            </ng-container>
 
         </div>
     </div>

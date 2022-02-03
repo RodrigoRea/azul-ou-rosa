@@ -1,3 +1,25 @@
 .modal-dialog{
     margin-top: 20%;
 }
+
+.box-show-template-invite{
+    border: 3px solid #d2d2d0;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.modal-body{
+    padding: 2px !important;
+
+    textarea{
+        min-height: 115px;
+        text-align: center;
+    }
+}
+
+.icon-edit{
+    font-size: 1.6rem;
+    position: relative;
+    top: -10px;
+    color: #f00;
+}

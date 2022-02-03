@@ -1,0 +1,33 @@
+.box-img-show-tema{
+    width: 100%;
+    text-align: center;
+    height: 300px;
+    border: 3px solid #0c184d;
+    overflow: auto;
+    border-radius: 3px;
+    background-color: #a0ccec;
+
+    -webkit-box-shadow: inset 0px 0px 25px -2px #0c184d; 
+    box-shadow: inset 0px 0px 25px -2px #0c184d;
+
+    .show-tema{
+        border: 0;
+        width: 100%;
+        
+    }
+
+    .slide-1{
+        max-width: 280px;
+    }
+    .slide-2{
+        
+    }
+}
+
+.name{
+    text-transform: uppercase;
+}
+
+.price{
+    float: right;
+}

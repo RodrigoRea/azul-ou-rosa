@@ -18,6 +18,8 @@ export interface ITemplate {
     sub_titulo_2: string;
     texto_4: string;
     ativo: string;
+    fone_presenca: string 
+    link_presenca: string;
 
     phtml: string;
 }

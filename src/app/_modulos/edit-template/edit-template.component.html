@@ -1,9 +1,9 @@
-<div id="invite-model"></div>
+<div *ngIf="show_page" class="box-show-template-invite" id="invite-model-{{ ID }}"></div>
 
 <!-- Modal para edicao de horario -->
 
 <div *ngIf="isOpenModal" class="ion-bootstrap-modal-backdrop show"></div>
-<div id="edit-text" class="modal" tabindex="-1" role="dialog" data-bs-backdrop="static">
+<div id="edit-text-{{ ID }}" class="modal" tabindex="-1" role="dialog" data-bs-backdrop="static">
   <div class="modal-dialog" role="document">
       <div class="modal-content">
           <div class="modal-header">
@@ -29,8 +29,8 @@
             </div>
             
           </div>
-          <div class="modal-footer">
-            <button class="btn btn-primary" (click)="updateCurrentText()" >Confirmar</button>
+          <div class="modal-footer text-center">
+            <button class="btn btn-primary" style="margin: auto;" (click)="updateCurrentText()" >Confirmar</button>
           </div>
       </div>
   </div>

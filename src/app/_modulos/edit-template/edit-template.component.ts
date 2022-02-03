@@ -1,4 +1,6 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/_auth/auth.service';
 import { ITemplate } from 'src/app/_interfaces';
 
 declare var $: any;
@@ -8,7 +10,9 @@ declare var $: any;
   templateUrl: './edit-template.component.html',
   styleUrls: ['./edit-template.component.scss'],
 })
-export class EditTemplateComponent implements OnInit {
+export class EditTemplateComponent implements OnInit, OnDestroy {
+
+  ID: string = '';
 
   isOpenModal: boolean = false;
 
@@ -20,18 +24,33 @@ export class EditTemplateComponent implements OnInit {
 
   @Input() template: ITemplate | undefined;
   @Output() templateChange = new EventEmitter<ITemplate>();
+
+  @Output() onChange = new EventEmitter<ITemplate>(); 
   
   local: any | undefined;
 
+  show_page: boolean = false;
+
   constructor(
+    private authService: AuthService,
+    private router: Router
   ) { }
 
-  ngOnInit() {    
+  ngOnInit() {
+    
+    this.ID = this.authService.generateID();
+    console.log('ngOnInit show_page true - sempre cria uma div de edicao de templete nova');
+    this.show_page = true;
 
     setTimeout(() => {
       console.log('EditTemplateComponent template', this.template);
-      const phtml = atob(`${this.template.phtml}`);
-      $("#invite-model").html(phtml);
+      if( typeof this.template.phtml === 'boolean' && !this.template.phtml ){
+        alert("Ops, este convite ainda não está pronto");
+        this.router.navigate(['convites']);
+        return;
+      }
+      const phtml = atob(`${this.template.phtml}`); 
+      $(`#invite-model-${this.ID}`).html(phtml);
       setTimeout(() => {
         this.startActionsTemplateMode();
       });
@@ -39,16 +58,19 @@ export class EditTemplateComponent implements OnInit {
 
   }
 
+
   openModal(){
     this.isOpenModal = true;
-    $(`#edit-text`).modal('show');
+    $(`#edit-text-${this.ID}`).modal('show');
   }
 
   closeModal(){
     this.isOpenModal = false;
     this.currentText = '';
     this.currentInput = '';
-    $(`#edit-text`).modal('hide');
+    $(`#edit-text-${this.ID}`).modal('hide');
+    this.cloneRemoteScript();
+    this.createIndicatorEditorMode();
   }
 
   startActionsTemplateMode(){
@@ -57,7 +79,9 @@ export class EditTemplateComponent implements OnInit {
         const ID = (`${elem.target.id}`).replace('t-','');
         this.toEdit(`${ID}`);
       }
-    })
+    });
+    this.cloneRemoteScript();
+    this.createIndicatorEditorMode();
   }
 
   toEdit(input: string){ 
@@ -112,6 +136,7 @@ export class EditTemplateComponent implements OnInit {
         this.template[`${key}`] = txt;
         $(`#t-${key}`).html((txt).replace(/\n/g,'<br/>')); 
       }
+      this.onChange.emit(this.template);
       this.closeModal();
       return;
     }
@@ -122,10 +147,72 @@ export class EditTemplateComponent implements OnInit {
     const txt = (this.currentText).replace(/\n/g,'<br/>');
     $(`#t-${this.currentInput}`).html(txt); 
     
+    this.onChange.emit(this.template);
     this.closeModal();
   }
 
-  
+  createIndicatorEditorMode(){
+    $('.icon-editor').remove();
+    var nstyle = `font-size: 1rem;position: relative;top: -15px;color: #c82076;float: none;`; 
+    setTimeout(() => {        
+      $("[id^=t-]").each(function(){
+        var id = $(this).attr('id');
+        if(
+          id == 't-cep' || 
+          id == 't-numero'   || 
+          id == 't-bairro'   || 
+          id == 't-cidade'   || 
+          id == 't-estado'   ||
+          id == 't-complemento'   
+        ){
+          // Não aplicar editor
+        }else{
+          $( this ).append(`<i class="fa fa-commenting-o icon-editor" onClick="$('#${id}').click();" style="${nstyle}"></i>`);
+        }        
+      });
 
+      // diferenciais ;
+      // data
+      var cstyle = `font-size: 1rem;position: relative;top: -60px;color: #c82076;float: none;left: 25px`;
+      $("#fixed-data-formated").append(`<i class="fa fa-commenting-o icon-editor" onClick="$('#t-data').click();" style="${cstyle}"></i>`);
+
+    });
+  }
+  
+  cloneRemoteScript(){  
+    setTimeout(() => {    
+      const meses = [
+        'Janeiro',
+        'Fevereiro',
+        'Março',
+        'Abril',
+        'Maio',
+        'Junho',
+        'Julho',
+        'Agosto',
+        'Setembro',
+        'Outubro',
+        'Novembro',
+        'Dezembro'
+      ];
+      var replaceFormatDate = function(){
+          // alert('é nada');
+          var data = $(`#t-data`).hide().text();
+          if( data && data != ''){
+              var part = (data).split('-');
+              var dia = part[2];
+              var mes = meses[ ((+part[1]) - 1 ) ]; 
+              var ano = part[0];
+              var html_data = "<div id='fixed-dia'>"+dia+"</div><div>"+mes+"</div>";
+              $(`#fixed-data-formated`).html(html_data);
+          }
+      }
+      replaceFormatDate();  
+    });   
+  }
+
+  ngOnDestroy(){
+    $(`.box-show-template-invite`).remove();
+  }
 
 }

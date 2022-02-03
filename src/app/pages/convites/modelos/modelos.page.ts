@@ -11,6 +11,12 @@ import { environment } from 'src/environments/environment';
 })
 export class ModelosPage implements OnInit {
 
+  show: number = 1;
+  limit: number = 2;
+
+  url: string = environment.api;
+  tema: string = '0000';
+
   isAuth: boolean = false;
 
   loading: boolean = false;
@@ -62,6 +68,18 @@ export class ModelosPage implements OnInit {
 
   toPage(page) {
     this.router.navigate([`${page}`]);
+  }
+
+  nextShow(){
+    if( this.show < this.limit ){
+      this.show = this.show + 1;
+    }else if( this.show === this.limit ){
+      this.show = 1;
+    }
+  }
+
+  getPathImg(id: number){
+    return ("0000" + id).slice(-4);
   }
 
 }

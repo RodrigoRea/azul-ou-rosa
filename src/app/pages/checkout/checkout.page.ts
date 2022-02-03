@@ -37,6 +37,8 @@ export class CheckoutPage implements OnInit {
   responseDebito = new RetornoPG();
   retornoTransacao: any = '';
 
+  url = environment.api;
+
   constructor(
     private router: Router,
     private zone: NgZone,
@@ -102,7 +104,7 @@ export class CheckoutPage implements OnInit {
   }
 
   importScript():Promise<any>{
-    return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
       let script: HTMLScriptElement = document.createElement('script');
       script.addEventListener('load', r => { 
         this.getSession();

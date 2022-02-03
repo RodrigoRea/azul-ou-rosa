@@ -31,3 +31,30 @@ iframe{
     border: none;
     padding: 5px;
 }
+
+.h-slide{
+    background-color: #fff;
+    padding-top: 10px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+}
+
+.box-act{
+    /*
+    padding: 20px 10px;
+    background-color: #fff;
+    width: 220px;
+    height: 220px;
+    border-radius: 10px;
+    border: 1px solid #00dbff;
+    */
+}
+
+ion-slide:nth-child(odd){
+    background-color: #fae9f5;
+}
+ion-slide:nth-child(even){
+    background-color: #9ed2f5;
+}
+

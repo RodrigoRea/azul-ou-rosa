@@ -42,13 +42,7 @@ export class PagSeguroService {
 
     post(payload: any):Observable<any> { // `pagamentos/recebe`,
         let url = `${environment.api}/payment/transaction/received`;
-        return this.authService.post(`${url}`, payload).pipe(
-            map(res=>{
-                if( res['status'] === 201 ){
-                    return res;
-                }
-                return undefined;
-            })
+        return this.authService.post(`${url}`, payload).pipe( map(res=>{ return res; })
         );
     }
 }

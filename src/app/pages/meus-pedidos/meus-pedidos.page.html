@@ -30,7 +30,14 @@
             <ng-container *ngFor="let item of pedido.itens">
               <div>{{ item.produto_nome }}</div>
               <div>{{ item.modelo_nome }}</div>              
-              <div *ngIf="+pedido.status === 3" ><a (click)="editar(item)">Editar</a></div>
+              <div *ngIf="+pedido.status === 3" >
+                <a (click)="editar(item)">Editar</a>
+                <br>
+                <br>
+                <a href="https://convite.mybabeis.com.br/invite/{{item.cod_site}}">
+                  link do convite
+                </a>
+              </div>
               <div *ngIf="+pedido.status > 0 && +pedido.status < 3"><a (click)="getTransaction(pedido)">Atualizar status de pagamento</a></div>
             </ng-container>
           </div>

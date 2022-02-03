@@ -12,20 +12,22 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="background ion-padding">
 
   <app-loading [loading]="loading"></app-loading>
 
   <ng-container *ngIf="produtos && (produtos).length > 0">
     <ion-card *ngFor="let produto of produtos">
-      <!--img src="./madison.jpg" /-->
+      <div class="box-img-show-tema" (click)="nextShow()">
+        <img class="show-tema slide-{{show}}" *ngIf="show===1" src="{{ url }}/assets/img/tema-{{ getPathImg(produto.template_id) }}-mobi.png" alt="" onerror="this.onerror=null; this.src='/assets/imgs/no-image.png'" alt="">
+        <img class="show-tema slide-{{show}}" *ngIf="show===2" src="{{ url }}/assets/img/tema-{{ getPathImg(produto.template_id) }}-frente.png" alt="" onerror="this.onerror=null; this.src='/assets/imgs/no-image.png'" alt="">
+      </div>
       <ion-card-header>
-        <ion-card-subtitle>{{ produto.modelo }}</ion-card-subtitle>
-        <ion-card-title>{{ produto.nome }}</ion-card-title>
+        <ion-card-subtitle class="ion-text-center">{{ produto.modelo }}</ion-card-subtitle>
+        <ion-card-title class="name">{{ produto.nome }} <label class="price">{{ produto.valor | currency : 'BRL' : true }}</label></ion-card-title>
       </ion-card-header>
     
-      <ion-card-content>
-        {{ produto.valor }}
+      <ion-card-content class="ion-text-right">        
         <br>
         <ion-button type="button" (click)="toProduct(produto)" ><b>Comprar</b></ion-button>
       </ion-card-content>
