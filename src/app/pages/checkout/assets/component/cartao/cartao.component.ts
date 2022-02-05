@@ -4,6 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { NgZone } from '@angular/core';
 import { Bin, Cartao, Dados, Metodos, PG } from '../../../checkout';
 import { PagSeguroService } from 'src/app/_services/pagseguro.service';
+import { environment } from 'src/environments/environment';
 
 declare var PagSeguroDirectPayment: any;
 
@@ -22,6 +23,14 @@ class CartaoParcelas{
 class ResponseParcelas{
   error: boolean;​
   installments: Array<any>;
+}
+
+var userMOCK = {
+  "cardnumber":"4111 1111 1111 1111",
+  "name":"Rodrigo Rea Mendes",
+  "cvv":"123",
+  "mes":"12",
+  "ano":"2026"
 }
 
 declare var $:any;
@@ -117,9 +126,15 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
     if( this.tipo === 'credito' ){
       this.getMaxInstallmentNoInterest();
     }
+
+    if( !environment.production ){
+      setTimeout(() => { this.formulario.patchValue(userMOCK); });
+    }
+    
   }
 
   ngAfterViewChecked(){
+    console.log('ngAfterViewChecked');
     $(document).setMask();
   }
 

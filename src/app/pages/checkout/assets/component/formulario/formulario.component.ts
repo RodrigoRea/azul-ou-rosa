@@ -8,6 +8,11 @@ import { IUser } from 'src/app/_interfaces';
 import { Router } from '@angular/router';
 
 declare var $: any;
+
+var userMOCK = {
+  "cpf":"340.974.968-32",
+  "dtnascimento":"13/03/1985",
+}
 @Component({
   selector: 'app-formulario',
   templateUrl: './formulario.component.html',
@@ -50,7 +55,7 @@ export class FormularioComponent implements OnInit {
     });
 
     if( !environment.production ){
-      // this.setFormularioTeste();
+      setTimeout(() => { this.formulario.patchValue(userMOCK); });
     }
 
     this.getUser();
@@ -93,7 +98,7 @@ export class FormularioComponent implements OnInit {
       this.formulario.get('CPF').setValue('340.974.968-32');
       this.formulario.get('mensagem').setValue('teste');
       this.formulario.get('telefone').setValue('(11)987065302');
-      this.formulario.get('email').setValue('c55887303879267249916@sandbox.pagseguro.com.br');
+      this.formulario.get('email').setValue('rodrigoreamendes@sandbox.pagseguro.com.br');
     });
   }
 
@@ -134,7 +139,7 @@ export class FormularioComponent implements OnInit {
       if( environment.production ){
         this.formulario.get('email').setValue(`${this.user.email}`);
       }else{
-        this.formulario.get('email').setValue('c55887303879267249916@sandbox.pagseguro.com.br');
+        this.formulario.get('email').setValue('app.mybabeis@sandbox.pagseguro.com.br');
       }
       this.loading = false;
     });

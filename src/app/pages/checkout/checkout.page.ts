@@ -4,6 +4,7 @@ import { Dados, Metodos, PayG, PG, RetornoPG } from './checkout';
 import { PagSeguroService } from 'src/app/_services/pagseguro.service';
 import { Router } from '@angular/router';
 
+declare var $: any;
 declare var PagSeguroDirectPayment: any;
 @Component({
   selector: 'app-checkout',
@@ -232,6 +233,7 @@ export class CheckoutPage implements OnInit {
   setDados(dados: Dados){
     this.dados = dados;
     this.passo = (dados.voltar) ? (this.passo - 1) : (this.passo + 1);
+    // this.toTop();
   }
 
 
@@ -260,8 +262,7 @@ export class CheckoutPage implements OnInit {
       self.startCredito(pg, self);
     }
   }
-
-
+  
   
   startBoleto(pg: PG, self: any){
     self.loading = true;
