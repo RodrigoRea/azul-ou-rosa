@@ -12,17 +12,19 @@
   <app-loading [loading]="loading"></app-loading>
 
   <h4 class="text-center">
-    {{ this.text['convites'] }}
+    Crie seu convite interativo!
   </h4>
 
   <div id="convites-page">
+    <br>
+    <br>
     <br>
     <ion-slides pager="false" scrollbar="true">
       <ion-slide *ngFor="let item of modelos">
         <div class="slide">
           <div class="box-act mt-2">
             <div (click)="toSelected(item)" class="box-window" style="background-image: url('assets/imgs/products/modelo_{{ item.modelo_id }}.jpeg');" ></div>  
-            <p class="mt-3">{{item.nome}}</p>     
+            <p class="mt-5 p-name">{{item.nome}}</p>     
           </div>   
         </div>
       </ion-slide>
@@ -45,7 +47,7 @@
     </ion-row -->
 
     <br>
-    <div class="ion-padding mt-5">
+    <!--div class="ion-padding mt-5">
       <p class="ion-padding ion-text-center desc-info">
         Nossos convites são feitos para visualização on-line.<br><br>
         São interativos e ficam disponíveis por um tempo determinado de 90 dias.<br><br>
@@ -53,7 +55,7 @@
         Os convidados não precisam do aplicativo para visualizar o convite.<br><br>
         Selecione o modelo que desejar e após a confirmação de pagamento será gerado um link do convite para compartilha com seus convidados.
       </p>
-    </div>
+    </div-->
 
 
 <!-- 

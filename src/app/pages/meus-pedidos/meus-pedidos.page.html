@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Minhas compras</ion-title>
+    <ion-title>Meus convites</ion-title>
     <ion-buttons slot="end">
       <ion-menu-button autoHide="false"></ion-menu-button>  
     </ion-buttons>
@@ -11,37 +11,79 @@
   
   <app-loading [loading]="loading"></app-loading>
 
+
+
   <div *ngIf="pedidos && (pedidos).length > 0">
 
     <ul class="list-group">
       <ng-container *ngFor="let pedido of pedidos">
-        <li class="list-group-item mt-2">
-          {{ pedido.data }} <label>{{ pedido.valor }}</label>
-          <div>{{ pedido.pedido_ref }}</div>
-          <div>{{ pedido.status }}</div>
-          <div *ngIf="pedido.tipo === 'credito'">Cartão de Crédito</div>
-          <div *ngIf="pedido.tipo === 'boleto'">
-            <div *ngIf="pedido.retorno_transacao && pedido.retorno_transacao.boleto">
-              <a href="{{ pedido.retorno_transacao.boleto }}" target="_blank">Visualizar boleto</a>
-            </div>
-          </div>
-
-          <div *ngIf="pedido.itens && (pedido.itens).length > 0">
+        <ng-container *ngIf="pedido && pedido.tipo">
+          <ng-container *ngIf="pedido.itens && (pedido.itens).length > 0">
             <ng-container *ngFor="let item of pedido.itens">
-              <div>{{ item.produto_nome }}</div>
-              <div>{{ item.modelo_nome }}</div>              
-              <div *ngIf="+pedido.status === 3" >
-                <a (click)="editar(item)">Editar</a>
-                <br>
-                <br>
-                <a href="https://convite.mybabeis.com.br/invite/{{item.cod_site}}">
-                  link do convite
-                </a>
-              </div>
-              <div *ngIf="+pedido.status > 0 && +pedido.status < 3"><a (click)="getTransaction(pedido)">Atualizar status de pagamento</a></div>
+              <li class="list-group-item mt-2" [class.box-online]="item.editavel === 'S'" [class.box-offline]="item.editavel !== 'S'" >
+                <!-- {{ pedido.data }} -->
+                <!-- div>{{ pedido.pedido_ref }}</div -->
+                <!-- div>{{ pedido.status }}</div -->
+
+                <!--div *ngIf="pedido.tipo === 'credito'">Cartão de Crédito</div>
+                <div *ngIf="pedido.tipo === 'boleto'">
+                  <div *ngIf="pedido.retorno_transacao && pedido.retorno_transacao.boleto">
+                    <a href="{{ pedido.retorno_transacao.boleto }}" target="_blank">Visualizar boleto</a>
+                  </div>
+                </div-->
+                  
+                    <label class="vl-item">{{ pedido.valor | currency: 'BRL' : true }}</label>
+                    <h4 class="title"><i class="icon-item fa fa-edit act-click" *ngIf="item.editavel === 'S'" (click)="editar(item)"></i>{{ item.modelo_nome }}</h4>
+                    
+                    <div class="produto-nome">                
+                      {{ item.produto_nome }}
+                    </div>
+                        
+                    <!-- div>{{ item.editavel }}</div -->          
+                    <div class="area-link" *ngIf="item.editavel === 'S' && +pedido.status === 3" >
+                      
+                      <!--button type="button" class="btn btn-primary" (click)="editar(item)">Editar <i class="fa fa-edit"></i></button -->
+                      <a class="link-primary" href="https://convite.mybabeis.com.br/invite/{{item.cod_site}}">
+                        <i class="fa fa-check"></i> Convite online
+                      </a>
+                      <label class="msg-copy" *ngIf="show_copy && cod_site === item.cod_site">Copiado</label>
+                      <label class="icon-end" (click)="copylink(item)" ><small>copiar&nbsp;</small><i class="fa fa-clone act-click"></i></label>
+                    </div>
+
+                    <div *ngIf="+pedido.status > 0 && +pedido.status < 3">
+                      <button type="button" class="btn btn-outline-secondary no-border no-padding" (click)="getTransaction(pedido)">
+                        <i class="icon-item fa fa-refresh" *ngIf="!(loading && item.pedido_id === pedido_id)"></i>
+                        <i class="icon-item fa fa-refresh fa-spin" *ngIf="loading && item.pedido_id === pedido_id"></i>
+                        Atualizar status de pagamento
+                        <label class="icon-end" *ngIf="pedido.tipo === 'boleto'"><i class="fa fa-barcode"></i></label>
+                        <label class="icon-end" *ngIf="pedido.tipo !== 'boleto'"><i class="fa fa-credit-card"></i></label>
+                      </button>                      
+                    </div>
+                    <div *ngIf="+pedido.status === 1">
+                      <small class="info-danger">Em analise </small>
+                    </div>
+                    <div *ngIf="+pedido.status === 2">
+                      <small class="info-danger">Em analise </small>
+                    </div>
+                    <div *ngIf="+pedido.status === 5">
+                      <small class="info-danger">Cancelado </small>
+                    </div>
+                    <div *ngIf="+pedido.status === 6">
+                      <small class="info-danger">Cancelado </small>
+                    </div>
+                    <div *ngIf="+pedido.status === 7">
+                      <small class="info-danger">Não autorizado </small>
+                    </div>
+
+                    <div *ngIf="+pedido.status === 3 || +pedido.status === 4">
+                      <small *ngIf="item.editavel === 'S'" class="info-primary">Disponível até {{ item.exp_data | date: 'dd/MM/yyyy' }} </small>
+                      <small *ngIf="item.editavel !== 'S'" class="info-primary">Expirado em {{ item.exp_data | date: 'dd/MM/yyyy' }} </small>
+                    </div>
+                
+              </li>
             </ng-container>
-          </div>
-        </li>
+          </ng-container>
+        </ng-container>
       </ng-container>
     </ul>
 

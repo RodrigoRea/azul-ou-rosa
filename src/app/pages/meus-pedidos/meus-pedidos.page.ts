@@ -44,17 +44,43 @@ export class MeusPedidosPage implements OnInit {
     this.router.navigate([`${page}`]);
   }
 
+  pedido_id: any = '';
   getTransaction(item){
+    this.pedido_id = item.pedido_id;
     this.loading = true;
     this.pedidoService.getTransaction(`${item.pedido_id}`).subscribe((res:any)=>{
       console.log('transacao', res);
       if( res && res.status ){
         if(item.status === res.status){
-          alert('Esta transação ainda não foi processada! Por favor, aguarde ou tente mais tarde.');
+          // alert('Esta transação ainda não foi processada! Por favor, aguarde ou tente mais tarde.');
         }
         item.status = res.status;
       }
       this.loading = false;
     }, error=> this.loading = false);
   }
+
+  timeout: any | undefined;
+  show_copy: boolean = false;
+  cod_site: string = '';
+  copylink(item){
+    if( this.timeout ){ clearTimeout(this.timeout); }
+    this.cod_site = item.cod_site;
+    this.show_copy = true;
+    const link = `https://convite.mybabeis.com.br/invite/${item.cod_site}`;
+    this.copiarTexto(link);
+    this.timeout = setTimeout(() => {
+      this.show_copy = false;
+    },3000);
+  }
+
+  copiarTexto(text) {
+    let sampleTextarea: any = document.createElement("textarea");
+    document.body.appendChild(sampleTextarea);
+    sampleTextarea.value = text; //save main text in it
+    sampleTextarea.select(); //select textarea contenrs
+    document.execCommand("copy");
+    document.body.removeChild(sampleTextarea);
+  }
+
 }

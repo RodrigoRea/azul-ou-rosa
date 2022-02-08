@@ -15,7 +15,7 @@
       
       <ion-col size="6" ion-item *ngFor="let item of items">
         <div class="ion-text-center">
-          <div class="box">
+          <div class="box box-{{ item.class }}">
             <div class="box-window" (click)="itemSelected(item.page)" style="background-image: url('assets/imgs/{{ item.image }}');" ></div>
             <div>{{item.title}}</div>
           </div>

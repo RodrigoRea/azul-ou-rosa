@@ -62,6 +62,9 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
   openModal(){
     this.isOpenModal = true;
     $(`#edit-text-${this.ID}`).modal('show');
+    setTimeout(() => {
+      $(".modal-body").find('textarea:first-child').focus();
+    },100);
   }
 
   closeModal(){
@@ -203,7 +206,7 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
               var dia = part[2];
               var mes = meses[ ((+part[1]) - 1 ) ]; 
               var ano = part[0];
-              var html_data = "<div id='fixed-dia'>"+dia+"</div><div>"+mes+"</div>";
+              var html_data = "<div id='fixed-dia' class='fixed-dia'>"+dia+"</div><div class='fixed-mes' style='white-space: nowrap;' >"+mes+"</div>";
               $(`#fixed-data-formated`).html(html_data);
           }
       }

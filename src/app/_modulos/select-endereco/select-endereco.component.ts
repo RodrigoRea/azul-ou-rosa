@@ -50,6 +50,7 @@ export class SelectEnderecoComponent implements OnInit, AfterViewChecked {
 
     setTimeout(() => {
       if( this.local ){
+        this.local.cep = ( this.local.cep && (this.local.cep).replace('-','') === '00000000' ) ? '' : this.local.cep;
         this.formulario.patchValue(this.local);
       }
 

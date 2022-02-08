@@ -1,0 +1,76 @@
+.vl-item{
+    float: right;
+    font-size: 1.2rem;
+    position: relative;
+    top: 10px;
+}
+
+.title{
+    height: 10px;
+    padding-bottom: 2px;
+    position: relative;
+    top: -10px;
+}
+
+.space-icon{
+    padding-left: 26px;
+}
+
+.icon-item{
+    width: 22px;
+    text-align: left;
+}
+
+.icon-end{
+    position: absolute;
+    right: 15px;
+}
+
+.act-click{
+    cursor: pointer;
+    color: #4b66d0  !important;
+}
+
+.link-primary{
+    cursor: pointer;
+    color: #4b66d0  !important;
+    text-decoration: none;
+}
+
+.area-link{    
+    border-bottom: 1px solid #ffffff;
+}
+
+.msg-copy{
+    float: right;
+    position: absolute;
+    bottom: 35px;
+    right: 33px;
+    color: #1e7acb;
+    background-color: #c7e2ff;
+    padding: 5px;
+    height: 23px;
+    border-radius: 6px;
+    font-size: 12px;
+    z-index: 1;
+}
+
+.box-online{
+    background-color: #c7e2ff;
+    border-radius: 10px;
+    border: 1px solid #2b5f30;
+}
+
+.box-offline{
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #999;
+}
+
+.info-danger{
+    color: #800000;
+}
+
+.info-primary{
+    color: #081b83;
+}

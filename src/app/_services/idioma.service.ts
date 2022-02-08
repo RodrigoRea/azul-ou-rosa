@@ -123,8 +123,9 @@ export class IdiomaService {
 
         this.strs['home-txt-1'] = ['Prepare-se para descobrir se seu bebê é menino ou menina','Get ready to find out if your baby is a boy or a girl','Prepárese para descubrir si su bebé es niño o niña'];
 
+        this.strs['convites'] = ['Convites','Invitations','Invitaciones'];
         
-        this.strs['calgravidez'] = ['Calculadora de gravidez','Pregnancy Calculator','Calculadora de embarazo'];
+        this.strs['calgravidez'] = ['Signo do bebê','Baby sign','Signo de bebe'];
         this.strs['calgravidez-txt-1'] = ['Calcula o prazo apróximado em que o bebê pode nascer. Podendo prever até o signo do bebê!','Calculate the approximate time the baby can be born. Can even predict the baby sign!','Calcula el plazo aproximado en que el bebé puede nacer. ¡Podrá predecir hasta el signo del bebé!'];
         this.strs['calgravidez-txt-2'] = ['Data do primeiro dia da ultima menstruação','Date of first day of last menstruation','Fecha del primer día de la última menstruación'];
         this.strs['calgravidez-txt-3'] = ['Dia de início','Start day','Día de inicio'];
