@@ -6,11 +6,12 @@ import { Bin, Cartao, Dados, Metodos, PG } from '../../../checkout';
 import { PagSeguroService } from 'src/app/_services/pagseguro.service';
 import { environment } from 'src/environments/environment';
 
+var NUMERO_MAX_PARCELA_SEM_JUROS: number = 3;
 declare var PagSeguroDirectPayment: any;
 
 class Parcela{
   quantity: number;
-  installmentAmount: number;
+  installmentAmount: number = 1;
   totalAmount: number;
   interestFree: boolean;
 }
@@ -54,6 +55,7 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
 
   formulario: FormGroup;
   valorparcelado: number;
+  loadinParc: boolean = false;
 
   _valor: number;
   get valor(): number { return this._valor; }
@@ -79,7 +81,10 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
   parcela = new Array<Parcela>();
 
   token: string;
-  maxInstallmentNoInterest: number = 0;
+
+  
+
+  maxInstallmentNoInterest: number = NUMERO_MAX_PARCELA_SEM_JUROS;
 
   meses: string[] = ['01','02','03','04','05','06','07','08','09','10','11','12'];
   anos: any = [];
@@ -101,7 +106,9 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
     this.token = '';
     this.bandeira = '';
     this.parcelas = new ResponseParcelas();
-    this.maxInstallmentNoInterest = 0;
+
+    // this.maxInstallmentNoInterest = 0; // DESLIGADO
+    this.maxInstallmentNoInterest = NUMERO_MAX_PARCELA_SEM_JUROS;
 
     this.YYYY = new Date().getFullYear();
     let j=0;
@@ -134,26 +141,44 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked(){
-    console.log('ngAfterViewChecked');
     $(document).setMask();
   }
 
   getMaxInstallmentNoInterest(){
+    this.loadinParc = true;
     this.pagSeguroService.mini().subscribe((res: any)=>{
+      console.log('getMaxInstallmentNoInterest', res);
         if(res && res.max_installment_no_interest){
           this.maxInstallmentNoInterest = +(res.max_installment_no_interest);
           this.getParcelamento(this._valor);
         }
-      }
-    );
+      }, error => { this.errorPagSeguroConn(this); });
   }
 
+  formatRS(x: any) {
+    let r = '0.00';
+    let v = (x+'');
+    let pm = (v).split(".");
+    if( (pm).length === 2 ){
+      console.log('pm',pm);
+      r = pm[0]; // + (+pm[1] < 10) ? (pm[1] + '0') : pm[1];
+      r += ".";
+      r += (+pm[1] < 10) ? pm[1] + '0' : pm[1];
+    }
+    if( (pm).length === 1 ){
+      r = pm[0] + '.00';
+    }
+    return r;
+  }
 
-  getParcelamento(valor: number){
+  getParcelamento(valor: number){    
     let self = this;
-    let MaxParcSemJuros: any = (this.maxInstallmentNoInterest === 0) ? undefined : this.maxInstallmentNoInterest;
+    let MaxParcSemJuros: any = (this.maxInstallmentNoInterest === 0) ? 1 : this.maxInstallmentNoInterest;
+    const strvalor = this.formatRS(valor);
+
+    console.log(`getInstallments - ${strvalor}`, MaxParcSemJuros);
     PagSeguroDirectPayment.getInstallments({
-        amount: valor,
+        amount: strvalor,
         maxInstallmentNoInterest: MaxParcSemJuros,
         //brand: 'visa',
         success: (response: ResponseParcelas)=>{
@@ -186,6 +211,7 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
       console.log('bandeiras', self.bandeiras );
       console.log('parcelas', self.parcelas );
     }
+    setTimeout(() => { self.loadinParc = false; });
   }
 
   validaCartao(cartao: string){
@@ -319,9 +345,12 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
     }else{
       qtdParcelas = n;
     }
+    console.log('qtdParcelas', qtdParcelas);
+    console.log('parcela', this.parcela);
+
     this.valorparcelado = 0;
     for( let key in this.parcela ){
-      if( qtdParcelas === this.parcela[key].quantity ){
+      if( +(qtdParcelas) === +(this.parcela[key].quantity) ){
         this.valorparcelado = this.parcela[key].installmentAmount;
         return this.valorparcelado;
       }
@@ -329,16 +358,16 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
   }
 
   finalizacao(hash: string, self: any){
-    self.loadingOFF();
+    this.loadingOFF();
     let pg = new PG();
-    pg.dados     = self.dados;
-    self.dados.quantidade = self.quantidade;
-    pg.pagamento = self.formulario.value as Cartao;
+    pg.dados     = this.dados;
+    this.dados.quantidade = this.quantidade;
+    pg.pagamento = this.formulario.value as Cartao;
     pg.hash = hash;
-    pg.pagamento.tipo = self.tipo;
-    pg.cardToken = self.token;
-    pg.pagamento.valorparcelado = self.valorparcelado;
-    self.finalizar.emit(pg);
+    pg.pagamento.tipo = this.tipo;
+    pg.cardToken = this.token;
+    pg.pagamento.valorparcelado = this.valorparcelado;
+    this.finalizar.emit(pg);
   }
 
   back(){
@@ -358,6 +387,7 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
 
   errorPagSeguroConn(self: any){
     self.loading = false; 
+    setTimeout(() => { self.loadinParc = false; });
     alert('Falha na conexão com nossos serviços de pagamento! Por favor, tente novamente');
     self.router.navigate(['/convites']);
   }

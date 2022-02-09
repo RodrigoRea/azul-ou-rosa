@@ -99,6 +99,9 @@ export class CheckoutPage implements OnInit {
     if( this.cart && (this.cart).length > 0 ){
       for(let i = 0; i < (this.cart).length; i++ ){
         total += +(this.cart[i].produto.valor);
+        if( this.cart[i].invite.valor_presenca && this.cart[i].invite.link_presenca === 'S' ){
+          total += +(this.cart[i].invite.valor_presenca);
+        }
       }
     }
     this.valor_total = total;
@@ -108,8 +111,10 @@ export class CheckoutPage implements OnInit {
   return new Promise((resolve, reject) => {
       let script: HTMLScriptElement = document.createElement('script');
       script.addEventListener('load', r => { 
-        this.getSession();
-        resolve(true);
+        setTimeout(() => {
+          this.getSession();
+          resolve(true);
+        });        
       });
       script.src = (environment.production) ? PayG.jsProducao : PayG.jsSandbox;
       script.id = 'pg-seguro-js';
@@ -121,6 +126,7 @@ export class CheckoutPage implements OnInit {
   errorPagSeguroConn(self: any){
     self.loading = false; 
     alert('Falha na conexão com nossos serviços de pagamento! Por favor, tente novamente');
+    //history.back();
     self.router.navigate(['/convites']);
   }
 
@@ -162,10 +168,28 @@ export class CheckoutPage implements OnInit {
     });
   }
 
+  formatRS(x: any) {
+    let r = '0.00';
+    let v = (x+'');
+    let pm = (v).split(".");
+    if( (pm).length === 2 ){
+      console.log('pm',pm);
+      r = pm[0]; // + (+pm[1] < 10) ? (pm[1] + '0') : pm[1];
+      r += ".";
+      r += (+pm[1] < 10) ? pm[1] + '0' : pm[1];
+    }
+    if( (pm).length === 1 ){
+      r = pm[0] + '.00';
+    }
+
+    return r;
+  }
+
   getMetodos(self){
-    console.log('getPaymentMethods');
+    const valor_total = this.formatRS(this.valor_total);
+    console.log('getPaymentMethods - amount', valor_total);
     PagSeguroDirectPayment.getPaymentMethods({
-      amount: self.valor_total,
+      amount: valor_total,
       success: (response: any) => {
         window['angularComponentRef'].zone.run(() => {
           window['angularComponentRef'].componentFn( ()=>{ self.setMetodos(response, self); } );

@@ -13,7 +13,10 @@
             <div class="input-group">
                 <input type="text" id="n-c-ps" class="form-mobi c-cartao" placeholder="- - - -   - - - -   - - - -   - - - -" formControlName="cardnumber" (keyup)="validaCartao($event.target['value'])" >
                 <span class="input-group-text group-form-mobi-right">
-                    <small *ngIf="bandeira != ''" ><img src="https://stc.pagseguro.uol.com.br/public/img/payment-methods-flags/42x20/{{ bandeira }}.png" alt="{{ bandeira }}"></small>
+                    <i *ngIf="loadinParc" class="fa fa-spinner fa-spin"></i>
+                    <small *ngIf="bandeira && bandeira !== ''" >                        
+                        <img src="https://stc.pagseguro.uol.com.br/public/img/payment-methods-flags/42x20/{{ bandeira }}.png" alt="{{ bandeira }}">
+                    </small>
                 </span>                  
             </div>
         </div>

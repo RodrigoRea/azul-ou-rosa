@@ -11,7 +11,8 @@ $.fn.setMask = function(){
     VMasker( $(".telefone") )   .maskPattern('(99) 99999-9999');
     VMasker( $(".telfixo") )    .maskPattern('(99) 9999-99999');
     VMasker( $(".fone") )       .maskPattern('(99) 999999999');
+    VMasker( $(".whatsapp") )   .maskPattern('(99) 9 9999-9999');
     VMasker( $(".cep") )        .maskPattern('99999-999');
     VMasker( $(".cpf") )        .maskPattern('999.999.999-99');
-    VMasker( $(".cnpj") )        .maskPattern('99.999.999/9999-99');
+    VMasker( $(".cnpj") )       .maskPattern('99.999.999/9999-99');
 }

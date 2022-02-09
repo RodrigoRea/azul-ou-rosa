@@ -11,7 +11,20 @@
   
   <app-loading [loading]="loading"></app-loading>
 
-
+  
+  <div *ngIf="!loading && pedidos && (pedidos).length === 0">
+    <div class="text-center mt-5">
+      Você ainda não possui nenhum convite interativo.
+      <br>
+      <br>
+      Crie agora seu convite interativo!
+      <br>
+      <br>
+      <small>(convites online)</small>
+      <br>
+      <button type="button" class="btn btn-primary" (click)="toPage('convites')" >Visualizar modelos de convite</button>
+    </div>
+  </div>
 
   <div *ngIf="pedidos && (pedidos).length > 0">
 

@@ -16,13 +16,13 @@
 
   <app-loading [loading]="loading" ></app-loading>
   
-  <div *ngIf="template">
-    <app-edit-template [(template)]="template" ></app-edit-template>
+    <div *ngIf="template">
+      <app-edit-template [(template)]="template" ></app-edit-template>
 
-    <div class="box-btn">
-      <ion-button (click)="gravar()" >Avançar</ion-button>
+      <div class="box-btn">
+        <ion-button (click)="gravar()" >Avançar</ion-button>
+      </div>
     </div>
-  </div>
    
   
 

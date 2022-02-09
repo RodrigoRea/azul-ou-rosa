@@ -19,17 +19,32 @@
   <ng-container *ngIf="produtos && (produtos).length > 0">
     <ion-card *ngFor="let produto of produtos">
       <div class="box-img-show-tema" (click)="nextShow()">
-        <img class="show-tema slide-{{show}}" *ngIf="show===1" src="{{ url }}/assets/img/tema-{{ getPathImg(produto.template_id) }}-mobi.png" alt="" onerror="this.onerror=null; this.src='/assets/imgs/no-image.png'" alt="">
-        <img class="show-tema slide-{{show}}" *ngIf="show===2" src="{{ url }}/assets/img/tema-{{ getPathImg(produto.template_id) }}-frente.png" alt="" onerror="this.onerror=null; this.src='/assets/imgs/no-image.png'" alt="">
+        <img class="show-tema slide-{{show}}" *ngIf="show===1" src="{{ url }}/assets/img/tema-{{ getPathImg(produto.template_id) }}-frente.png" alt="" onerror="this.onerror=null; this.src='/assets/imgs/no-image.png'" alt="">
+        <img class="show-tema slide-{{show}}" *ngIf="show===2" src="{{ url }}/assets/img/tema-{{ getPathImg(produto.template_id) }}-mobi.png" alt="" onerror="this.onerror=null; this.src='/assets/imgs/no-image.png'" alt="">
       </div>
       <ion-card-header>
-        <ion-card-subtitle class="ion-text-center">{{ produto.modelo }}</ion-card-subtitle>
-        <ion-card-title class="name">{{ produto.nome }} <label class="price">{{ produto.valor | currency : 'BRL' : true }}</label></ion-card-title>
+        <ion-card-subtitle>{{ produto.nome }}</ion-card-subtitle>
+        <ion-card-title class="name">{{ produto.modelo }} <label class="price">{{ produto.valor | currency : 'BRL' : true }}</label></ion-card-title>
       </ion-card-header>
-    
-      <ion-card-content class="ion-text-right">        
-        <br>
-        <ion-button type="button" (click)="toProduct(produto)" ><b>Comprar</b></ion-button>
+      
+      <ion-card-content>        
+        <p>
+          Os convites interativos ficam disponíveis por até 90 dias.<br>
+          Envie apenas o link do convite aos seus convidados
+        </p>
+        
+        <div class="text-end">
+          <ion-button type="button" (click)="toProduct(produto)" ><b>Comprar</b></ion-button>
+        </div>
+
+        <ul class="list-group mt-2">
+          <li class="list-group-item"><ion-icon name="color-wand-outline"></ion-icon>&nbsp;Interativo&nbsp;<ion-icon name="checkmark-outline"></ion-icon></li>
+          <li class="list-group-item"><ion-icon name="map-outline"></ion-icon>&nbsp;Link do mapa&nbsp;<ion-icon name="checkmark-outline"></ion-icon></li>
+          <li class="list-group-item"><ion-icon name="person-add-outline"></ion-icon>&nbsp;Confirmação de presença&nbsp;<ion-icon name="checkmark-outline"></ion-icon></li>
+          <li class="list-group-item"><ion-icon name="create-outline"></ion-icon>&nbsp;Textos editáveis&nbsp;<ion-icon name="checkmark-outline"></ion-icon></li>
+          <li class="list-group-item"><ion-icon name="cloud-done-outline"></ion-icon>&nbsp;Online por 90 dias&nbsp;<ion-icon name="checkmark-outline"></ion-icon></li>
+        </ul>
+
       </ion-card-content>
     </ion-card>
   </ng-container>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnDestroy, AfterViewChecked } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/_auth/auth.service';
 import { ITemplate } from 'src/app/_interfaces';
@@ -10,11 +10,13 @@ declare var $: any;
   templateUrl: './edit-template.component.html',
   styleUrls: ['./edit-template.component.scss'],
 })
-export class EditTemplateComponent implements OnInit, OnDestroy {
+export class EditTemplateComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   ID: string = '';
 
   isOpenModal: boolean = false;
+  isOpenModalOptionList: boolean = false;
+  isOpenModalWhatsApp: boolean = false;
 
   type: string = '';
 
@@ -22,6 +24,7 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
   currentInput: string = '';
   currentText: string = '';
 
+  @Input() mode: string = '';
   @Input() template: ITemplate | undefined;
   @Output() templateChange = new EventEmitter<ITemplate>();
 
@@ -56,6 +59,10 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
       });
     });    
 
+  }
+
+  ngAfterViewChecked(){
+    $(document).setMask();
   }
 
 
@@ -156,7 +163,7 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
 
   createIndicatorEditorMode(){
     $('.icon-editor').remove();
-    var nstyle = `font-size: 1rem;position: relative;top: -15px;color: #c82076;float: none;`; 
+    var nstyle = `font-size: 1rem;position: relative;top: -15px;color: #6f94da;float: none;text-shadow: 0px 0px 6px rgb(68, 211, 255);`; 
     setTimeout(() => {        
       $("[id^=t-]").each(function(){
         var id = $(this).attr('id');
@@ -176,11 +183,74 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
 
       // diferenciais ;
       // data
-      var cstyle = `font-size: 1rem;position: relative;top: -60px;color: #c82076;float: none;left: 25px`;
+      var cstyle = `
+        font-size: 1rem;position: 
+        relative;top: -60px;
+        color: #6f94da;
+        float: none;left: 25px;
+        text-shadow: 0px 0px 6px rgb(68, 211, 255);
+      `;
       $("#fixed-data-formated").append(`<i class="fa fa-commenting-o icon-editor" onClick="$('#t-data').click();" style="${cstyle}"></i>`);
 
     });
   }
+
+  openOptionList(fab: any){
+    if(fab){
+      //(fab.el).stopPropagation();
+      setTimeout(() => { fab.activated = true });
+      this.openModalOptionList();
+    }
+  }
+
+  openModalOptionList(){
+    this.isOpenModalOptionList = true;
+    $(`#option-list-${this.ID}`).modal('show');
+  }
+
+  closeModalOptionList(){
+    this.isOpenModalOptionList = false;
+    $(`#option-list-${this.ID}`).modal('hide');
+  }
+
+  addConfPres(){
+    this.template.link_presenca = 'S';
+    this.closeModalOptionList();
+  }
+
+  delConfPres(){
+    this.template.link_presenca = 'N';
+    this.closeModalOptionList();
+  }
+  /************************ */
+  openWhatsApp(fab: any){
+    if(fab){
+      //(fab.el).stopPropagation();
+      setTimeout(() => { fab.activated = true });
+      this.openModalWhatsApp();
+    }
+  }
+  openModalWhatsApp(){
+    this.isOpenModalWhatsApp = true;
+    $(`#whats-app-${this.ID}`).modal('show');
+  }
+
+  closeModalWhatsApp(){
+    this.isOpenModalWhatsApp = false;
+    $(`#whats-app-${this.ID}`).modal('hide');
+  }
+
+  addWhatsApp(){
+    this.template.fone_presenca = 'S';
+    this.closeModalWhatsApp();
+  }
+
+  delWhatsApp(){
+    this.template.fone = '';
+    this.template.fone_presenca = 'N';
+    this.closeModalWhatsApp();
+  }
+  /*********************************** */
   
   cloneRemoteScript(){  
     setTimeout(() => {    

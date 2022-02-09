@@ -17,7 +17,7 @@
   <app-loading [loading]="loading"></app-loading>
 
   <div *ngIf="template">
-    <app-edit-template [(template)]="template" (onChange)="saveInBackGround($event);" ></app-edit-template>
+    <app-edit-template [mode]="'update'" [(template)]="template" (onChange)="saveInBackGround($event);" ></app-edit-template>
 
     <!--ion-button (click)="gravar()" >Atualizar</ion-button-->
   </div>

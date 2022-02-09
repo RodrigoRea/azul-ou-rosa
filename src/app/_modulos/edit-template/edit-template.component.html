@@ -1,3 +1,21 @@
+<ion-fab style="margin-top: 45px;" horizontal="end" vertical="top" slot="fixed" edge [activated]="true" #_fab>
+  <ion-fab-button>
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list>
+    <ion-fab-button *ngIf="mode !== 'update'" color="{{ template.link_presenca === 'S' ? 'success' : 'light' }}" (click)="openOptionList(_fab)">
+      <!--ion-icon name="list-outline" ></ion-icon-->
+      <ion-icon name="clipboard-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="{{ template.fone_presenca === 'S' ? 'success' : 'light' }}" (click)="openWhatsApp(_fab)">
+      <ion-icon name="logo-whatsapp"></ion-icon>
+    </ion-fab-button>
+    <!--ion-fab-button color="light">
+      <ion-icon name="logo-vimeo"></ion-icon>
+    </ion-fab-button-->
+  </ion-fab-list>
+</ion-fab>
+
 <div *ngIf="show_page" class="box-show-template-invite" id="invite-model-{{ ID }}"></div>
 
 <!-- Modal para edicao de horario -->
@@ -11,26 +29,118 @@
               <button type="button" class="btn-close" (click)="closeModal()"></button>
           </div>
           <div class="modal-body" *ngIf="isOpenModal">
+            <div class="container"> 
+              <div *ngIf="type === 'text'">
+                <textarea class="form-control" [(ngModel)]="currentText" >{{ currentText }}</textarea>
+              </div>
+
+              <div *ngIf="type === 'date'">
+                <app-select-date [(dateValue)]="currentText" ></app-select-date>
+              </div>
               
-            <div *ngIf="type === 'text'">
-              <textarea class="form-control" [(ngModel)]="currentText" >{{ currentText }}</textarea>
-            </div>
+              <div *ngIf="type === 'time'">
+                <app-select-hour [(horaValue)]="currentText" ></app-select-hour>
+              </div>
 
-            <div *ngIf="type === 'date'">
-              <app-select-date [(dateValue)]="currentText" ></app-select-date>
-            </div>
-            
-            <div *ngIf="type === 'time'">
-              <app-select-hour [(horaValue)]="currentText" ></app-select-hour>
-            </div>
-
-            <div *ngIf="type === 'local' && local">
-              <app-select-endereco [(local)]="local"></app-select-endereco>
-            </div>
+              <div *ngIf="type === 'local' && local">
+                <app-select-endereco [(local)]="local"></app-select-endereco>
+              </div>
+            </div> 
             
           </div>
           <div class="modal-footer text-center">
             <button class="btn btn-primary" style="margin: auto;" (click)="updateCurrentText()" >Confirmar</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div *ngIf="isOpenModalOptionList" class="ion-bootstrap-modal-backdrop show"></div>
+<div *ngIf="template" id="option-list-{{ ID }}" class="modal" tabindex="-1" role="dialog" data-bs-backdrop="static">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Confirmação de presença</h5>
+              <button type="button" class="btn-close" (click)="closeModalOptionList()"></button>
+          </div>
+          <div class="modal-body" *ngIf="isOpenModalOptionList">
+              <div class="container">
+                
+                <p class="text-center">Seus convidados poderão informar através do convite se poderão comparecer ou não</p>
+
+                <p class="text-center" *ngIf="template.link_presenca != 'S'">
+                  Adicione esta funcionalidade por apenas<br>
+                  <strong>{{ template.valor_presenca | currency: 'BRL' : true }}</strong>
+                </p>
+
+                <p class="text-center" *ngIf="template.link_presenca === 'S'">
+                  Funcionalidade adicionada<br>
+                  <strong>{{ template.valor_presenca | currency: 'BRL' : true }}</strong>
+                </p>
+              </div>
+            
+          </div>
+          <div class="modal-footer">
+            <div class="row">
+              <div class="col-6 text-start">
+                <button class="btn btn-default" (click)="closeModalOptionList()">cancelar</button>
+              </div>
+              <div class="col-6 text-end" *ngIf="template.link_presenca != 'S'">
+                <button class="btn btn-primary" (click)="addConfPres()">Adicionar</button>
+              </div>
+
+              <div class="col-6 text-end" *ngIf="template.link_presenca === 'S'">
+                <button class="btn btn-danger" (click)="delConfPres()">Remover</button>
+              </div>
+            </div>
+            
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+<div *ngIf="isOpenModalWhatsApp" class="ion-bootstrap-modal-backdrop show"></div>
+<div *ngIf="template" id="whats-app-{{ ID }}" class="modal" tabindex="-1" role="dialog" data-bs-backdrop="static">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Link do seu whatsapp</h5>
+              <button type="button" class="btn-close" (click)="closeModalWhatsApp()"></button>
+          </div>
+          <div class="modal-body" *ngIf="isOpenModalWhatsApp">
+              <div class="container">
+                
+                <p class="text-center">Adicione o link do whatsapp para seus convidados</p>
+
+                <label><ion-icon name="logo-whatsapp"></ion-icon>&nbsp;WhatsApp</label>
+                <input type="text" class="form-control mb-3 whatsapp" [(ngModel)]="template.fone" placeholder="(__) _ ____-____" >
+
+                <p class="text-center" *ngIf="template.fone_presenca != 'S'">
+                  Adicione esta funcionalidade grátis<br>
+                </p>
+
+                <p class="text-center" *ngIf="template.fone_presenca === 'S'">
+                  Funcionalidade adicionada<br>
+                </p>
+              </div>
+            
+          </div>
+          <div class="modal-footer">
+            <div class="row">
+              <div class="col-6 text-start">
+                <button class="btn btn-default" (click)="closeModalWhatsApp()">cancelar</button>
+              </div>
+              <div class="col-6 text-end" *ngIf="template.fone_presenca != 'S'">
+                <button class="btn btn-primary" (click)="addWhatsApp()" [disabled]="template && template.fone && (template.fone).length < 16 || !template || !template.fone" >Adicionar</button>
+              </div>
+
+              <div class="col-6 text-end" *ngIf="template.fone_presenca === 'S'">
+                <button class="btn btn-danger" (click)="delWhatsApp()">Remover</button>
+              </div>
+            </div>
+            
           </div>
       </div>
   </div>

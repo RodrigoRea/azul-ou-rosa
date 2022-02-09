@@ -141,16 +141,21 @@
     <!--pre>{{ cart | json }}</pre-->
 
   <ng-container *ngIf="cart && (cart).length > 0">
-    <ul class="list-group">
-      <ng-container *ngFor="let item of cart">
-        <li class="list-group-item">
-          <h6>{{ item.produto.modelo }}</h6>
-          <h5>{{ item.produto.nome }}</h5>
-          <label class="price-list">{{ item.produto.valor | currency: 'BRL': true }}</label>
-        </li>
-      </ng-container>
-    </ul>
+        <ul class="list-group">
+            <ng-container *ngFor="let item of cart">
+                    <li class="list-group-item">                        
+                        <h6>{{ item.produto.modelo }} - {{ item.produto.nome }}</h6>
+                        <label class="price-list">{{ item.produto.valor | currency: 'BRL': true }}</label>
+                    </li>
+                    <li class="list-group-item" *ngIf="item.invite.link_presenca === 'S'">
+                        <h6>Confirmação de presença</h6>
+                        <label class="price-list">{{ item.invite.valor_presenca | currency: 'BRL': true }}</label>
+                    </li>
+            </ng-container>
+        </ul>
   </ng-container>
+
+  <!--pre>{{ cart | json }}</pre-->
 
   <div class="col-12 mt-2 text-left">
       <label *ngIf="tipo === 'credito'">Cartão de Crédito</label>
@@ -170,7 +175,7 @@
 
 
 <div *ngIf="passo === 3" >
-  <div *ngIf="tipo === 'credito' || tipo === 'debito'  ">
+  <div *ngIf="tipo === 'credito' || tipo === 'debito' && valor_total > 0 ">
       <app-cartao
           (evento)="setDados($event)"
           [tipo]="tipo"
@@ -183,7 +188,7 @@
   </div>
 
   <app-boleto
-      *ngIf="tipo === 'boleto'"
+      *ngIf="tipo === 'boleto' && valor_total > 0 "
       [valor]="valor_total"
       [quantidade]="1"
       [dados]="dados"
