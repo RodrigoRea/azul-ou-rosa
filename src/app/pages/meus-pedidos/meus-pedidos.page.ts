@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 })
 export class MeusPedidosPage implements OnInit {
 
-  loading: boolean = false;
+  show: boolean = false;
+  loading: boolean = true;
   pedidos: any[] = [] as any[];
 
   constructor(
@@ -18,10 +19,11 @@ export class MeusPedidosPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    
+    this.show = false;
   }
 
   ionViewWillEnter(){
+    this.show = false;
     this.getPedidos();
   }
 
@@ -33,7 +35,8 @@ export class MeusPedidosPage implements OnInit {
         this.pedidos = res;
       }
       this.loading = false;
-    }, error=>{ this.loading = false; });
+      this.show = true;
+    }, error=>{ this.loading = false; this.show = true; });
   }
 
   editar(item){

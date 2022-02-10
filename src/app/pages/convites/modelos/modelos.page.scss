@@ -31,3 +31,16 @@
 .price{
     float: right;
 }
+
+.list-group-item{
+    small{
+        font-size: 1rem;
+        color: #666;
+        margin-right: 6px;
+        padding-left: 10px;
+    }
+    p{
+        padding-left: 24px;
+        color: #999;
+    }
+}

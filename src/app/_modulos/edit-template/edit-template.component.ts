@@ -37,28 +37,30 @@ export class EditTemplateComponent implements OnInit, OnDestroy, AfterViewChecke
   constructor(
     private authService: AuthService,
     private router: Router
-  ) { }
+  ) { 
+    $('.box-show-template-invite').remove();
+  }
 
   ngOnInit() {
-    
-    this.ID = this.authService.generateID();
-    console.log('ngOnInit show_page true - sempre cria uma div de edicao de templete nova');
-    this.show_page = true;
-
     setTimeout(() => {
-      console.log('EditTemplateComponent template', this.template);
-      if( typeof this.template.phtml === 'boolean' && !this.template.phtml ){
-        alert("Ops, este convite ainda não está pronto");
-        this.router.navigate(['convites']);
-        return;
-      }
-      const phtml = atob(`${this.template.phtml}`); 
-      $(`#invite-model-${this.ID}`).html(phtml);
-      setTimeout(() => {
-        this.startActionsTemplateMode();
-      });
-    });    
+      this.ID = this.authService.generateID();
+      console.log('ngOnInit show_page true - sempre cria uma div de edicao de templete nova');
+      this.show_page = true;
 
+      setTimeout(() => {
+        console.log('EditTemplateComponent template', this.template);
+        if( typeof this.template.phtml === 'boolean' && !this.template.phtml ){
+          alert("Ops, este convite ainda não está pronto");
+          this.router.navigate(['convites']);
+          return;
+        }
+        const phtml = atob(`${this.template.phtml}`); 
+        $(`#invite-model-${this.ID}`).html(phtml);
+        setTimeout(() => {
+          this.startActionsTemplateMode();
+        });
+      });    
+    }); 
   }
 
   ngAfterViewChecked(){
@@ -240,15 +242,23 @@ export class EditTemplateComponent implements OnInit, OnDestroy, AfterViewChecke
     $(`#whats-app-${this.ID}`).modal('hide');
   }
 
+  closeModalWhatsAppWithSave(){
+    this.isOpenModalWhatsApp = false;
+    $(`#whats-app-${this.ID}`).modal('hide');    
+    if( this.mode === 'update' ){
+      this.onChange.emit(this.template);
+    }
+  }
+
   addWhatsApp(){
     this.template.fone_presenca = 'S';
-    this.closeModalWhatsApp();
+    this.closeModalWhatsAppWithSave();
   }
 
   delWhatsApp(){
     this.template.fone = '';
     this.template.fone_presenca = 'N';
-    this.closeModalWhatsApp();
+    this.closeModalWhatsAppWithSave();
   }
   /*********************************** */
   
@@ -285,7 +295,8 @@ export class EditTemplateComponent implements OnInit, OnDestroy, AfterViewChecke
   }
 
   ngOnDestroy(){
-    $(`.box-show-template-invite`).remove();
+    $('.box-show-template-invite').remove();
+    this.show_page = false;
   }
 
 }

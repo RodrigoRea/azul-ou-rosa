@@ -12,7 +12,7 @@
   <app-loading [loading]="loading"></app-loading>
 
   
-  <div *ngIf="!loading && pedidos && (pedidos).length === 0">
+  <ng-container *ngIf="!loading && pedidos && (pedidos).length === 0">
     <div class="text-center mt-5">
       Você ainda não possui nenhum convite interativo.
       <br>
@@ -24,9 +24,9 @@
       <br>
       <button type="button" class="btn btn-primary" (click)="toPage('convites')" >Visualizar modelos de convite</button>
     </div>
-  </div>
+  </ng-container> 
 
-  <div *ngIf="pedidos && (pedidos).length > 0">
+  <div *ngIf="show && pedidos && (pedidos).length > 0">
 
     <ul class="list-group">
       <ng-container *ngFor="let pedido of pedidos">
@@ -46,7 +46,7 @@
                 </div-->
                   
                     <label class="vl-item">{{ pedido.valor | currency: 'BRL' : true }}</label>
-                    <h4 class="title"><i class="icon-item fa fa-edit act-click" *ngIf="item.editavel === 'S'" (click)="editar(item)"></i>{{ item.modelo_nome }}</h4>
+                    <div><i class="icon-item fa fa-edit act-click" *ngIf="item.editavel === 'S'" (click)="editar(item)"></i>{{ item.modelo_nome }}</div>
                     
                     <div class="produto-nome">                
                       {{ item.produto_nome }}

@@ -64,7 +64,7 @@ export class ProdutoPage implements OnInit {
     console.log('this.template', template);
     this.pedidoService.post(this.pedido_id,this.item_id, template).subscribe((res: any)=>{
       if(res && res.status === 201){
-        alert('alterado com sucesso');
+        // alert('alterado com sucesso');
       }
       this.loading = false;
     }, error=>{ this.loading = false; });

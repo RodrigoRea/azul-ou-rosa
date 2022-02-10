@@ -1,3 +1,5 @@
+<div *ngIf="show_page" class="box-show-template-invite" id="invite-model-{{ ID }}"></div>
+
 <ion-fab style="margin-top: 45px;" horizontal="end" vertical="top" slot="fixed" edge [activated]="true" #_fab>
   <ion-fab-button>
     <ion-icon name="add"></ion-icon>
@@ -16,7 +18,7 @@
   </ion-fab-list>
 </ion-fab>
 
-<div *ngIf="show_page" class="box-show-template-invite" id="invite-model-{{ ID }}"></div>
+
 
 <!-- Modal para edicao de horario -->
 
@@ -129,16 +131,25 @@
           </div>
           <div class="modal-footer">
             <div class="row">
-              <div class="col-6 text-start">
+              <div class="col-4 text-start">
                 <button class="btn btn-default" (click)="closeModalWhatsApp()">cancelar</button>
               </div>
-              <div class="col-6 text-end" *ngIf="template.fone_presenca != 'S'">
+              <div class="col-8 text-end" *ngIf="template.fone_presenca != 'S'">
                 <button class="btn btn-primary" (click)="addWhatsApp()" [disabled]="template && template.fone && (template.fone).length < 16 || !template || !template.fone" >Adicionar</button>
               </div>
 
-              <div class="col-6 text-end" *ngIf="template.fone_presenca === 'S'">
+              <div class="col-8 text-end" *ngIf="template.fone_presenca === 'S' && mode !== 'update'">
                 <button class="btn btn-danger" (click)="delWhatsApp()">Remover</button>
               </div>
+
+              <div class="col-4 text-end" *ngIf="template.fone_presenca === 'S' && mode === 'update'">
+                <button class="btn btn-danger" (click)="delWhatsApp()">Remover</button>
+              </div>
+              <div class="col-4 text-end" *ngIf="template.fone_presenca === 'S' && mode === 'update'">
+                <button class="btn btn-primary ml-3" (click)="addWhatsApp()" [disabled]="template && template.fone && (template.fone).length < 16 || !template || !template.fone">Atualizar</button>
+              </div>
+
+
             </div>
             
           </div>
