@@ -8,6 +8,7 @@ export const environment = {
     'api.mybabeis.com.br',
   ],
 
+  pagseguro_use_sandbox: false,
   jsProducao: 'https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js',
   jsSandbox: 'https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js',
 

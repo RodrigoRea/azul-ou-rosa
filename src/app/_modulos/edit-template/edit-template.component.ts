@@ -17,6 +17,7 @@ export class EditTemplateComponent implements OnInit, OnDestroy, AfterViewChecke
   isOpenModal: boolean = false;
   isOpenModalOptionList: boolean = false;
   isOpenModalWhatsApp: boolean = false;
+  isOpenModalHelp: boolean = false;
 
   type: string = '';
 
@@ -61,6 +62,10 @@ export class EditTemplateComponent implements OnInit, OnDestroy, AfterViewChecke
         });
       });    
     }); 
+
+    setTimeout(() => {
+      this.openModalHelp();
+    }, 400);
   }
 
   ngAfterViewChecked(){
@@ -223,6 +228,21 @@ export class EditTemplateComponent implements OnInit, OnDestroy, AfterViewChecke
   delConfPres(){
     this.template.link_presenca = 'N';
     this.closeModalOptionList();
+  }
+  /************************ */
+  openHelp(fab: any){
+    if(fab){
+      setTimeout(() => { fab.activated = true });
+      this.openModalHelp();
+    }
+  }
+  openModalHelp(){
+    this.isOpenModalHelp = true;
+    $(`#box-help-${this.ID}`).modal('show');
+  }
+  closeModalHelp(){
+    this.isOpenModalHelp = false;
+    $(`#box-help-${this.ID}`).modal('hide');
   }
   /************************ */
   openWhatsApp(fab: any){

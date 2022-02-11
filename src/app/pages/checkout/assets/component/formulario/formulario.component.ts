@@ -54,7 +54,7 @@ export class FormularioComponent implements OnInit {
       voltar: []
     });
 
-    if( !environment.production ){
+    if( environment.pagseguro_use_sandbox ){
       setTimeout(() => { this.formulario.patchValue(userMOCK); });
     }
 
@@ -91,16 +91,6 @@ export class FormularioComponent implements OnInit {
     this.evento.emit( this.formulario.value );
   }
 
-  setFormularioTeste(){
-    setTimeout(() => {
-      this.formulario.get('nome').setValue('Rodrigo Rea Mendes');
-      this.formulario.get('dtnascimento').setValue('13/03/1985');
-      this.formulario.get('CPF').setValue('340.974.968-32');
-      this.formulario.get('mensagem').setValue('teste');
-      this.formulario.get('telefone').setValue('(11)987065302');
-      this.formulario.get('email').setValue('rodrigoreamendes@sandbox.pagseguro.com.br');
-    });
-  }
 
   setFormularioCurrentUser(){
     setTimeout(() => {
@@ -136,10 +126,10 @@ export class FormularioComponent implements OnInit {
       this.formulario.get('CPF').setValue((this.user.cpf)?this.user.cpf:'');
       this.formulario.get('mensagem').setValue('');
       this.formulario.get('telefone').setValue((this.user.fone1)?this.user.fone1:'');
-      if( environment.production ){
-        this.formulario.get('email').setValue(`${this.user.email}`);
-      }else{
+      if( environment.pagseguro_use_sandbox ){
         this.formulario.get('email').setValue('app.mybabeis@sandbox.pagseguro.com.br');
+      }else{        
+        this.formulario.get('email').setValue(`${this.user.email}`);
       }
       this.loading = false;
     });

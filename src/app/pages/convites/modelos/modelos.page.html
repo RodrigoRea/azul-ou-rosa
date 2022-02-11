@@ -18,23 +18,25 @@
 
   <ng-container *ngIf="produtos && (produtos).length > 0">
     <ion-card *ngFor="let produto of produtos">
-      <div class="box-img-show-tema" (click)="nextShow()">
+      <div class="box-img-show-tema" ><!-- (click)="nextShow()" mudar slide -->
         <img class="show-tema slide-{{show}}" *ngIf="show===1" src="{{ url }}/assets/img/tema-{{ getPathImg(produto.template_id) }}-frente.png" alt="" onerror="this.onerror=null; this.src='/assets/imgs/no-image.png'" alt="">
-        <img class="show-tema slide-{{show}}" *ngIf="show===2" src="{{ url }}/assets/img/tema-{{ getPathImg(produto.template_id) }}-mobi.png" alt="" onerror="this.onerror=null; this.src='/assets/imgs/no-image.png'" alt="">
+        <!--img class="show-tema slide-{{show}}" *ngIf="show===2" src="{{ url }}/assets/img/tema-{{ getPathImg(produto.template_id) }}-mobi.png" alt="" onerror="this.onerror=null; this.src='/assets/imgs/no-image.png'" alt=""-->
       </div>
       <ion-card-header>
-        <ion-card-subtitle>{{ produto.nome }}</ion-card-subtitle>
+        <ion-card-subtitle>Convite interativo: {{ produto.nome }}</ion-card-subtitle>
         <ion-card-title class="name">{{ produto.modelo }} <label class="price">{{ produto.valor | currency : 'BRL' : true }}</label></ion-card-title>
       </ion-card-header>
       
       <ion-card-content>        
         <p>
-          Os convites interativos ficam disponíveis por até 90 dias.<br>
-          Envie apenas o link do convite aos seus convidados
+          Disponível por até 90 dias.<br>
+          Compartilhe o link com seus convidados
         </p>
         
-        <div class="text-end">
-          <ion-button type="button" (click)="toProduct(produto)" ><b>Comprar</b></ion-button>
+        <div class="text-center"> 
+          <button class="btn btn-primary" type="button" (click)="toProduct(produto)" >
+            Criar meu convite&nbsp;<ion-icon name="color-wand-outline"></ion-icon>
+          </button>
         </div>
 
         <ul class="list-group mt-2">

@@ -47,9 +47,9 @@
                   
                     <label class="vl-item">{{ pedido.valor | currency: 'BRL' : true }}</label>
                     <div>
-                      <label *ngIf="item.editavel === 'S'" (click)="editar(item)">
-                        <i class="icon-item fa fa-edit act-click"></i>&nbsp;Editar
-                      </label>
+                      <button class="btn btn-outline-primary btn-sm" *ngIf="item.editavel === 'S'" (click)="editar(item)">
+                        <i class="icon-item fa fa-edit"></i>&nbsp;Editar
+                      </button>
                     </div>
                     <div>{{ item.modelo_nome }}</div>
                     
@@ -58,7 +58,7 @@
                     </div>
                         
                     <!-- div>{{ item.editavel }}</div -->          
-                    <div class="area-link" *ngIf="item.editavel === 'S' && +pedido.status === 3 && item.ativo === 'S'" >
+                    <div class="area-link mb-2" *ngIf="item.editavel === 'S' && +pedido.status === 3 && item.ativo === 'S'" >
                       
                       <!--button type="button" class="btn btn-primary" (click)="editar(item)">Editar <i class="fa fa-edit"></i></button -->
                       <a class="link-primary" href="https://convite.mybabeis.com.br/invite/{{item.cod_site}}">
@@ -68,14 +68,14 @@
                       <label class="icon-end" (click)="copylink(item)" ><small>copiar link&nbsp;</small><i class="fa fa-clone act-click"></i></label>
                     </div>
 
-                    <div class="area-link" *ngIf="item.ativo !== 'S'" >
+                    <div class="area-link mb-2" *ngIf="item.ativo !== 'S'" >
                       <label>Desativado</label>
                     </div>
 
                     <div *ngIf="+pedido.status > 0 && +pedido.status < 3">
-                      <button type="button" class="btn btn-outline-secondary no-border no-padding" (click)="getTransaction(pedido)">
-                        <i class="icon-item fa fa-refresh" *ngIf="!(loading && item.pedido_id === pedido_id)"></i>
-                        <i class="icon-item fa fa-refresh fa-spin" *ngIf="loading && item.pedido_id === pedido_id"></i>
+                      <button type="button" class="btn btn-outline-primary no-border no-padding" (click)="getTransaction(pedido)">
+                        <i class="fa fa-refresh" *ngIf="!(loading && item.pedido_id === pedido_id)"></i>
+                        <i class="fa fa-refresh fa-spin" *ngIf="loading && item.pedido_id === pedido_id"></i>
                         Atualizar status de pagamento
                         <label class="icon-end" *ngIf="pedido.tipo === 'boleto'"><i class="fa fa-barcode"></i></label>
                         <label class="icon-end" *ngIf="pedido.tipo !== 'boleto'"><i class="fa fa-credit-card"></i></label>

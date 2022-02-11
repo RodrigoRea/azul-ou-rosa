@@ -1,12 +1,3 @@
-export const PayG = {
-
-    jsProducao: 'https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js',
-    jsSandbox: 'https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js',
-
-    pgSeguroURL: 'https://stc.pagseguro.uol.com.br',
-
-}
-
 export class Produto {
     valor: number;
     nome: string;

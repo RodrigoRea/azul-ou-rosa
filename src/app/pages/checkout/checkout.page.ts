@@ -1,6 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Dados, Metodos, PayG, PG, RetornoPG } from './checkout';
+import { Dados, Metodos, PG, RetornoPG } from './checkout';
 import { PagSeguroService } from 'src/app/_services/pagseguro.service';
 import { Router } from '@angular/router';
 
@@ -28,7 +28,7 @@ export class CheckoutPage implements OnInit {
   session: string = '';
   cart: any | undefined;
 
-  pgSeguroURL = PayG.pgSeguroURL;
+  pgSeguroURL: string =  environment.pgSeguroURL;
   tipo: string = '';
 
   dados = new Dados();
@@ -116,7 +116,7 @@ export class CheckoutPage implements OnInit {
           resolve(true);
         });        
       });
-      script.src = (environment.production) ? PayG.jsProducao : PayG.jsSandbox;
+      script.src = (environment.pagseguro_use_sandbox) ? environment.jsSandbox : environment.jsProducao;
       script.id = 'pg-seguro-js';
       script.type = 'text/javascript';
       document.head.appendChild(script);

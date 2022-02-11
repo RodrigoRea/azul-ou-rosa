@@ -43,7 +43,6 @@ declare var $:any;
 export class CartaoComponent implements OnInit, AfterViewChecked {
 
   loading: boolean = false;
-  pgSeguroURL = 'https://stc.pagseguro.uol.com.br';
   senderHash: string = '';
 
   MaskValidade = [/[0-1]/, /[0-9]/, '/', /[2]/, /[0-0]/, /[1-9]/, /[0-9]/];
@@ -134,7 +133,7 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
       this.getMaxInstallmentNoInterest();
     }
 
-    if( !environment.production ){
+    if( environment.pagseguro_use_sandbox ){
       setTimeout(() => { this.formulario.patchValue(userMOCK); });
     }
     

@@ -11,7 +11,7 @@
 
             <label>N° do Cartão</label>
             <div class="input-group">
-                <input type="text" id="n-c-ps" class="form-mobi c-cartao" placeholder="- - - -   - - - -   - - - -   - - - -" formControlName="cardnumber" (keyup)="validaCartao($event.target['value'])" >
+                <input type="text" id="n-c-ps" class="form-mobi c-cartao" placeholder="- - - -   - - - -   - - - -   - - - -" formControlName="cardnumber" (change)="validaCartao($event.target['value'])" (keyup)="validaCartao($event.target['value'])" >
                 <span class="input-group-text group-form-mobi-right">
                     <i *ngIf="loadinParc" class="fa fa-spinner fa-spin"></i>
                     <small *ngIf="bandeira && bandeira !== ''" >                        

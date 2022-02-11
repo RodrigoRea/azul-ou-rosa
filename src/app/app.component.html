@@ -10,19 +10,23 @@
 
     <ion-content class="background-inverse">
       <ion-list class="background-inverse">
-        <ion-item (click)="toPage('home')" >{{ text['home'] }}</ion-item>   
-        <ion-item (click)="toPage('convites')" >{{ text['convites'] }}</ion-item> 
-        <ion-item (click)="toPage('calgravidez')" >{{ text['calgravidez'] }}</ion-item>     
-        <ion-item (click)="toPage('dicas')" >{{ text['dicas'] }}</ion-item>
-        <ion-item (click)="toPage('idioma')" >{{ text['idioma'] }}</ion-item>
+        <ion-item (click)="toPage('home')" ><i class="fa fa-home me-1"></i>{{ text['home'] }}</ion-item>   
+        <ion-item (click)="toPage('convites')" ><i class="fa fa-bookmark-o me-1"></i>{{ text['convites'] }}</ion-item> 
+        <ion-item (click)="toPage('calgravidez')" ><i class="fa fa-calendar me-1"></i>{{ text['calgravidez'] }}</ion-item>     
+        <ion-item (click)="toPage('dicas')" ><i class="fa fa-info-circle me-1"></i>{{ text['dicas'] }}</ion-item>
+        <!-- ion-item (click)="toPage('idioma')" >{{ text['idioma'] }}</ion-item -->
 
-        <ion-item *ngIf="!isAuth" (click)="toPage('/auth/login')" >Entrar</ion-item>
+        
 
-        <ion-item *ngIf="isAuth" (click)="toPage('/meus-pedidos')" >Meus convites</ion-item>
-        <ion-item *ngIf="isAuth" (click)="toPage('/cadastro')" >Cadastro</ion-item> 
-        <ion-item *ngIf="isAuth" (click)="toPage('/alterar-senha')" >Mudar senha</ion-item> 
-        <ion-item *ngIf="isAuth" (click)="toPage('/auth/logout')" >Sair</ion-item>
-        <ion-item *ngIf="isAuth" (click)="toPage('/excluir-conta')" >Excluir conta</ion-item>
+        <ion-item *ngIf="isAuth" (click)="toPage('/meus-pedidos')" ><i class="fa fa-bookmark me-1"></i>Meus convites/compras</ion-item>
+        <ion-item *ngIf="isAuth" (click)="toPage('/cadastro')" ><i class="fa fa-user-circle me-1"></i>Cadastro</ion-item> 
+        <ion-item *ngIf="isAuth" (click)="toPage('/alterar-senha')" ><i class="fa fa-key me-1"></i>Mudar senha</ion-item> 
+        <ion-item *ngIf="isAuth" (click)="toPage('/excluir-conta')" ><i class="fa fa-user-times me-1"></i>Excluir conta</ion-item>
+
+        <ion-item><hr></ion-item>
+        <ion-item *ngIf="!isAuth" (click)="toPage('/auth/login')" ><i class="fa fa-sign-in me-1"></i>Entrar</ion-item>
+        <ion-item *ngIf="isAuth" (click)="toPage('/auth/logout')" ><i class="fa fa-power-off me-1"></i>Sair</ion-item>
+        
         <!-- 
           <ion-item><hr></ion-item>
 
