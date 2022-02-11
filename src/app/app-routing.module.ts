@@ -80,6 +80,10 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     canLoad: [AuthGuard]
   },
+  {
+    path: 'confirmacao/:pedido_item_id',
+    loadChildren: () => import('./pages/confirmacao/confirmacao.module').then( m => m.ConfirmacaoPageModule)
+  },
 ];
 @NgModule({
   imports: [

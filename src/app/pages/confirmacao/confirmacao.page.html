@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar color="primary">
+
+      <ion-buttons slot="start">
+          <ion-back-button defaultHref="/"></ion-back-button>
+      </ion-buttons>
+
+      <ion-title>Confirmação de presença</ion-title>
+      <ion-buttons slot="end">
+      <ion-menu-button autoHide="false"></ion-menu-button>  
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background ion-padding">
+  <app-loading [loading]="loading"></app-loading>
+ 
+
+  <ion-list *ngIf="list && (list).length > 0 && !loading">
+    <ion-list-header>
+      Respostas de {{ total_pessoas }} convidado(s)<br>
+      Total de {{ total_adultos }} adulto(s)<br>
+      Total de {{ total_criancas }} criança(s)<br>
+      Totalizando {{ total_pessoas }} pessoa(s)
+    </ion-list-header>
+
+    <ion-item *ngFor="let row of list">
+      <ion-avatar slot="start">
+        <div class="indication">
+          <i class="fa fa-check resp-sim" *ngIf="row.presenca === 'S'"></i>
+          <i class="fa fa-times resp-nao" *ngIf="row.presenca !== 'S'"></i>
+        </div>
+      </ion-avatar>
+      <ion-label>
+        <h2 class="capitalize">{{ row.nome }} <label class="info-time" *ngIf="row.data">{{ row.data | date : 'dd/MM/yy - h:mm a' }}</label></h2>
+        <h3 *ngIf="row.presenca === 'S'" class="text-yes">Presença confirmada</h3>
+        <h3 *ngIf="row.presenca !== 'S'" class="text-no">Presença não confirmada</h3>
+        <h4>{{ row.telefone }} 
+          <label class="info-people" *ngIf="row.presenca === 'S'">
+            <span *ngIf="row.adulto && +row.adulto > 0">Adulto: {{ row.adulto }}</span><br>
+            <span *ngIf="row.crianca && +row.crianca > 0">Crianca: {{ row.crianca }}</span>
+          </label>
+        </h4>
+        <p>{{ row.email }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

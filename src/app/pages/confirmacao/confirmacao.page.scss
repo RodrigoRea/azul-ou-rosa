@@ -1,0 +1,42 @@
+.indication{
+    width: 35px;
+    border: 1px solid #ccc;
+    height: 35px;
+    border-radius: 50%;
+    padding: 5px;
+    text-align: center;
+    
+}
+
+.resp-sim{
+    color: #4aec44;
+}
+
+.resp-nao{
+    color: #db3466;
+}
+
+.info-time{
+    float: right;
+    font-size: 0.8rem;
+}
+
+.info-people{
+    position: absolute;
+    right: 0;
+    padding-right: 15px;
+    text-align: right;
+    font-size: 0.8rem;
+    top: 40px;
+}
+
+.capitalize{
+    text-transform: capitalize;
+}
+
+.text-no{
+    color: #999;
+}
+.text-yes{
+    color: #6475ff;
+}

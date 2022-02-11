@@ -46,21 +46,30 @@
                 </div-->
                   
                     <label class="vl-item">{{ pedido.valor | currency: 'BRL' : true }}</label>
-                    <div><i class="icon-item fa fa-edit act-click" *ngIf="item.editavel === 'S'" (click)="editar(item)"></i>{{ item.modelo_nome }}</div>
+                    <div>
+                      <label *ngIf="item.editavel === 'S'" (click)="editar(item)">
+                        <i class="icon-item fa fa-edit act-click"></i>&nbsp;Editar
+                      </label>
+                    </div>
+                    <div>{{ item.modelo_nome }}</div>
                     
                     <div class="produto-nome">                
                       {{ item.produto_nome }}
                     </div>
                         
                     <!-- div>{{ item.editavel }}</div -->          
-                    <div class="area-link" *ngIf="item.editavel === 'S' && +pedido.status === 3" >
+                    <div class="area-link" *ngIf="item.editavel === 'S' && +pedido.status === 3 && item.ativo === 'S'" >
                       
                       <!--button type="button" class="btn btn-primary" (click)="editar(item)">Editar <i class="fa fa-edit"></i></button -->
                       <a class="link-primary" href="https://convite.mybabeis.com.br/invite/{{item.cod_site}}">
-                        <i class="fa fa-check"></i> Convite online
+                        <i class="fa fa-check"></i> visualizar convite (link)
                       </a>
                       <label class="msg-copy" *ngIf="show_copy && cod_site === item.cod_site">Copiado</label>
-                      <label class="icon-end" (click)="copylink(item)" ><small>copiar&nbsp;</small><i class="fa fa-clone act-click"></i></label>
+                      <label class="icon-end" (click)="copylink(item)" ><small>copiar link&nbsp;</small><i class="fa fa-clone act-click"></i></label>
+                    </div>
+
+                    <div class="area-link" *ngIf="item.ativo !== 'S'" >
+                      <label>Desativado</label>
                     </div>
 
                     <div *ngIf="+pedido.status > 0 && +pedido.status < 3">
@@ -92,7 +101,26 @@
                       <small *ngIf="item.editavel === 'S'" class="info-primary">Disponível até {{ item.exp_data | date: 'dd/MM/yyyy' }} </small>
                       <small *ngIf="item.editavel !== 'S'" class="info-primary">Expirado em {{ item.exp_data | date: 'dd/MM/yyyy' }} </small>
                     </div>
-                
+                    
+                    <div class="row">
+                      <div class="col-6">
+                        <button type="button" class="btn btn-sm btn-outline-danger btn-toggle" (click)="toActive(false, item)" *ngIf="item.ativo === 'S' && item.editavel === 'S'">
+                          Desativar
+                          <i *ngIf="!loading_active" class="ms-1 fa fa-toggle-off"></i>
+                          <i *ngIf="loading_active" class="ms-1 fa fa-spinner fa-spin"></i>
+                        </button>
+                 
+                        <button type="button" class="btn btn-sm btn-outline-primary btn-toggle" (click)="toActive(true, item)" *ngIf="item.ativo !== 'S' && item.editavel === 'S'">
+                          Ativar
+                          <i *ngIf="!loading_active" class="ms-1 fa fa-toggle-on"></i>
+                          <i *ngIf="loading_active" class="ms-1 fa fa-spinner fa-spin"></i>
+                        </button>
+                      </div>
+                      <div class="col-6 text-end" *ngIf="item.link_presenca === 'S'">
+                        <button type="button" class="btn btn-sm btn-primary" (click)="toPage('confirmacao/'+item.pedido_item_id)">Lista de presença</button>
+                      </div>
+                    </div>
+
               </li>
             </ng-container>
           </ng-container>

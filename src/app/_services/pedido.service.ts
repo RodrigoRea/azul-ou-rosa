@@ -64,4 +64,17 @@ export class PedidoService {
             })
         );
     }
+
+    setActive(pedido_id: any, item_id: any, active: boolean):Observable<any> {
+        const action = (active) ? 'ativado' : 'desativado';
+        let url = `${environment.api}/pedido/${pedido_id}/item/${item_id}/active/${action}`;
+        return this.authService.post(`${url}`,{}).pipe(
+            map(res=>{
+                if( res['status'] === 201 ){
+                    return res['resposta'];
+                }
+                return undefined;
+            })
+        );
+    }
 }

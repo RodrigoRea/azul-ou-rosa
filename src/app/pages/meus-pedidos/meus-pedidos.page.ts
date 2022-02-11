@@ -86,4 +86,20 @@ export class MeusPedidosPage implements OnInit {
     document.body.removeChild(sampleTextarea);
   }
 
+  loading_active: boolean = false;
+  toActive(active: boolean, item: any){
+    this.loading_active = true;
+    this.pedidoService.setActive(item.pedido_id, item.pedido_item_id, active).subscribe((res:any) => {
+      if( res ){
+        if(active){
+          item.ativo = 'S';
+        }else{
+          item.ativo = 'N';
+        }
+      }
+      this.loading_active = false;
+    }, error => { this.loading_active = false; });
+
+    
+  }
 }
