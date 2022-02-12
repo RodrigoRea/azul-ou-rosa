@@ -70,7 +70,6 @@ export class CheckoutPage implements OnInit {
   }
 
   init() {
-    let self = this;
     this.passo = 1;
     this.importScript().then(()=>{
       console.log('importScript pay ok');
@@ -89,7 +88,7 @@ export class CheckoutPage implements OnInit {
       } 
 
     }).catch(()=>{
-      this.errorPagSeguroConn(self);
+      this.errorPagSeguroConn();
     })
        
   }
@@ -123,15 +122,14 @@ export class CheckoutPage implements OnInit {
     });
   }
 
-  errorPagSeguroConn(self: any){
-    self.loading = false; 
+  errorPagSeguroConn(){
+    this.loading = false; 
     alert('Falha na conexão com nossos serviços de pagamento! Por favor, tente novamente');
     //history.back();
-    self.router.navigate(['/convites']);
+    this.router.navigate(['/convites']);
   }
 
   getSession(){
-    let self = this;
     this.session = '';
     this.loading = true;
     // this.getSession();
@@ -143,23 +141,22 @@ export class CheckoutPage implements OnInit {
         this.loading = false;         
       }else{
         this.session = '';
-        this.errorPagSeguroConn(self);
+        this.errorPagSeguroConn();
       }
     }, error => {
       this.session = '';      
-      this.errorPagSeguroConn(self);
+      this.errorPagSeguroConn();
     });
   }
 
   setSessionID(){
-    let self = this;
     console.log('session', this.session);
     setTimeout(() => {
       if( this.session !== '' ){
         PagSeguroDirectPayment.setSessionId(this.session);
         setTimeout(() => {
           window['angularComponentRef'].zone.run(() => {
-            window['angularComponentRef'].componentFn( ()=>{ self.getMetodos(self); } );
+            window['angularComponentRef'].componentFn( ()=>{ this.getMetodos(); } );
           });
         });        
       }else{
@@ -185,21 +182,21 @@ export class CheckoutPage implements OnInit {
     return r;
   }
 
-  getMetodos(self){
+  getMetodos(){
     const valor_total = this.formatRS(this.valor_total);
     console.log('getPaymentMethods - amount', valor_total);
     PagSeguroDirectPayment.getPaymentMethods({
       amount: valor_total,
       success: (response: any) => {
         window['angularComponentRef'].zone.run(() => {
-          window['angularComponentRef'].componentFn( ()=>{ self.setMetodos(response, self); } );
+          window['angularComponentRef'].componentFn( ()=>{ this.setMetodos(response); } );
         });                
       },
       error: (response) => {
         console.log('response', response);
         if(response){          
           window['angularComponentRef'].zone.run(() => {
-            window['angularComponentRef'].componentFn( ()=>{ self.errorPagSeguroConn(self); } );
+            window['angularComponentRef'].componentFn( ()=>{ this.errorPagSeguroConn(); } );
           }); 
         }
       },
@@ -209,44 +206,44 @@ export class CheckoutPage implements OnInit {
     });
   }
 
-  setMetodos(metodos: any, self: any){
+  setMetodos(metodos: any){
     console.log('metodos');
     if( !metodos.error ){
       for( let key in metodos.paymentMethods ){
         if( key === 'BOLETO' ){
-          self.mBoleto = metodos.paymentMethods[key]['options'][key];
+          this.mBoleto = metodos.paymentMethods[key]['options'][key];
         }
         if( key === 'BALANCE' ){
-          self.mBalance = metodos.paymentMethods[key]['options'][key];
+          this.mBalance = metodos.paymentMethods[key]['options'][key];
         }
         if( key === 'CREDIT_CARD' ){
-          self.mCredito = [];
+          this.mCredito = [];
           const m = metodos.paymentMethods[key]['options'];
           for( const k in m ){
-            (self.mCredito).push(m[k]);
+            (this.mCredito).push(m[k]);
           }
         }
         if( key === 'ONLINE_DEBIT' ){
           const m = metodos.paymentMethods[key]['options'];
           for( const k in m ){
-            (self.mDebito).push(m[k]);
+            (this.mDebito).push(m[k]);
           }
         }
         if( key === 'DEPOSIT' ){
           const m = metodos.paymentMethods[key]['options'];
           for( const k in m ){
-            (self.mDeposito).push(m[k]);
+            (this.mDeposito).push(m[k]);
           }
         }
       }
 
-      self.showMetodos = true;
+      this.showMetodos = true;
 
       console.log(metodos);
-      console.log('Boleto', self.mBoleto);
-      console.log('Credito', self.mCredito);
-      console.log('Debito', self.mDebito);
-      self.loading = false; 
+      console.log('Boleto', this.mBoleto);
+      console.log('Credito', this.mCredito);
+      console.log('Debito', this.mDebito);
+      this.loading = false; 
     }
   }
 
@@ -262,7 +259,6 @@ export class CheckoutPage implements OnInit {
 
 
   enviarDadosDePagamento(pg: PG){
-    let self = this;
     if(pg && pg.pagamento && pg.pagamento.cardnumber && pg.pagamento.cvv){
       let cardnumber = pg.pagamento.cardnumber;
       pg.pagamento.cardnumber = btoa(btoa((cardnumber).replace(/ /g, ";")));
@@ -275,7 +271,7 @@ export class CheckoutPage implements OnInit {
     // this.passo = 4;   
 
     if( pg.pagamento.tipo === 'boleto' ){
-      self.startBoleto(pg, self);
+      this.startBoleto(pg);
     }
 
     /*if( pg.pagamento.tipo === 'debito' ){
@@ -283,21 +279,21 @@ export class CheckoutPage implements OnInit {
     }*/
 
     if( pg.pagamento.tipo === 'credito' ){
-      self.startCredito(pg, self);
+      this.startCredito(pg);
     }
   }
   
   
-  startBoleto(pg: PG, self: any){
-    self.loading = true;
-    self.passo = 4;
-    const compra = {...pg, ...{cart: self.cart}};
-    self.pagSeguroService.post(compra).subscribe((response: any) => {
-      self.retornoTransacao = response;
-      self.passo = 5;
+  startBoleto(pg: PG){
+    this.loading = true;
+    this.passo = 4;
+    const compra = {...pg, ...{cart: this.cart}, ...{session: this.session}};
+    this.pagSeguroService.post(compra).subscribe((response: any) => {
+      this.retornoTransacao = response;
+      this.passo = 5;
       localStorage.removeItem(environment.cartStorage);
-      self.loading = false;
-    }, error => { self.passo = 6; self.loadingOFF(); });
+      this.loading = false;
+    }, error => { this.passo = 6; this.loadingOFF(); });
   }
 
   /*startDebito(pg: PG){
@@ -317,17 +313,17 @@ export class CheckoutPage implements OnInit {
     )
   }*/
 
-  startCredito(pg: PG, self: any) {
-    self.loading = true;
-    self.passo = 4;
-    const compra = {...pg, ...{cart: self.cart}};    
-    self.pagSeguroService.post(compra).subscribe((response: any) => {
+  startCredito(pg: PG) {
+    this.loading = true;
+    this.passo = 4;
+    const compra = {...pg, ...{cart: this.cart}, ...{session: this.session}};    
+    this.pagSeguroService.post(compra).subscribe((response: any) => {
       console.log('startCredito', response);      
-      self.retornoTransacao = response;
-      self.passo = 5;
-      self.loading = false;
+      this.retornoTransacao = response;
+      this.passo = 5;
+      this.loading = false;
       localStorage.removeItem(environment.cartStorage);
-    }, error => { self.passo = 6; self.loadingOFF(); });
+    }, error => { this.passo = 6; this.loadingOFF(); });
   }
 
   toPage(page) {

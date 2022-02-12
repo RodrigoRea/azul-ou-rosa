@@ -5,6 +5,7 @@ import { NgZone } from '@angular/core';
 import { Bin, Cartao, Dados, Metodos, PG } from '../../../checkout';
 import { PagSeguroService } from 'src/app/_services/pagseguro.service';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 var NUMERO_MAX_PARCELA_SEM_JUROS: number = 3;
 declare var PagSeguroDirectPayment: any;
@@ -92,7 +93,8 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
   constructor(
     private formBuilder: FormBuilder,
     private zone: NgZone,
-    private pagSeguroService: PagSeguroService
+    private pagSeguroService: PagSeguroService,
+    private router: Router
   ) {
     window['angularComponentRef'] = {
       zone: this.zone,
@@ -151,7 +153,7 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
           this.maxInstallmentNoInterest = +(res.max_installment_no_interest);
           this.getParcelamento(this._valor);
         }
-      }, error => { this.errorPagSeguroConn(this); });
+      }, error => { this.errorPagSeguroConn(); });
   }
 
   formatRS(x: any) {
@@ -170,8 +172,7 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
     return r;
   }
 
-  getParcelamento(valor: number){    
-    let self = this;
+  getParcelamento(valor: number){  
     let MaxParcSemJuros: any = (this.maxInstallmentNoInterest === 0) ? 1 : this.maxInstallmentNoInterest;
     const strvalor = this.formatRS(valor);
 
@@ -183,14 +184,14 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
         success: (response: ResponseParcelas)=>{
           // Retorna as opções de parcelamento disponíveis
           window['angularComponentRef'].zone.run(() => {
-            window['angularComponentRef'].componentFn( ()=>{ self.setParcelas(response, self); } );
+            window['angularComponentRef'].componentFn( ()=>{ this.setParcelas(response); } );
           }); 
         },
         error: (response) => {
           console.log('response', response);
           if(response){
             window['angularComponentRef'].zone.run(() => {
-              window['angularComponentRef'].componentFn( ()=>{ self.errorPagSeguroConn(self); } );
+              window['angularComponentRef'].componentFn( ()=>{ this.errorPagSeguroConn(); } );
             });
           }
         },
@@ -200,17 +201,17 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  setParcelas(parcelas:ResponseParcelas, self: any){
-    self.bandeiras = new Array<string>();
+  setParcelas(parcelas:ResponseParcelas){
+    this.bandeiras = new Array<string>();
     if( !parcelas.error ){
       for( const key in parcelas.installments ){
-        (self.bandeiras).push(key);
+        (this.bandeiras).push(key);
       }
-      self.parcelas = parcelas;
-      console.log('bandeiras', self.bandeiras );
-      console.log('parcelas', self.parcelas );
+      this.parcelas = parcelas;
+      console.log('bandeiras', this.bandeiras );
+      console.log('parcelas', this.parcelas );
     }
-    setTimeout(() => { self.loadinParc = false; });
+    setTimeout(() => { this.loadinParc = false; });
   }
 
   validaCartao(cartao: string){
@@ -245,19 +246,18 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
   }
 
   getBandeira( card: string ){
-    let self = this;
     const bin = card.substr(0,6);
     // console.log( bin );
     PagSeguroDirectPayment.getBrand({
       cardBin: bin,
       success: (response: Bin) => {
         window['angularComponentRef'].zone.run(() => {
-          window['angularComponentRef'].componentFn( ()=> { self.setBandeira(response); });
+          window['angularComponentRef'].componentFn( ()=> { this.setBandeira(response); });
         });
       },
       error: function(response) {
         window['angularComponentRef'].zone.run(() => {
-          window['angularComponentRef'].componentFn( ()=>{ self.errorPagSeguroConn(self); });
+          window['angularComponentRef'].componentFn( ()=>{ this.errorPagSeguroConn(); });
         });
         //tratamento do erro
       },
@@ -277,7 +277,6 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
   }
 
   getCardToken(){
-    let self = this;
     this.loading = true;
     const cartao = (`${this.formulario.get('cardnumber').value}`).replace(/[^\d]+/g,'');
     const bandeira = (`${this.formulario.get('brand').value}`).replace(/[^\d]+/g,'');
@@ -293,12 +292,13 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
       expirationYear: ano, // Ano da expiração do cartão, é necessário os 4 dígitos.
       success: (response: any) => {
         window['angularComponentRef'].zone.run(() => {
-          window['angularComponentRef'].componentFn( ()=> { self.setCardToken(response, self); });
+          window['angularComponentRef'].componentFn( ()=> { this.setCardToken(response); });
         });
       },
       error: (response) => {
+        console.log('getCardToken response', response);
         window['angularComponentRef'].zone.run(() => {
-          window['angularComponentRef'].componentFn( ()=>{ self.setNoToken(self); });
+          window['angularComponentRef'].componentFn( ()=>{ this.setNoToken(); });
         });
       },
       complete: function(response) {
@@ -307,33 +307,32 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
    });
   }
 
-  setNoToken(self){
-    self.loadingOFF();
-    self.token = '';
-    self.formulario.get('token').setValue(self.token);
+  setNoToken(){
+    this.loadingOFF();
+    this.token = '';
+    this.formulario.get('token').setValue(this.token);
   }
 
-  setCardToken(response: any, self: any){
+  setCardToken(response: any){
     if( response['card'] !== undefined ){
-      self.token = response['card']['token'];
-      self.formulario.get('tipo').setValue(self.tipo);
-      self.setHash();
+      this.token = response['card']['token'];
+      this.formulario.get('tipo').setValue(this.tipo);
+      this.setHash();
     }
   }
 
   setHash(){
-    let self = this;
     this.senderHash = '';
     PagSeguroDirectPayment.onSenderHashReady((response: any) => {
       if(response['status'] === 'error') {
         window['angularComponentRef'].zone.run(() => {
-          window['angularComponentRef'].componentFn( ()=> { self.errorPagSeguroConn(self); });
+          window['angularComponentRef'].componentFn( ()=> { this.errorPagSeguroConn(); });
         });
         return false;
       }
-      self.senderHash = response['senderHash'];
+      this.senderHash = response['senderHash'];
       //response['senderHash']; //Hash estará disponível nesta variável.
-      self.finalizacao(response['senderHash'], self);
+      this.finalizacao(response['senderHash']);
     });
   }
 
@@ -356,7 +355,7 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  finalizacao(hash: string, self: any){
+  finalizacao(hash: string){
     this.loadingOFF();
     let pg = new PG();
     pg.dados     = this.dados;
@@ -384,10 +383,10 @@ export class CartaoComponent implements OnInit, AfterViewChecked {
     this.loading = false; 
   }
 
-  errorPagSeguroConn(self: any){
-    self.loading = false; 
-    setTimeout(() => { self.loadinParc = false; });
+  errorPagSeguroConn(){
+    this.loading = false; 
+    setTimeout(() => { this.loadinParc = false; });
     alert('Falha na conexão com nossos serviços de pagamento! Por favor, tente novamente');
-    self.router.navigate(['/convites']);
+    this.router.navigate(['/convites']);
   }
 }

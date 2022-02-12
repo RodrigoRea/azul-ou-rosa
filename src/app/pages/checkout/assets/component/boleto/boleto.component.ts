@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, NgZone } from '@angular/core';
 import { Input } from '@angular/core';
 import { Cartao, Dados, PG } from '../../../checkout';
+import { Router } from '@angular/router';
 
 declare var PagSeguroDirectPayment: any;
 
@@ -25,6 +26,7 @@ export class BoletoComponent implements OnInit {
 
   constructor(
     private zone: NgZone,
+    private router: Router
   ) { 
     window['angularComponentRef'] = {
       zone: this.zone, 
@@ -39,7 +41,6 @@ export class BoletoComponent implements OnInit {
   }
 
   setHash(){
-    let self = this;
     PagSeguroDirectPayment.onSenderHashReady((response: any) => {
       
       //response['senderHash']; //Hash estará disponível nesta variável.
@@ -47,10 +48,10 @@ export class BoletoComponent implements OnInit {
         window['angularComponentRef'].componentFn( ()=> {
           setTimeout(() => {
             if( response && response.senderHash ){
-              self.finalizacao(response.senderHash, self); 
+              this.finalizacao(response.senderHash); 
             }
             if( response && response.status === 'error' || response === undefined ){
-              self.errorPagSeguroConn(self);
+              this.errorPagSeguroConn();
             }
           });  
         });
@@ -58,22 +59,22 @@ export class BoletoComponent implements OnInit {
     });
   }
 
-  finalizacao(hash: string, self: any){
+  finalizacao(hash: string ){
     let pg = new PG();
-    self.dados.quantidade = self.quantidade;
-    pg.dados = self.dados;
+    this.dados.quantidade = this.quantidade;
+    pg.dados = this.dados;
     pg.hash = hash;
 
     pg.pagamento = new Cartao();
     pg.pagamento.tipo = 'boleto';
-    self.loading = false;
-    setTimeout(() => { self.finalizar.emit(pg); });
+    this.loading = false;
+    setTimeout(() => { this.finalizar.emit(pg); });
     
   }
 
-  errorPagSeguroConn(self: any){
-    self.loading = false; 
+  errorPagSeguroConn(){
+    this.loading = false; 
     alert('Falha na conexão com nossos serviços de pagamento! Por favor, tente novamente');
-    self.router.navigate(['/convites']);
+    this.router.navigate(['/convites']);
   }
 }
