@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/_auth/auth.service';
 import { ProdutoService } from 'src/app/_services/produto.service';
@@ -24,6 +24,9 @@ export class ModelosPage implements OnInit {
 
   produtos: any[] = [] as any[];
 
+  @ViewChild('slides', {static: true}) slides: any;
+  selected: number = 0;
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -37,6 +40,8 @@ export class ModelosPage implements OnInit {
     console.log('this.modelo_id', this.modelo_id);
     if( this.modelo_id ){
       this.getProdutos();
+    }else{
+      alert('show vitrine');
     }
   }
 
@@ -82,4 +87,9 @@ export class ModelosPage implements OnInit {
     return ("0000" + id).slice(-4);
   }
 
+  activeSlide(slide: any){
+    slide.getActiveIndex​().then((selected: number)=>{
+      this.selected = selected;
+    });
+  }
 }

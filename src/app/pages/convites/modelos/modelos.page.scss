@@ -24,6 +24,10 @@
     }
 }
 
+.box-img-show-tema-invite{
+    height: 600px;
+}
+
 .name{
     text-transform: uppercase;
 }
@@ -54,5 +58,38 @@
     p{
         padding-left: 24px;
         color: #999;
+    }
+}
+
+.vitrine{
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid #fff;
+}
+
+.info-price{
+    background-color: #fff;
+    height: 90px;
+    width: 90px;
+
+    border-radius: 50%;
+    border: 4px solid #fff;
+    position: absolute;
+    left: 25px;
+    bottom: 200px;
+    z-index: 1;
+
+    -webkit-box-shadow: 0px 0px 5px 0px #000000; 
+    box-shadow: 0px 0px 5px 0px #000000;
+
+    i{
+        color: #707070;
+        display: block;
+        margin: auto;
+        width: 100%;
+        padding-top: 31px;
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: bold;
     }
 }

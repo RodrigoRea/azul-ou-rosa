@@ -45,7 +45,8 @@
                   </div>
                 </div-->
                   
-                    <label class="vl-item">{{ pedido.valor | currency: 'BRL' : true }}</label>
+                    <!--label class="vl-item">{{ pedido.valor | currency: 'BRL' : true }}</label-->
+                    <label class="vl-date">Contratação em:<br>{{ pedido.full_date | date : 'dd/MM/yy - h:mm a' }}</label>
                     <div>
                       <button class="btn btn-outline-primary btn-sm" *ngIf="item.editavel === 'S'" (click)="editar(item)">
                         <i class="icon-item fa fa-edit"></i>&nbsp;Editar
@@ -66,6 +67,7 @@
                       </a>
                       <label class="msg-copy" *ngIf="show_copy && cod_site === item.cod_site">Copiado</label>
                       <label class="icon-end" (click)="copylink(item)" ><small>copiar link&nbsp;</small><i class="fa fa-clone act-click"></i></label>
+                      <div><p><small>Compartilhe o link do convite com seus convidados.</small></p></div>
                     </div>
 
                     <div class="area-link mb-2" *ngIf="item.ativo !== 'S'" >
@@ -82,19 +84,19 @@
                       </button>                      
                     </div>
                     <div *ngIf="+pedido.status === 1">
-                      <small class="info-danger">Em analise </small>
+                      <small class="info-danger">Transação em analise </small>
                     </div>
                     <div *ngIf="+pedido.status === 2">
-                      <small class="info-danger">Em analise </small>
+                      <small class="info-danger">Transação em analise </small>
                     </div>
                     <div *ngIf="+pedido.status === 5">
-                      <small class="info-danger">Cancelado </small>
+                      <small class="info-danger">Pagamento cancelado </small>
                     </div>
                     <div *ngIf="+pedido.status === 6">
-                      <small class="info-danger">Cancelado </small>
+                      <small class="info-danger">Pagamento cancelado </small>
                     </div>
                     <div *ngIf="+pedido.status === 7">
-                      <small class="info-danger">Não autorizado </small>
+                      <small class="info-danger">Pagamento não autorizado</small>
                     </div>
 
                     <div *ngIf="+pedido.status === 3 || +pedido.status === 4">

@@ -56,6 +56,7 @@ export class MeusPedidosPage implements OnInit {
       if( res && res.status ){
         if(item.status === res.status){
           // alert('Esta transação ainda não foi processada! Por favor, aguarde ou tente mais tarde.');
+          this.getPedidos();
         }
         item.status = res.status;
       }

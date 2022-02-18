@@ -17,76 +17,107 @@
   <app-loading [loading]="loading"></app-loading>
 
   <ng-container *ngIf="produtos && (produtos).length > 0">
+    <div class="vitrine" [attr.style]="'background-color: #' + produtos[selected].cor + ';'">
+      <ion-slides #slides pager="true" scrollbar="true" (ionSlideDidChange)="activeSlide(slides)" >
+        <ion-slide *ngFor="let produto of produtos">
+          <div class="slide">
+            <div class="box-act mt-2">
+              <div class="box-img-show-tema box-img-show-tema-invite" >
+                <img class="show-tema slide-{{show}}" *ngIf="show===1" src="{{ url }}/assets/img/tema-{{ getPathImg(produto.template_id) }}-frente.png" alt="" onerror="this.onerror=null; this.src='/assets/imgs/no-image.png'" alt="">
+              </div>  
+            </div>   
+          </div>
+        </ion-slide>
+      </ion-slides>
+
+      <ng-container *ngIf="produtos && (produtos).length > 0">
+        <h5 class="text-center">{{ produtos[selected].modelo }}</h5>
+        <h1 class="text-center">{{ produtos[selected].nome }}</h1>
+        <div>
+          <label class="info-price" [attr.style]="'background-color: #' + produtos[selected].cor + ';'">
+            <i>{{ produtos[selected].valor | currency : 'BRL' : true }}</i>
+          </label>
+        </div>
+
+        <div class="text-center"> 
+          <button class="btn btn-primary" type="button" (click)="toProduct(produtos[selected])" >
+            Criar meu convite&nbsp;<ion-icon name="color-wand-outline"></ion-icon>
+          </button>
+        </div>
+
+        <ion-card-content>        
+          <p>
+            {{ produtos[selected].descricao }}
+          </p>
+          
+          <ul class="list-group mt-2">
+
+            <li class="list-group-item">
+              <ion-icon name="color-wand-outline"></ion-icon>
+              <small>Interativo</small>
+              <ion-icon name="checkmark-outline"></ion-icon> 
+              <p>Ações com clique nos ícones</p>         
+            </li>
+
+            <li class="list-group-item">
+              <ion-icon name="map-outline"></ion-icon>
+              <small>Link do mapa</small>
+              <ion-icon name="checkmark-outline"></ion-icon>
+              <p>Link do evento para google maps</p>
+            </li>   
+            
+            <li class="list-group-item">
+              <ion-icon name="logo-whatsapp"></ion-icon>
+              <small>Link para o whatsapp</small>
+              <ion-icon name="checkmark-outline"></ion-icon>
+              <p>Link para seu whatsapp (opcional)</p>
+            </li> 
+
+            <li class="list-group-item">
+              <ion-icon name="create-outline"></ion-icon>
+              <small>Textos editáveis</small>
+              <ion-icon name="checkmark-outline"></ion-icon>
+              <p>Alteração completa dos textos</p>
+            </li>
+
+            <li class="list-group-item">
+              <ion-icon name="cloud-done-outline"></ion-icon>
+              <small>Online por 90 dias</small>
+              <ion-icon name="checkmark-outline"></ion-icon>
+              <p>Link disponível por 3 meses</p>
+            </li>
+
+            <li class="list-group-item">
+              <ion-icon name="person-add-outline"></ion-icon>
+              <small>*Confirmação de presença</small>
+              <ion-icon name="checkmark-outline"></ion-icon>
+              <p>Adquirido separadamente</p>
+            </li>
+
+          </ul>
+
+        </ion-card-content>
+
+
+        <!-- pre>{{ produtos[selected] | json }}</pre -->
+      </ng-container>
+    </div>
+  </ng-container>
+
+
+  <!--ng-container *ngIf="produtos && (produtos).length > 0">
     <ion-card *ngFor="let produto of produtos">
-      <div class="box-img-show-tema" ><!-- (click)="nextShow()" mudar slide -->
+      <div class="box-img-show-tema" ><!-* (click)="nextShow()" mudar slide *->
         <img class="show-tema slide-{{show}}" *ngIf="show===1" src="{{ url }}/assets/img/tema-{{ getPathImg(produto.template_id) }}-frente.png" alt="" onerror="this.onerror=null; this.src='/assets/imgs/no-image.png'" alt="">
-        <!--img class="show-tema slide-{{show}}" *ngIf="show===2" src="{{ url }}/assets/img/tema-{{ getPathImg(produto.template_id) }}-mobi.png" alt="" onerror="this.onerror=null; this.src='/assets/imgs/no-image.png'" alt=""-->
+        <!-*img class="show-tema slide-{{show}}" *ngIf="show===2" src="{{ url }}/assets/img/tema-{{ getPathImg(produto.template_id) }}-mobi.png" alt="" onerror="this.onerror=null; this.src='/assets/imgs/no-image.png'" alt=""*->
       </div>
       <ion-card-header>
         <ion-card-subtitle>Convite interativo: {{ produto.nome }}</ion-card-subtitle>
         <ion-card-title class="name">{{ produto.modelo }} <label class="price">{{ produto.valor | currency : 'BRL' : true }}</label></ion-card-title>
       </ion-card-header>
       
-      <ion-card-content>        
-        <p>
-          Disponível por até 90 dias.<br>
-          Compartilhe o link com seus convidados
-        </p>
-        
-        <div class="text-center"> 
-          <button class="btn btn-primary" type="button" (click)="toProduct(produto)" >
-            Criar meu convite&nbsp;<ion-icon name="color-wand-outline"></ion-icon>
-          </button>
-        </div>
-
-        <ul class="list-group mt-2">
-
-          <li class="list-group-item">
-            <ion-icon name="color-wand-outline"></ion-icon>
-            <small>Interativo</small>
-            <ion-icon name="checkmark-outline"></ion-icon> 
-            <p>Ações com clique nos ícones</p>         
-          </li>
-
-          <li class="list-group-item">
-            <ion-icon name="map-outline"></ion-icon>
-            <small>Link do mapa</small>
-            <ion-icon name="checkmark-outline"></ion-icon>
-            <p>Link do evento para google maps</p>
-          </li>   
-          
-          <li class="list-group-item">
-            <ion-icon name="logo-whatsapp"></ion-icon>
-            <small>Link para o whatsapp</small>
-            <ion-icon name="checkmark-outline"></ion-icon>
-            <p>Link para seu whatsapp (opcional)</p>
-          </li> 
-
-          <li class="list-group-item">
-            <ion-icon name="create-outline"></ion-icon>
-            <small>Textos editáveis</small>
-            <ion-icon name="checkmark-outline"></ion-icon>
-            <p>Alteração completa dos textos</p>
-          </li>
-
-          <li class="list-group-item">
-            <ion-icon name="cloud-done-outline"></ion-icon>
-            <small>Online por 90 dias</small>
-            <ion-icon name="checkmark-outline"></ion-icon>
-            <p>Link disponível por 3 meses</p>
-          </li>
-
-          <li class="list-group-item">
-            <ion-icon name="person-add-outline"></ion-icon>
-            <small>*Confirmação de presença</small>
-            <ion-icon name="checkmark-outline"></ion-icon>
-            <p>Adquirido separadamente</p>
-          </li>
-
-        </ul>
-
-      </ion-card-content>
+      
     </ion-card>
-  </ng-container>
+  </ng-container -->
 
 </ion-content>
