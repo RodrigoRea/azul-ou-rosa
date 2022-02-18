@@ -16,7 +16,7 @@
         <ion-item (click)="toPage('dicas')" ><i class="fa fa-info-circle me-1"></i>{{ text['dicas'] }}</ion-item>
         <!-- ion-item (click)="toPage('idioma')" >{{ text['idioma'] }}</ion-item -->
 
-        
+        <ion-item (click)="toAvaliar()" ><i class="fa fa-star-half-full me-1"></i>Avalie-nos</ion-item>
 
         <ion-item *ngIf="isAuth" (click)="toPage('/meus-pedidos')" ><i class="fa fa-bookmark me-1"></i>Meus convites/compras</ion-item>
         <ion-item *ngIf="isAuth" (click)="toPage('/cadastro')" ><i class="fa fa-user-circle me-1"></i>Cadastro</ion-item> 
@@ -36,7 +36,26 @@
           <ion-item (click)="toPage('tab4')" >{{ text['numerologia'] }}</ion-item>
         -->
 
-        
+        <ion-modal
+          [isOpen]="showAvaliacao"
+          [breakpoints]="[0.1, 0.5, 1]"
+          [initialBreakpoint]="0.5"
+        >
+          <ng-template>
+            <ion-content>
+              <div class="container" *ngIf="!respondido">
+                <h5 class="text-center mt-5">Esta gostando deste aplicativo?</h5>
+                <div class="row mt-3">
+                  <div class="col-6 text-center"><button type="button" class="btn btn-outline-danger" (click)="responder(false)" >Não</button></div>
+                  <div class="col-6 text-center"><button type="button" class="btn btn-outline-primary" (click)="responder(true)" >Sim</button></div>
+                </div>
+              </div>
+              <div class="container" *ngIf="respondido && gosta_do_app === 'N'">
+                <h5 class="text-center mt-5">Obrigado!</h5>
+              </div>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
 
       </ion-list>
     </ion-content>

@@ -5,6 +5,7 @@ import { MenuController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './_auth/auth.service';
+import { ApplicationService } from './_services/application.service';
 import { IdiomaService } from './_services/idioma.service';
 
 @Component({
@@ -14,6 +15,10 @@ import { IdiomaService } from './_services/idioma.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
+  application_name = '';
+  gosta_do_app: string = '';
+  respondido: boolean = false;
+  showAvaliacao: boolean = false;
   email: string = '';
   token: any | undefined;
   isAuth: boolean = false;
@@ -25,7 +30,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private idioma: IdiomaService,
     private router: Router,
     private menu: MenuController,
-    private authService: AuthService
+    private authService: AuthService,
+    private applicationService: ApplicationService
   ) {
     this.idioma.initLanguage();    
   }
@@ -35,6 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subscription = this.idioma.refreshLanguageState.subscribe(text=>this.text = text);
 
     this.checkIsAuthenticate();
+    this.getApplicationName();
   }
 
   checkIsAuthenticate(){
@@ -71,6 +78,34 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     if( this.subscription ){ this.subscription.unsubscribe(); }
+  }
+
+  getApplicationName(){
+    this.application_name = '';
+    this.applicationService.get().subscribe((res: any) => {
+      if( res && res.link ){
+        this.application_name = res.link;
+      }
+    })
+  }
+
+  toAvaliar(){
+    if( this.application_name !== '' ){
+      this.showAvaliacao = !this.showAvaliacao;
+    }    
+  }
+
+  responder(resp: boolean){
+    if( resp ){
+      this.gosta_do_app = 'S';
+      this.showAvaliacao = false;
+      console.log('ir para a loja do aplicativo', this.application_name);
+      if( this.application_name !== '' ){ window.location.href = this.application_name; }      
+    }else{
+      this.gosta_do_app = 'N';
+      setTimeout(() => { this.showAvaliacao = false; }, 3000);
+    }
+    this.respondido = true;
   }
   
 }

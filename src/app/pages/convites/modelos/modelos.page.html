@@ -31,19 +31,19 @@
       </ion-slides>
 
       <ng-container *ngIf="produtos && (produtos).length > 0">
-        <h5 class="text-center">{{ produtos[selected].modelo }}</h5>
-        <h1 class="text-center">{{ produtos[selected].nome }}</h1>
+        <div class="text-center mt-2"> 
+          <button class="btn btn-primary" type="button" (click)="toProduct(produtos[selected])" >
+            Editar este convite&nbsp;<ion-icon name="color-wand-outline"></ion-icon>
+          </button>
+        </div>
+        <h5 class="text-center"><small>{{ produtos[selected].modelo }} - {{ produtos[selected].nome }}</small></h5>
         <div>
           <label class="info-price" [attr.style]="'background-color: #' + produtos[selected].cor + ';'">
             <i>{{ produtos[selected].valor | currency : 'BRL' : true }}</i>
           </label>
         </div>
 
-        <div class="text-center"> 
-          <button class="btn btn-primary" type="button" (click)="toProduct(produtos[selected])" >
-            Criar meu convite&nbsp;<ion-icon name="color-wand-outline"></ion-icon>
-          </button>
-        </div>
+        
 
         <ion-card-content>        
           <p>
