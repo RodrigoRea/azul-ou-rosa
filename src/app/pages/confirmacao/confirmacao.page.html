@@ -15,6 +15,9 @@
 <ion-content class="background ion-padding">
   <app-loading [loading]="loading"></app-loading>
  
+  <div class="container" *ngIf="list && (list).length === 0 && !loading">
+    <h5>Nenhuma confirmação respondida até agora!</h5>
+  </div>
 
   <ion-list *ngIf="list && (list).length > 0 && !loading">
     <ion-list-header>
