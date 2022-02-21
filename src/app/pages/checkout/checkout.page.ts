@@ -292,6 +292,7 @@ export class CheckoutPage implements OnInit {
       this.retornoTransacao = response;
       this.passo = 5;
       localStorage.removeItem(environment.cartStorage);
+      localStorage.removeItem(environment.templateStorage);
       this.loading = false;
     }, error => { this.passo = 6; this.loadingOFF(); });
   }
@@ -323,6 +324,7 @@ export class CheckoutPage implements OnInit {
       this.passo = 5;
       this.loading = false;
       localStorage.removeItem(environment.cartStorage);
+      localStorage.removeItem(environment.templateStorage);
     }, error => { this.passo = 6; this.loadingOFF(); });
   }
 

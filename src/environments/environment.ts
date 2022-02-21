@@ -5,6 +5,7 @@
 export const environment = {
   production: true,
   cartStorage: 'sandbox_cart',
+  templateStorage: 'sandbox_template',
   keytoken: 'sandbox_mybabeis',
 
   api: 'https://api.mybabeis.com.br',

@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IdiomaService } from 'src/app/_services/idioma.service';
 import { ModeloService } from 'src/app/_services/modelo.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-convites',

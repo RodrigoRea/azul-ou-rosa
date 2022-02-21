@@ -24,4 +24,6 @@ export interface ITemplate {
     valor_presenca: number;
 
     phtml: string;
+
+    in_cart?: boolean;
 }

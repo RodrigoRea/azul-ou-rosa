@@ -58,7 +58,7 @@ export class EditTemplateComponent implements OnInit, OnDestroy, AfterViewChecke
         const phtml = atob(`${this.template.phtml}`); 
         $(`#invite-model-${this.ID}`).html(phtml);
         setTimeout(() => {
-          this.startActionsTemplateMode();
+          this.setDefaultValues();          
         });
       });    
     }); 
@@ -98,7 +98,29 @@ export class EditTemplateComponent implements OnInit, OnDestroy, AfterViewChecke
       }
     });
     this.cloneRemoteScript();
-    this.createIndicatorEditorMode();
+    this.createIndicatorEditorMode();    
+  }
+
+  setDefaultValues(){
+    if( this.template && this.template.in_cart ){
+      setTimeout(() => {
+        const template = this.template;
+        $("[id^=t-]").each(function(){
+          let id = ( $(this).attr('id') ).replace('t-','');
+          try {
+            const v = template[id];
+            if(v){ $(`#t-${id}`).html(v); }            
+          } catch (error) { 
+            console.log(`Erro id: ${id}`, error);
+          }
+          // console.log(`id = #t-${id} - valor template[id] = ${template[id]}` );
+        })
+        // alert('Achamos um convite pré editado');
+        this.startActionsTemplateMode();
+      });      
+    }else{
+      this.startActionsTemplateMode();
+    }
   }
 
   toEdit(input: string){ 

@@ -30,11 +30,12 @@ export class ProdutoPage implements OnInit {
     private templateService: TemplateService
   ) { }
 
-  
-
-  ngOnInit() {
+  ionViewWillEnter(){
     this.produto = this.getInviteSelected();
-    this.getInviteTemplate();
+    this.getInviteTemplate();    
+  }
+
+  ngOnInit() {    
   }
 
   getInviteSelected(){
@@ -48,10 +49,39 @@ export class ProdutoPage implements OnInit {
     return produto;
   }
 
+  getInviteTemplateStorage(template_id: any): any{
+    let templates: any = localStorage.getItem(environment.templateStorage);
+    try {
+      templates = ( templates ) ? JSON.parse(atob(templates)) : undefined;
+    } catch (error) {
+      templates = undefined;
+    }
+    if( templates && (templates).length > 0 ){
+      for(let i = 0; i < (templates).length; i++){
+        const template = templates[i];
+        if( template && template.invite && template.invite.template_id ){
+          if( `${template.invite.template_id}` === `${template_id}` ){
+            return template.invite;
+          }
+        }
+      }
+    }
+    return undefined;
+    
+  }
+
   getInviteTemplate(){
     this.template = undefined;
     if( this.produto.template_id ){
       this.loading = true;
+
+      const template = this.getInviteTemplateStorage(this.produto.template_id);
+      if( template && template.template_id ){
+        this.template = template;
+        this.template['in_cart'] = true;
+        setTimeout(() => { this.loading = false },1000);
+        return;
+      }
       this.templateService.get(this.produto.template_id).subscribe((res:any)=>{
         if(res){
           this.template = res;
@@ -70,6 +100,7 @@ export class ProdutoPage implements OnInit {
     }]
     console.log('gravar', cart);
     localStorage.setItem(environment.cartStorage, btoa(JSON.stringify(cart)));
+    localStorage.setItem(environment.templateStorage, btoa(JSON.stringify(cart)));
     setTimeout(() => {
       this.router.navigate([`checkout`]);
     });

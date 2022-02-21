@@ -126,7 +126,7 @@ export class IdiomaService {
         this.strs['convites'] = ['Convites','Invitations','Invitaciones'];
         
         this.strs['calgravidez'] = ['Signo do bebê','Baby sign','Signo de bebe'];
-        this.strs['calgravidez-txt-1'] = ['Calcula o prazo apróximado em que o bebê pode nascer. Podendo prever até o signo do bebê!','Calculate the approximate time the baby can be born. Can even predict the baby sign!','Calcula el plazo aproximado en que el bebé puede nacer. ¡Podrá predecir hasta el signo del bebé!'];
+        this.strs['calgravidez-txt-1'] = ['Calcula a data apróximada em que o bebê pode nascer. Podendo prever até o signo do bebê!','Calculate the approximate time the baby can be born. Can even predict the baby sign!','Calcula el plazo aproximado en que el bebé puede nacer. ¡Podrá predecir hasta el signo del bebé!'];
         this.strs['calgravidez-txt-2'] = ['Data do primeiro dia da ultima menstruação','Date of first day of last menstruation','Fecha del primer día de la última menstruación'];
         this.strs['calgravidez-txt-3'] = ['Dia de início','Start day','Día de inicio'];
         this.strs['calgravidez-txt-4'] = ['Mês','Month','Mes'];
@@ -149,13 +149,13 @@ export class IdiomaService {
         this.strs['maia-txt-1'] = ['A idade deve ser entre 15 e 40 anos!','The age must be between 15 and 40 years!','La edad debe ser entre 15 y 40 años!'];
         this.strs['maia-txt-2'] = ['Mês em que o bebê irá nascer','Month the baby will be born','Mes en el que el bebé nacer'];
         this.strs['maia-txt-3'] = ['Idade da mamãe quando ficou grávida','Mom\'s age when she became pregnant','Edad de la mamá cuando se quedó embarazada'];
-        this.strs['maia-txt-4'] = ['A versão maia baseia-se nas fases da lua e no ciclo menstrual da mãe. Se ovula na lua cheia provavelmente vai nascer uma menina, se ovula em lua nova será um menino, e nas fases crescente e minguante será menina e menino.','The Mayan version is based on the phases of the moon and the mother\'s menstrual cycle. If you ovulate on the full moon, a girl, if she ovulate a new moon will be a boy, and in the growing and waning phases will be girl and boy.','La versión maya se basa en las fases de la luna y en el ciclo menstrual de la madre. Si se ovula en la luna llena probablemente va a nacer una niña, si ovula en luna nueva será un niño, y en las fases creciente y menguante será niña y niño.'];
+        this.strs['maia-txt-4'] = ['A versão maia baseia-se nas fases da lua.','The Mayan version is based on the phases of the moon.','La versión maya se basa en las fases de la luna.'];
 
         this.strs['cigana'] = ['Cigana','Gipsy','Citano'];
         this.strs['cigana-txt-1'] = ['Qualquer idade!','Any age!','¡Cualquier edad!'];
         this.strs['cigana-txt-2'] = ['Mês em que a mamãe engravidou','Month when mom got pregnant','Mes en el que la mamá se quedó embarazada'];
         this.strs['cigana-txt-3'] = ['Idade da mamãe quando ficou grávida','Mom\'s age when she became pregnant','Edad de la mamá cuando se quedó embarazada'];
-        this.strs['cigana-txt-4'] = ['Basta somar a sua idade ao mês em que engravidou. Se der número par, provávelmente será menino, se der ímpar, provávelmente será menina.','Just add your age to the month you got pregnant. If it`s an even number, it`s likely to be a boy, if it`s an odd number, it`s likely to be a girl.','Simplemente agregue su edad al mes en que quedó embarazada. Si es un número par, es probable que sea un niño, si es un número impar, es probable que sea una niña.']
+        this.strs['cigana-txt-4'] = ['Cálculo apenas sobre a data e idade da mãe','',''];
 
         this.strs['resultado'] = ['Resultado','Result','Resultado'];
         this.strs['resultado-txt-1'] = ['Parabéns, acho que vai ser um menino','Congratulations, I think it\'s going to be a boy.','Enhorabuena, creo que va a ser un niño'];
