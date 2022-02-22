@@ -31,6 +31,7 @@ export class SignUpComponent implements OnInit {
 
     this.formulario = this.formBuilder.group({
       mail: ['',[Validators.required, Validators.email]],
+      remail: ['',[Validators.required, Validators.email]],
       pass: ['',[Validators.required, Validators.minLength(5)]]
     });
   }

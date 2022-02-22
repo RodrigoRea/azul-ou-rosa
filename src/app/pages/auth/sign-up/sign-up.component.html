@@ -12,7 +12,7 @@
 
 <ion-content class="background ion-padding">
 
-<div class="container content-page" *ngIf="formulario !== undefined">
+<div class="container content-page" *ngIf="formulario">
   <div class="row mt-5">
 
     <div class="col-md-6 text-center">
@@ -27,6 +27,18 @@
                 <input type="mail" class="form-mobi text-lowercase" (input)="mensagem = ''" placeholder="Ex: meu@email.com.br" formControlName="mail"
                   [autocomplete]="'off'" required>
                     <span class="input-group-text group-form-mobi-right"><i class="fa fa-envelope icon-input-motors"></i></span>                  
+                </div>
+              </div>
+
+              <div class="form-max-input mt-4">
+                <div class="info-text text-start">Repita seu email</div>
+                <div class="input-group">
+                <input type="mail" class="form-mobi text-lowercase" (input)="mensagem = ''" placeholder="Ex: meu@email.com.br" formControlName="remail"
+                  [autocomplete]="'off'" required>
+                    <span class="input-group-text group-form-mobi-right"><i class="fa fa-envelope icon-input-motors"></i></span>                  
+                </div>
+                <div *ngIf="formulario.get('mail').valid && formulario.get('remail').valid && formulario.get('mail').value !== formulario.get('remail').value">
+                  <small class="error-info">Os emails i nformados são diferentes</small>
                 </div>
               </div>
 
@@ -48,7 +60,7 @@
                 <div class="row">
                   <div class="form-max-input">
                     <div class="col-md-12 text-center mt-5">
-                      <button class="btn btn-primary" [disabled]="!formulario?.valid || enviando" type="submit"
+                      <button class="btn btn-primary" [disabled]="!formulario?.valid || enviando || formulario.get('mail').value !== formulario.get('remail').value" type="submit"
                         expand="block">Cadastrar</button>
                     </div>
                   </div>
