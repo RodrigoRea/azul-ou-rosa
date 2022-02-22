@@ -20,12 +20,18 @@
     <br>
     <br>
     <ion-slides pager="false" scrollbar="true">
-      <ion-slide *ngFor="let item of modelos">
+      <ion-slide *ngFor="let item of modelos; let i = index">
         <div class="slide">
           <div class="box-act mt-2">
             <div (click)="toSelected(item)" class="box-window" style="background-image: url('https://convite.mybabeis.com.br/assets/img/products/modelo_{{ item.modelo_id }}.jpeg');" ></div>  
             <p class="mt-5 p-name">{{item.nome}}</p>     
-          </div>   
+          </div> 
+          <div class="row indicative">
+            <div class="col-5"><i class="fa fa-angle-left"></i> </div>
+            <div class="col-2 n-info">{{ (i + 1) }}</div>
+            <div class="col-5"><i class="fa fa-angle-right"></i> </div>            
+          </div>
+          
         </div>
       </ion-slide>
     </ion-slides>

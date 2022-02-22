@@ -19,14 +19,21 @@
   <ng-container *ngIf="produtos && (produtos).length > 0">
     <div class="vitrine" [attr.style]="'background-color: #' + produtos[selected].cor + ';'">
       <ion-slides #slides pager="true" scrollbar="true" (ionSlideDidChange)="activeSlide(slides)" >
-        <ion-slide *ngFor="let produto of produtos">
+        <ion-slide *ngFor="let produto of produtos; let i = index">
           <div class="slide">
             <div class="box-act mt-2">
               <div class="box-img-show-tema box-img-show-tema-invite" >
                 <img class="show-tema slide-{{show}}" *ngIf="show===1" src="{{ url }}/assets/img/tema-{{ getPathImg(produto.template_id) }}-frente.png" alt="" onerror="this.onerror=null; this.src='/assets/imgs/no-image.png'" alt="">
               </div>  
-            </div>   
-          </div>
+            </div> 
+            
+            <div class="row indicative">
+              <div class="col-5"><i class="fa fa-angle-left"></i> </div>
+              <div class="col-2 n-info">{{ (i + 1) }}</div>
+              <div class="col-5"><i class="fa fa-angle-right"></i> </div>            
+            </div>
+            
+          </div>          
         </ion-slide>
       </ion-slides>
 

@@ -32,16 +32,6 @@ export class HomePage implements OnInit, OnDestroy {
     this.items = [];
 
       this.items.push({
-        title: this.text['convites'],
-        note: '',
-        icon: "heart",
-        image:'convites.jpg',
-        component: null,
-        page: 'convites',
-        class: 'convites'
-      });
-
-      this.items.push({
         title: this.text['maia'],
         note: this.text['batimentos-txt'],
         icon: "heart",
@@ -89,6 +79,16 @@ export class HomePage implements OnInit, OnDestroy {
         component: null,
         page: 'calgravidez',
         class: ''
+      });
+
+      this.items.push({
+        title: this.text['convites'],
+        note: '',
+        icon: "heart",
+        image:'convites.jpg',
+        component: null,
+        page: 'convites',
+        class: 'convites'
       });
   }
 
