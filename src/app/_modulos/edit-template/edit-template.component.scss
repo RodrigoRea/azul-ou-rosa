@@ -1,3 +1,8 @@
+ion-fab-button{
+    background: #fff;
+    border-radius: 50%;
+}
+
 .modal-dialog{
     margin-top: 20%;
 }
@@ -33,4 +38,15 @@
 .info-text{
     font-size: 0.8rem;
     color: #999;
+}
+
+
+.icon-editor-ex, .icon-menu{
+    color: #6f94da;
+    font-size: 1.4rem;
+}
+
+.icon-whatsapp{
+    color: #43a843;
+    font-size: 1.4rem;  
 }

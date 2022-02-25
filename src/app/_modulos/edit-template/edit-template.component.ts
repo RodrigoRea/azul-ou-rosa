@@ -192,7 +192,22 @@ export class EditTemplateComponent implements OnInit, OnDestroy, AfterViewChecke
 
   createIndicatorEditorMode(){
     $('.icon-editor').remove();
-    var nstyle = `font-size: 1rem;position: relative;top: -15px;color: #6f94da;float: none;text-shadow: 0px 0px 6px rgb(68, 211, 255);`; 
+    var nstyle = `
+      position: relative;
+      top: -15px;
+      color: #6f94da;
+      float: none;
+      text-shadow: 0px 0px 6px rgb(68, 211, 255);
+
+      font-size: 1.5rem;
+      background-color: #fff;
+      border-radius: 50%;
+      cursor: pointer;
+
+      -webkit-box-shadow: 0px 0px 5px 0px #fff;
+      box-shadow: 0px 0px 5px 0px #fff;
+      padding: 2px;
+    `; 
     setTimeout(() => {        
       $("[id^=t-]").each(function(){
         var id = $(this).attr('id');
@@ -213,11 +228,20 @@ export class EditTemplateComponent implements OnInit, OnDestroy, AfterViewChecke
       // diferenciais ;
       // data
       var cstyle = `
-        font-size: 1rem;position: 
-        relative;top: -60px;
+        position: relative;
+        top: -60px;
         color: #6f94da;
         float: none;left: 25px;
         text-shadow: 0px 0px 6px rgb(68, 211, 255);
+
+        font-size: 1.5rem;
+        background-color: #fff;
+        border-radius: 50%;
+        cursor: pointer;
+
+        -webkit-box-shadow: 0px 0px 5px 0px #fff;
+        box-shadow: 0px 0px 5px 0px #fff;
+        padding: 2px;
       `;
       $("#fixed-data-formated").append(`<i class="fa fa-commenting-o icon-editor" onClick="$('#t-data').click();" style="${cstyle}"></i>`);
 
