@@ -45,12 +45,25 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   checkIsAuthenticate(){
-    this.isAuth = this.authService.getAuthState();
+    this.isAuth = ( this.authService.getAuthState() && this.codeByEmailIsValid());
     this.subscription = this.authService.authState.subscribe(auth=>{
-      this.isAuth = auth;  
+      this.isAuth = ( auth && this.codeByEmailIsValid());  
       this.getSession(this.isAuth);    
     })
     this.getSession(this.isAuth);
+  }
+
+  codeByEmailIsValid(){
+    const helper = new JwtHelperService();
+    let tk = localStorage.getItem(environment.keytoken);
+    if( tk === undefined || tk === null){
+      return false;
+    }
+    const token = helper.decodeToken(tk);
+    if( token && token['code'] && token['code'] === 'S' ){
+      return false;
+    }
+    return true;
   }
 
   async getSession(autenticado: boolean){

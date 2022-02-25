@@ -89,7 +89,7 @@ export class AuthService {
             this.removeLocalStorageToken();
             this.autenticado.emit(false);
             this.authsubject.next(<boolean>false);
-            this.router.navigate(['/home']);
+            setTimeout(() => { this.router.navigate(['/home']); });            
             return false;
         }
     }
