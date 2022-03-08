@@ -23,3 +23,12 @@
 .line-price{
     float: right;
 }
+
+.off-add{
+    color: #ccc;
+    text-decoration: line-through;
+    label{
+        color: #ccc !important; 
+        text-decoration: line-through !important;
+    }
+}

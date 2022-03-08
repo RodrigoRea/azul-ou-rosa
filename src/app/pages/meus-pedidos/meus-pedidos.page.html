@@ -25,8 +25,8 @@
       <button type="button" class="btn btn-primary" (click)="toPage('convites')" >Visualizar modelos de convite</button>
     </div>
   </ng-container> 
-
-  <div *ngIf="show && pedidos && (pedidos).length > 0">
+  
+  <div *ngIf="!loading && show && pedidos && (pedidos).length > 0">
 
     <ul class="list-group">
       <ng-container *ngFor="let pedido of pedidos">

@@ -30,12 +30,16 @@ export class MeusPedidosPage implements OnInit {
   getPedidos(){
     this.pedidos = [];
     this.loading = true;
+    this.show = false;
     this.pedidoService.get().subscribe((res)=>{
+      this.loading = false;
+      
+
       if(res && (res).length > 0){
         this.pedidos = res;
+        this.show = true;
       }
-      this.loading = false;
-      this.show = true;
+      
     }, error=>{ this.loading = false; this.show = true; });
   }
 

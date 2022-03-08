@@ -145,11 +145,22 @@
         <ul class="list-group">
             <ng-container *ngFor="let item of cart">
                     <li class="list-group-item">                        
-                        <h6>{{ item.produto.modelo }} - {{ item.produto.nome }}</h6>
+                        <h6><i class="fa fa-check"></i>{{ item.produto.modelo }} - {{ item.produto.nome }}</h6>
                         <label class="price-list">{{ item.produto.valor | currency: 'BRL': true }}</label>
                     </li>
-                    <li class="list-group-item" *ngIf="item.invite.link_presenca === 'S'">
-                        <h6>Confirmação de presença</h6>
+                    <li class="list-group-item on-add" *ngIf="item.invite.link_presenca === 'S'">
+                        <h6>
+                            <i (click)="toggleLinkPresenca(item)" class="fa fa-trash" *ngIf="passo === 2"></i>
+                            <i class="fa fa-check" *ngIf="passo !== 2"></i>
+                            Confirmação de presença
+                        </h6>
+                        <label class="price-list">{{ item.invite.valor_presenca | currency: 'BRL': true }}</label>
+                    </li>
+                    <li class="list-group-item off-add" *ngIf="item.invite.link_presenca != 'S' && passo === 2">
+                        <h6>
+                            <i (click)="toggleLinkPresenca(item)" class="fa fa-plus"></i>
+                            Confirmação de presença
+                        </h6>
                         <label class="price-list">{{ item.invite.valor_presenca | currency: 'BRL': true }}</label>
                     </li>
             </ng-container>

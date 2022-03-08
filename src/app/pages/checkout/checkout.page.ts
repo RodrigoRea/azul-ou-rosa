@@ -282,6 +282,17 @@ export class CheckoutPage implements OnInit {
       this.startCredito(pg);
     }
   }
+
+  toggleLinkPresenca(item: any){
+    if( item && item.invite && item.invite.link_presenca ){
+      if( item.invite.link_presenca === 'S' ){
+        item.invite.link_presenca = 'N';
+      }else{
+        item.invite.link_presenca = 'S';
+      }
+      this.setTotal();
+    }    
+  }
   
   
   startBoleto(pg: PG){
