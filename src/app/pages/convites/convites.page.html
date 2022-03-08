@@ -12,52 +12,32 @@
   <app-loading [loading]="loading"></app-loading>
 
   <h4 class="text-center">
-    Crie seu convite interativo!
+    Selecione seu tipo de convite!
   </h4>
 
-  <div id="convites-page">
-    <br>
-    <br>
-    <br>
-    <ion-slides pager="false" scrollbar="true">
-      <ion-slide *ngFor="let item of modelos; let i = index">
-        <div class="slide">
-          <div class="box-act mt-2">
-            <div (click)="toSelected(item)" class="box-window" style="background-image: url('https://convite.mybabeis.com.br/assets/img/products/modelo_{{ item.modelo_id }}.jpeg');" ></div>  
-            <p class="mt-5 p-name">{{item.nome}}</p>     
-          </div> 
-          <div class="row indicative">
-            <div class="col-5"><i class="fa fa-angle-left"></i> </div>
-            <div class="col-2 n-info">{{ (i + 1) }}</div>
-            <div class="col-5"><i class="fa fa-angle-right"></i> </div>            
-          </div>
-          
-        </div>
-      </ion-slide>
-    </ion-slides>
-    <br>
-    <br>
+  <p class="mt-3 mb-3 text-center">Qual é o tipo de convite<br>que está procurando?</p>
+
+  <div *ngFor="let item of modelos; let i = index">
+    <ion-list>
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://convite.mybabeis.com.br/assets/img/products/modelo_{{ item.modelo_id }}.jpeg" />
+        </ion-avatar>
+        <ion-label (click)="toSelected(item)">
+          <h2>{{item.nome}}</h2>
+          <p>Clique aqui para ver os modelos</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
     <br>
   </div>
+
+
   
 
-    <!--ion-row>        
-      <ion-col size="6" *ngFor="let item of modelos">
-        <div class="ion-text-center">
-          <div class="box" (click)="toSelected(item)" >
-            <div class="box-window" style="background-image: url('assets/imgs/products/modelo_{{ item.modelo_id }}.jpeg');" ></div>   
-            <div><small>{{ this.text['convites'] }}</small></div>       
-            <div>{{item.nome}}</div>
-          </div>
-        </div>
-      </ion-col>
-    </ion-row -->
-
-    <br>
-    <br><br><br><br><br>
     <div class="container">
-      <div class="text-center mt-2">
-        <a class="btn btn-primary" href="https://convite.mybabeis.com.br/invite/361da489e09032f94e8241cecc710183">Clique aqui para visualizar<br>um convite modelo</a>
+      <div class="text-center mt-3">
+        <a class="btn btn-primary btn-sm" href="https://convite.mybabeis.com.br/invite/361da489e09032f94e8241cecc710183">Clique aqui para visualizar<br>um convite modelo</a>
       </div>
       <div class="text-center mt-5">
         <iframe class="mv-mybabeis" width="560" height="315" src="https://www.youtube.com/embed/eyus1F_tI4I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

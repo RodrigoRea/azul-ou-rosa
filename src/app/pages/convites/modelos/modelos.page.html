@@ -5,7 +5,7 @@
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon> 
       </ion-button>
     </ion-buttons>
-    <ion-title>Modelos</ion-title>
+    <ion-title>Convite</ion-title>
     <ion-buttons slot="end">
       <ion-menu-button autoHide="false"></ion-menu-button>  
     </ion-buttons>
@@ -40,7 +40,7 @@
       <ng-container *ngIf="produtos && (produtos).length > 0">
         <div class="text-center mt-2"> 
           <button class="btn btn-primary" type="button" (click)="toProduct(produtos[selected])" >
-            Editar este convite&nbsp;<ion-icon name="color-wand-outline"></ion-icon>
+            Escrever neste convite&nbsp;<ion-icon name="color-wand-outline"></ion-icon>
           </button>
         </div>
         <h5 class="text-center"><small>{{ produtos[selected].modelo }} - {{ produtos[selected].nome }}</small></h5>
