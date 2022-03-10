@@ -76,6 +76,17 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  toNoSpace(input: string){
+    setTimeout(() => {    
+      if( this.formulario && this.formulario.get(input) ){
+        const valor = this.formulario.get(input).value;
+        if( valor && typeof valor === 'string'){
+          this.formulario.get(input).setValue((valor).trim());
+        }        
+      }
+    });
+  }
+
   login(){
     
     if( this.formulario !== undefined && this.formulario.valid ){

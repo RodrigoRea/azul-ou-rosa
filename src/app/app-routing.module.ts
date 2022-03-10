@@ -84,6 +84,10 @@ const routes: Routes = [
     path: 'confirmacao/:pedido_item_id',
     loadChildren: () => import('./pages/confirmacao/confirmacao.module').then( m => m.ConfirmacaoPageModule)
   },
+  {
+    path: 'quem-somos',
+    loadChildren: () => import('./pages/quem-somos/quem-somos.module').then( m => m.QuemSomosPageModule)
+  },
 ];
 @NgModule({
   imports: [

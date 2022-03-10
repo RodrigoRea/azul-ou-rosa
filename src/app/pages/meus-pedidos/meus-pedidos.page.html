@@ -75,6 +75,14 @@
                     </div>
 
                     <div *ngIf="+pedido.status > 0 && +pedido.status < 3">
+                      
+                      <ng-container *ngIf="pedido.tipo === 'boleto'">
+                        <small style="color: #ff0000;">Realize o pagamento para <strong>ativar e editar</strong> este convite</small>
+                        <div *ngIf="pedido.retorno_transacao && pedido.retorno_transacao.boleto">
+                          <a class="btn btn-secondary btn-sm mt-2 mb-2" href="{{ pedido.retorno_transacao.boleto }}">Abrir boleto&nbsp;<i class="fa fa-eye"></i></a>
+                        </div>
+                      </ng-container>
+
                       <button type="button" class="btn btn-outline-primary no-border no-padding" (click)="getTransaction(pedido)">
                         <i class="fa fa-refresh" *ngIf="!(loading && item.pedido_id === pedido_id)"></i>
                         <i class="fa fa-refresh fa-spin" *ngIf="loading && item.pedido_id === pedido_id"></i>

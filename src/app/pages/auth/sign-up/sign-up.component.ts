@@ -45,6 +45,17 @@ export class SignUpComponent implements OnInit {
     this.typepass = (this.typepass === 'password') ? 'text' : 'password';
   }
 
+  toNoSpace(input: string){
+    setTimeout(() => {    
+      if( this.formulario && this.formulario.get(input) ){
+        const valor = this.formulario.get(input).value;
+        if( valor && typeof valor === 'string'){
+          this.formulario.get(input).setValue((valor).trim());
+        }        
+      }
+    });
+  }
+
   cadastrar(){
     
     if( this.formulario?.valid ){

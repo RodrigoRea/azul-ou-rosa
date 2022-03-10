@@ -23,7 +23,7 @@
                   <div class="info-text text-start">Email</div>
                   <div class="input-group">
                     <input class="form-mobi text-lowercase" placeholder="Ex: meu@email.com.br" type="email"
-                      formControlName="mail" autocomplete="off">
+                      formControlName="mail" autocomplete="off" (keypress)="toNoSpace('mail')">
                       <span class="input-group-text group-form-mobi-right"><i class="fa fa-envelope icon-input-motors"></i></span>                  
                   </div>
                 </div>
@@ -36,7 +36,7 @@
                   <div class="info-text text-start">Senha</div>
                   <div class="input-group">
                     <input class="form-mobi" placeholder="Senha" type="{{ typepass }}"
-                      formControlName="pass" autocomplete="off">
+                      formControlName="pass" autocomplete="off" (keypress)="toNoSpace('pass')">
                     <span class="input-group-text group-form-mobi-right">
                       <i (click)="changeTypePass()" *ngIf="typepass === 'text'" class="fa fa-eye icon-input-motors"></i>
                       <i (click)="changeTypePass()" *ngIf="typepass === 'password'" class="fa fa-eye-slash icon-input-motors"></i>

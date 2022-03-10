@@ -24,7 +24,7 @@
               <div class="form-max-input mt-4">
                 <div class="info-text text-start">Email</div>
                 <div class="input-group">
-                <input type="mail" class="form-mobi text-lowercase" (input)="mensagem = ''" placeholder="Ex: meu@email.com.br" formControlName="mail"
+                <input type="mail" class="form-mobi text-lowercase" (input)="mensagem = ''" placeholder="Ex: meu@email.com.br" (keypress)="toNoSpace('mail')" formControlName="mail"
                   [autocomplete]="'off'" required>
                     <span class="input-group-text group-form-mobi-right"><i class="fa fa-envelope icon-input-motors"></i></span>                  
                 </div>
@@ -34,7 +34,7 @@
                 <div class="info-text text-start">Repita seu email</div>
                 <div class="input-group">
                 <input type="mail" class="form-mobi text-lowercase" (input)="mensagem = ''" placeholder="Ex: meu@email.com.br" formControlName="remail"
-                  [autocomplete]="'off'" required>
+                  [autocomplete]="'off'" required (keypress)="toNoSpace('remail')">
                     <span class="input-group-text group-form-mobi-right"><i class="fa fa-envelope icon-input-motors"></i></span>                  
                 </div>
                 <div *ngIf="formulario.get('mail').valid && formulario.get('remail').valid && formulario.get('mail').value !== formulario.get('remail').value">
@@ -46,7 +46,7 @@
                 <div class="info-text text-start">Senha</div>
                 <div class="input-group">
                   <input class="form-mobi" placeholder="Senha" type="{{ typepass }}"
-                    formControlName="pass" autocomplete="off" required>
+                    formControlName="pass" autocomplete="off" required (keypress)="toNoSpace('pass')">
                   <span class="input-group-text group-form-mobi-right">
                     <i (click)="changeTypePass()" *ngIf="typepass === 'text'" class="fa fa-eye icon-input-motors"></i>
                     <i (click)="changeTypePass()" *ngIf="typepass === 'password'" class="fa fa-eye-slash icon-input-motors"></i>

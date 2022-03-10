@@ -96,14 +96,32 @@
 
 .indicative{
     position: relative;
-    top: -37px;
+    top: -200px;
 
     height: 0;
     font-size: 2.4rem;
     line-height: 0;
-    color: #5e9ae7;
-    opacity: 0.4;
+    color: #ffffff;
+    opacity: 0.8;
+
+    .left{
+        text-align: left !important;
+        position: relative;
+        right: 28px;
+    }
+
+    .right{
+        text-align: right !important;
+        position: relative;
+        left: 28px;
+    }
+
+    .n-info{
+        opacity: 0 !important;
+    }
 }
+
+
 
 .n-info{
     font-size: 1.4rem;
