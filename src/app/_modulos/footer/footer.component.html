@@ -1,0 +1,11 @@
+<footer>
+  <table style="width: 100%;" class="mt-1">
+      <tr>
+          <td class="text-center" *ngFor="let social of socials">
+              <a href="{{ social.link }}" class="icon-btn-social">
+                  <i class="{{ social.icon }}"></i>
+              </a>
+          </td>
+      </tr>
+  </table>
+</footer>

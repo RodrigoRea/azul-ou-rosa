@@ -8,6 +8,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
 import { IconLogoModule } from 'src/app/_modulos/icon-logo/icon-logo.module';
+import { SharedModule } from 'src/app/_modulos/shared.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { IconLogoModule } from 'src/app/_modulos/icon-logo/icon-logo.module';
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
-    IconLogoModule
+    IconLogoModule,
+    SharedModule
   ],
   declarations: [HomePage]
 })

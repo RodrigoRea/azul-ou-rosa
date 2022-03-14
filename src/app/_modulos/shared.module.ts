@@ -7,6 +7,7 @@ import { IconLogoModule } from './icon-logo/icon-logo.module';
 import { DirectivesModule } from '../_directive/directives.module';
 import { LoadingModule } from './loading/loading.module';
 import { EditTemplateModule } from './edit-template/edit-template.module';
+import { FooterModule } from './footer/footer.module';
 
 @NgModule({
   imports: [    
@@ -16,7 +17,8 @@ import { EditTemplateModule } from './edit-template/edit-template.module';
     RouterModule,
     IconLogoModule,
     LoadingModule,
-    EditTemplateModule
+    EditTemplateModule,
+    FooterModule
   ],
   declarations: [
   ],
@@ -27,7 +29,8 @@ import { EditTemplateModule } from './edit-template/edit-template.module';
     IconLogoModule,
     DirectivesModule,
     LoadingModule,
-    EditTemplateModule
+    EditTemplateModule,
+    FooterModule
   ],
   providers: []
 })

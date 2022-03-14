@@ -14,9 +14,10 @@ export const environment = {
   jsSandbox: 'https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js',
 
   pgSeguroURL: 'https://stc.pagseguro.uol.com.br',
+  isApp: true
 };
 
-// VERSAO WEB
+// VERSAO WEB - setar isApp: false para gerar versao web
 // ng build --configuration=production --deploy-url app/
 
 /************************************************************************************ */
