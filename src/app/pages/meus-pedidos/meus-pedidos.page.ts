@@ -57,14 +57,15 @@ export class MeusPedidosPage implements OnInit {
     this.loading = true;
     this.pedidoService.getTransaction(`${item.pedido_id}`).subscribe((res:any)=>{
       console.log('transacao', res);
+      this.loading = false;
       if( res && res.status ){
         if(item.status === res.status){
           // alert('Esta transação ainda não foi processada! Por favor, aguarde ou tente mais tarde.');
           this.getPedidos();
+          return;
         }
         item.status = res.status;
-      }
-      this.loading = false;
+      }      
     }, error=> this.loading = false);
   }
 

@@ -109,7 +109,7 @@
 
                     <div *ngIf="+pedido.status === 3 || +pedido.status === 4">
                       <small *ngIf="item.editavel === 'S'" class="info-primary">Disponível até {{ item.exp_data | date: 'dd/MM/yyyy' }} </small>
-                      <small *ngIf="item.editavel !== 'S'" class="info-primary">Expirado em {{ item.exp_data | date: 'dd/MM/yyyy' }} </small>
+                      <small *ngIf="item.editavel !== 'S'" class="info-primary">Desativação em {{ item.exp_data | date: 'dd/MM/yyyy' }} </small>
                     </div>
                     
                     <div class="row">
