@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { AdMobPlus, BannerAd, InterstitialAd } from '@admob-plus/capacitor';
 
+declare var $:any;
+
 const AdMobPROD = {
     // AppID deve ser alterado em AndroidManifest.xml
     AppID: 'ca-app-pub-2124010802423434~5424089591',
@@ -21,6 +23,7 @@ export class AdMobGoogleService {
     AdMobIDs = AdMobDEV; //AdMobPROD;
 
     private _banner: BannerAd;
+    private _interstitial: InterstitialAd;
 
     constructor(
         private platform: Platform        
@@ -34,46 +37,76 @@ export class AdMobGoogleService {
                 adUnitId: this.AdMobIDs.BannerID,
             })
             await this._banner.show();
-
-            /*
-            AdMobPlus.addListener('banner.impression', async () => {
-                await banner.hide()
-            })
-            */
-           
         });
     }
 
-    
-
-    bannerHide(){
-        console.log('bannerHide');
-        if( this._banner ){
-            console.log('bannerHide _banner defined');
-            AdMobPlus.addListener('banner.impression', async () => {
-                await this._banner.hide()
-            })
-        }        
+    async bannerHide(){
+        if( this._banner ){ await this._banner.hide(); }        
     }
 
-    interstitial(){
+    loadingOn(){
+        console.log('loadingOn...');
+        const box = document.createElement('div');
+        box.setAttribute('id','loading-ads-google');
+        box.setAttribute('style',`
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background-color: #fff;
+            opacity: 1;
+        `);
+        const img = document.createElement('img');
+        img.setAttribute('id','loading-ads-image');
+        img.setAttribute('src','/assets/imgs/loading-babe.gif'); 
+        img.setAttribute('style',`margin-top: 50%;`);
+        box.appendChild(img);
+
+        const text = document.createElement('p');
+        text.setAttribute('style',`text-align: center; color: #ccc;`);
+        text.append('Por favor, aguarde!!!');
+        box.appendChild(text);
+        document.body.appendChild(box);
+    }
+
+    loadingOff(){
+        $("#loading-ads-google").remove();
+        console.log('loadingOff...');
+    }
+
+    interstitialShowWithLoading(){
+        this.loadingOn();
         this.platform.ready().then(async () => {
-            const interstitial = new InterstitialAd({
+            this._interstitial = new InterstitialAd({
                 adUnitId: this.AdMobIDs.InterstitialID,
-            })
-            await interstitial.load();
-            await interstitial.show();
+            });
+            await this._interstitial.load();
+            
+            setTimeout(() => { this.loadingOff(); },2000);
+
+            setTimeout(() => { this._interstitial.show(); },5000);
+        })
+    }
+
+    interstitialShow(){
+        this.platform.ready().then(async () => {
+            this._interstitial = new InterstitialAd({
+                adUnitId: this.AdMobIDs.InterstitialID,
+            });
+            await this._interstitial.load();
+            await this._interstitial.show();
         })
     }
 
     async canInterstitial(): Promise<boolean>{
         return new Promise(resolve =>{ 
             this.platform.ready().then(async () => {
-                const interstitial = new InterstitialAd({
+                this._interstitial = new InterstitialAd({
                     adUnitId:this.AdMobIDs.InterstitialID,
                 })
-                await interstitial.load();
-                await interstitial.show();
+                await this._interstitial.load();
+                await this._interstitial.show();
                 resolve(true);
             });
             

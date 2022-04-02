@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AdMobGoogleService } from 'src/app/_services/admob-google.service';
 import { IdiomaService } from 'src/app/_services/idioma.service';
 
 @Component({
@@ -18,8 +19,11 @@ export class DicasPage implements OnInit, OnDestroy {
 
   constructor(
     private idioma: IdiomaService,
-    private router: Router
-  ) { }
+    private adMobGoogleService: AdMobGoogleService
+  ) {}
+  
+  ionViewWillEnter(){ this.adMobGoogleService.bannerShow(); }
+  ionViewWillLeave(){ this.adMobGoogleService.bannerHide(); }
 
   ngOnInit() {
 

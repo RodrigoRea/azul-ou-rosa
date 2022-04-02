@@ -27,11 +27,10 @@ export class Tab1Page implements OnInit, OnDestroy {
     private idioma: IdiomaService,
     private router: Router,
     private adMobGoogleService: AdMobGoogleService
-  ) {
+  ) {}
 
-    
-
-  }
+  ionViewWillEnter(){ this.adMobGoogleService.bannerShow(); }
+  ionViewWillLeave(){ this.adMobGoogleService.bannerHide(); }
 
   ngOnInit() {
 
@@ -88,7 +87,7 @@ export class Tab1Page implements OnInit, OnDestroy {
     this.tabela[id++] = [0,1,0,1,0,1,0,1,0,1,0,0]; //39
     this.tabela[id++] = [1,0,1,0,1,0,1,0,1,0,1,0]; //40
 
-    console.log(this.tabela);
+    // console.log(this.tabela);
 
   }
 
@@ -101,6 +100,9 @@ export class Tab1Page implements OnInit, OnDestroy {
   submit(){
     
     if( this.forms.valid ){
+
+      this.adMobGoogleService.interstitialShowWithLoading();
+
       const M1 = this.mesNascimentoBebe;
       const idade = parseInt(this.forms.get('idadeMae').value);
 
@@ -115,38 +117,9 @@ export class Tab1Page implements OnInit, OnDestroy {
       }
       
     }
-
     
   }
-
-
-  ionViewWillEnter(){
-    console.log('ionViewWillEnter');
-    this.adMobBanner('show');
-  }
-
-  ionViewDidEnter(){
-    //console.log('ionViewDidEnter');
-  }
-
-  ionViewWillLeave(){
-    console.log('ionViewWillLeave');
-    this.adMobBanner('hide');
-  }
-
-  ionViewDidLeave(){
-    //console.log('ionViewDidLeave');
-  }
-
-  adMobBanner(status: 'show'|'hide' = 'show' ){
-    setTimeout(() => {
-      if( status === 'show' ){
-        this.adMobGoogleService.bannerShow(); 
-      }else{
-        this.adMobGoogleService.bannerHide();
-      }      
-    });
-  }
+  
 
   ngOnDestroy(){
     if( this.subscription ){ this.subscription.unsubscribe(); }    

@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AdMobGoogleService } from '../_services/admob-google.service';
 import { IdiomaService } from '../_services/idioma.service';
 
 @Component({
@@ -24,9 +25,13 @@ export class Tab2Page implements OnInit, OnDestroy {
   constructor(
     public formBuilder: FormBuilder,
     private idioma: IdiomaService,
-    private router: Router
+    private router: Router,
+    private adMobGoogleService: AdMobGoogleService
   ) {
   }
+
+  ionViewWillEnter(){ this.adMobGoogleService.bannerShow(); }
+  ionViewWillLeave(){ this.adMobGoogleService.bannerHide(); }
 
   ngOnInit() {
     this.idades = [];
@@ -106,6 +111,7 @@ export class Tab2Page implements OnInit, OnDestroy {
       const idade = parseInt(this.forms.get('idadeMae').value);
 
       if(idade >= 18 && idade <= 45){
+        this.adMobGoogleService.interstitialShowWithLoading();
         const M1 = this.mesAniversarioMae;
         const M2 = this.mesGravidezMae;
         const idadeLunar = ( M1 <= 1 ) ? idade : idade + 1;

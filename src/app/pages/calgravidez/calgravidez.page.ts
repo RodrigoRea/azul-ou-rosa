@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AdMobGoogleService } from 'src/app/_services/admob-google.service';
 import { IdiomaService } from 'src/app/_services/idioma.service';
 import { SignosService } from 'src/app/_services/signos.service';
 
@@ -26,9 +27,12 @@ export class CalgravidezPage implements OnInit, OnDestroy {
     private idioma: IdiomaService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private signo: SignosService
-  ) {
-  }
+    private signo: SignosService,
+    private adMobGoogleService: AdMobGoogleService
+  ) {}
+  
+  ionViewWillEnter(){ this.adMobGoogleService.bannerShow(); }
+  ionViewWillLeave(){ this.adMobGoogleService.bannerHide(); }
 
   ngOnInit() {
     this.text = this.idioma.getTexts();
@@ -68,7 +72,7 @@ export class CalgravidezPage implements OnInit, OnDestroy {
   submit(){
     
     if( this.forms.valid ){
-
+      this.adMobGoogleService.interstitialShowWithLoading();
       const M1  = parseInt(this.forms.get('mes').value); 
       const dia = parseInt(this.forms.get('primeiroDia').value);
       const ano = parseInt(this.forms.get('ano').value);
