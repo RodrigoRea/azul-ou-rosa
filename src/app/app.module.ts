@@ -27,6 +27,7 @@ import ptBr from '@angular/common/locales/pt';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { environment } from 'src/environments/environment';
 import { AuthGuard } from './_auth/auth.guard';
+import { AdMobGoogleService } from './_services/admob-google.service';
 registerLocaleData(ptBr);
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ registerLocaleData(ptBr);
     },
     IdiomaService, 
     AuthService,
-    AuthGuard
+    AuthGuard,
+    AdMobGoogleService
   ],
   bootstrap: [
     AppComponent

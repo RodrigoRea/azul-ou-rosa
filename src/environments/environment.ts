@@ -29,3 +29,44 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+
+
+/* 
+
+  https://admob-plus.github.io/docs/capacitor
+
+  npm install @capacitor/cli@latest @capacitor/core@latest
+  npm install @admob-plus/capacitor
+
+  depois...
+  em: android/app/src/main/AndroidManifest.xml
+
+  <manifest>
+    <application>
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-xxx~yyy" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.DELAY_APP_MEASUREMENT_INIT"
+            android:value="true" />
+    </application>
+  </manifest>
+
+
+  ***************************************************
+
+  Configure o arquivo app-ads.txt
+  app-ads.txt
+
+  ID DO APLICATIVO: ca-app-pub-2124010802423434~5424089591
+
+  toOpen
+  ID toOpen: ca-app-pub-2124010802423434/9315271137
+
+  toBanner 
+  ID toBanner: ca-app-pub-2124010802423434/4310356463
+
+  toIntersticial
+  ID toIntersticial: ca-app-pub-2124010802423434/2666102300
+*/

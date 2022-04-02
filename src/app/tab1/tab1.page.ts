@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AdMobGoogleService } from '../_services/admob-google.service';
 import { IdiomaService } from '../_services/idioma.service';
 
 @Component({
@@ -24,7 +25,8 @@ export class Tab1Page implements OnInit, OnDestroy {
   constructor(
     public formBuilder: FormBuilder,
     private idioma: IdiomaService,
-    private router: Router
+    private router: Router,
+    private adMobGoogleService: AdMobGoogleService
   ) {
 
     
@@ -117,8 +119,37 @@ export class Tab1Page implements OnInit, OnDestroy {
     
   }
 
+
+  ionViewWillEnter(){
+    console.log('ionViewWillEnter');
+    this.adMobBanner('show');
+  }
+
+  ionViewDidEnter(){
+    //console.log('ionViewDidEnter');
+  }
+
+  ionViewWillLeave(){
+    console.log('ionViewWillLeave');
+    this.adMobBanner('hide');
+  }
+
+  ionViewDidLeave(){
+    //console.log('ionViewDidLeave');
+  }
+
+  adMobBanner(status: 'show'|'hide' = 'show' ){
+    setTimeout(() => {
+      if( status === 'show' ){
+        this.adMobGoogleService.bannerShow(); 
+      }else{
+        this.adMobGoogleService.bannerHide();
+      }      
+    });
+  }
+
   ngOnDestroy(){
-    if( this.subscription ){ this.subscription.unsubscribe(); }
+    if( this.subscription ){ this.subscription.unsubscribe(); }    
   }
 
 }
