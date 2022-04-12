@@ -4,147 +4,71 @@
         <ion-buttons slot="start">
             <ion-back-button *ngIf="passo === 1" defaultHref="/"></ion-back-button>
 
-            <ion-button *ngIf="passo === 2" (click)="toPasso1()">  
-                <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon> 
+            <ion-button *ngIf="passo === 2" (click)="toPasso1()">
+                <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
             </ion-button>
 
-            <ion-button *ngIf="passo === 3" (click)="passo = 2">  
-                <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon> 
+            <ion-button *ngIf="passo === 3" (click)="passo = 2">
+                <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
             </ion-button>
 
-            <ion-button *ngIf="passo >= 5 " (click)="toPage('/convites')">  
-                <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon> 
-              </ion-button>
+            <ion-button *ngIf="passo >= 5 " (click)="toPage('/convites')">
+                <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+            </ion-button>
         </ion-buttons>
 
         <ion-title>Checkout</ion-title>
         <ion-buttons slot="end">
-        <ion-menu-button autoHide="false"></ion-menu-button>  
-      </ion-buttons>
+            <ion-menu-button autoHide="false"></ion-menu-button>
+        </ion-buttons>
     </ion-toolbar>
-  </ion-header>
-  
-  <ion-content class="background ion-padding">
+</ion-header>
 
-    <!-- 
-    <div>{{ session }}</div>
-    <pre>passo: {{ passo }}</pre>
-    -->
+<ion-content class="background ion-padding">
 
-    <app-loading [loading]="loading" ></app-loading>
+    <app-loading [loading]="loading"></app-loading>
 
-<div *ngIf="passo === 1" >
-    <div class="text-center">
-        <small>Compra de convite online interativo</small>
-    </div>
-    <h3 class="mt-3 text-center" >Selecione o método de pagamento</h3>
-    <div class="row mt-3">
-        <div class="col-6 mt-2 text-center box-info-metodo">
-            <button type="button" class="btn btn-primary btn-block btn-pay" (click)="tipo = 'credito'; passo = 2">
-                Crédito
-                <div><i class="fa fa-credit-card icon-pay"></i></div>
-            </button>
-            <!--div class=" mt-2 mb-3 text-center">
-                <div class="row" *ngIf="(mCredito).length > 0" >
-                    <ng-container *ngFor="let cartao of mCredito" >
-                        <div class="col-2 mt-3 text-center" *ngIf="cartao.status === 'AVAILABLE'" >
-                            <div><img [src]="pgSeguroURL+cartao.images['SMALL']['path']" alt="{{ cartao.name }}" ></div>                            
-                        </div>
-                    </ng-container>
-                </div>  
-            </div-->
+    <div *ngIf="passo === 1">
+        <div class="text-center">
+            <small>Compra de convite online interativo</small>
         </div>
-        <!--
-        <div class="col-md col-sm-12 mt-2 text-center box-info-metodo">
-            <button type="button" [disabled]="(mDebito).length === 0" class="btn btn-outline-primary btn-block" (click)="tipo = 'debito'; passo = 2">Débito</button>
-            <div class=" mt-2 mb-3 text-center">
-                <div class="row" *ngIf="(mDebito).length > 0" >
-                    <ng-container *ngFor="let banco of mDebito" >
-                        <div class="col mt-3 text-center" *ngIf="banco.status === 'AVAILABLE'" >
-                            <div><img [src]="pgSeguroURL+banco.images['SMALL']['path']" alt="{{ banco.name }}" ></div>                            
-                        </div>
-                    </ng-container>
-                </div>
+        <h3 class="mt-3 text-center">Selecione o método de pagamento</h3>
+        <div class="row mt-3">
+            <div class="col-6 mt-2 text-center box-info-metodo">
+                <button type="button" class="btn btn-primary btn-block btn-pay" (click)="tipo = 'credito'; passo = 2">
+                    Crédito
+                    <div><i class="fa fa-credit-card icon-pay"></i></div>
+                </button>
             </div>
-        </div>
-        -->
-        <div class="col-6 mt-2 text-center box-info-metodo">
-            <button type="button" class="btn btn-warning btn-block btn-pay" (click)="tipo = 'boleto'; passo = 2">
-                Boleto
-                <div><i class="fa fa-barcode icon-pay"></i></div>
-            </button>
-            <!--div class=" mt-2 mb-3 text-center">
-                <div class="row" *ngIf="mBoleto.images !== undefined" >
-                    <div class="col mt-3 text-center">
-                        <img [src]="pgSeguroURL+mBoleto.images['MEDIUM']['path']" class="img-rounded img-boleto" >
-                        <div class="mt-3">
-                            <!-*small>Taxa de emissão de Boleto R$ 1,00</small*->
-                            <br>
-                            <small>Pagamento com boleto pode levar até 2 dias úteis para ser compensado</small>
-                        </div>
-                    </div> 
-                </div>               
-            </div-->            
-        </div>
-    </div>
 
-    <!--div class="row" *ngIf="(mCredito).length === 0" >
-        <div class="col-md mt-5" >
-            <div class="text-center">Por favor, aguarde...</div>
-            <div class="progress">
-                <div
-                    class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
-                    role="progressbar"
-                    aria-valuenow="100"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                    style="width: 100%">
-                </div>
-            </div>
-            <div class="text-center">Carregando componentes de pagamento...</div>
         </div>
-    </div-->
 
-    <div class="text-center mt-5">
-        <small>
+
+        <div class="text-center mt-5">
+            <!-- <small>
             Pagamento com boleto pode levar até 2 dias úteis para ser compensado.
-        </small>
-        <br>
-        <small>
-            Seu convite será publicado após a confirmação de pagamento.
-        </small>
-        <div style="max-width: 200px;margin: auto;padding-top: 40px;">
-            <img src="{{ url }}/assets/img/pagseguro.svg">
+        </small> -->
+            <br>
+            <small>
+                Seu convite será publicado após a confirmação de pagamento.
+            </small>
+            <div style="max-width: 200px;margin: auto;padding-top: 40px;">
+                <img src="{{ url }}/assets/img/pagseguro.svg">
+            </div>
         </div>
+
     </div>
 
-</div>
 
 
+    <div class="row" *ngIf="passo === 2 || passo === 3">
 
+        <!--pre>{{ cart | json }}</pre-->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="row" *ngIf="passo === 2 || passo === 3" >
-
-    <!--pre>{{ cart | json }}</pre-->
-
-  <ng-container *ngIf="cart && (cart).length > 0">
-        <ul class="list-group">
-            <ng-container *ngFor="let item of cart">
-                    <li class="list-group-item">                        
+        <ng-container *ngIf="cart && (cart).length > 0">
+            <ul class="list-group">
+                <ng-container *ngFor="let item of cart">
+                    <li class="list-group-item">
                         <h6><i class="fa fa-check"></i>{{ item.produto.modelo }} - {{ item.produto.nome }}</h6>
                         <label class="price-list">{{ item.produto.valor | currency: 'BRL': true }}</label>
                     </li>
@@ -163,128 +87,119 @@
                         </h6>
                         <label class="price-list">{{ item.invite.valor_presenca | currency: 'BRL': true }}</label>
                     </li>
-            </ng-container>
-        </ul>
-  </ng-container>
+                </ng-container>
+            </ul>
+        </ng-container>
 
-  <!--pre>{{ cart | json }}</pre-->
+        <!--pre>{{ cart | json }}</pre-->
 
-  <div class="col-12 mt-2 text-left">
-      <label *ngIf="tipo === 'credito'">Cartão de Crédito</label>
-      <label *ngIf="tipo === 'boleto'">Boleto</label>
-      <label class="line-price">Valor total {{ valor_total | currency: 'BRL': true }}</label>
-  </div>
-</div>
-
-
-<div *ngIf="passo === 2" >
-  <app-formulario
-      [dados]="dados"
-      (evento)="setDados($event)"
-       >
-  </app-formulario>
-</div>
-
-
-<div *ngIf="passo === 3" >
-  <div *ngIf="tipo === 'credito' || tipo === 'debito' && valor_total > 0 ">
-      <app-cartao
-          (evento)="setDados($event)"
-          [tipo]="tipo"
-          [valor]="valor_total"
-          [quantidade]="1"
-          [dados]="dados"
-          [mDebito]="mDebito"
-          (finalizar)="enviarDadosDePagamento($event)">
-      </app-cartao>
-  </div>
-
-  <app-boleto
-      *ngIf="tipo === 'boleto' && valor_total > 0 "
-      [valor]="valor_total"
-      [quantidade]="1"
-      [dados]="dados"
-      (finalizar)="enviarDadosDePagamento($event)">
-  </app-boleto>
-</div>
-
-
-
-<div *ngIf="passo === 4" >
-  
-    <!-- Tela em branco durante a transação de pagamento -->
-</div>
-
-<div *ngIf="passo === 5" >
-
-    <div *ngIf="retornoTransacao && retornoTransacao.resposta">
-        <div *ngIf="retornoTransacao.resposta.referencia">
-            <h3 class="text-center">Pedido</h3>
-            <h6 class="text-center mb-5">{{ retornoTransacao.resposta.referencia }}</h6>
-        </div>
-        <div class="text-center mt-5" *ngIf="retornoTransacao.resposta.mensagem">
-            <p>{{ retornoTransacao.resposta.mensagem }}</p>
+        <div class="col-12 mt-2 text-left">
+            <label *ngIf="tipo === 'credito'">Cartão de Crédito</label>
+            <label *ngIf="tipo === 'boleto'">Boleto</label>
+            <label class="line-price">Valor total {{ valor_total | currency: 'BRL': true }}</label>
         </div>
     </div>
 
-    <div *ngIf="retornoTransacao && retornoTransacao.status">
-        <div class="text-center mt-5" *ngIf="retornoTransacao.status === 201">
 
-            <!-- INICIO Erro -->
-            <div class="error-result" *ngIf="retornoTransacao.resposta.error">
-                <div class="mt-2 mb-3" *ngIf="retornoTransacao.resposta.error.message">
-                    {{ retornoTransacao.resposta.error.message }}
-                </div>
-                <div *ngIf="retornoTransacao.mensagem">
-                    {{ retornoTransacao.mensagem }}
-                </div>
-                <button type="button" class="btn btn-outline-primary mt-5" (click)="toPage('convites')">Voltar</button>
+    <div *ngIf="passo === 2">
+        <app-formulario [dados]="dados" (evento)="setDados($event)">
+        </app-formulario>
+    </div>
+
+
+    <div *ngIf="passo === 3">
+        <div *ngIf="tipo === 'credito' || tipo === 'debito' && valor_total > 0 ">
+            <app-cartao (evento)="setDados($event)" [tipo]="tipo" [valor]="valor_total" [quantidade]="1" [dados]="dados"
+                [mDebito]="mDebito" (finalizar)="enviarDadosDePagamento($event)">
+            </app-cartao>
+        </div>
+
+        <app-boleto *ngIf="tipo === 'boleto' && valor_total > 0 " [valor]="valor_total" [quantidade]="1" [dados]="dados"
+            (finalizar)="enviarDadosDePagamento($event)">
+        </app-boleto>
+    </div>
+
+
+
+    <div *ngIf="passo === 4">
+
+        <!-- Tela em branco durante a transação de pagamento -->
+    </div>
+
+    <div *ngIf="passo === 5">
+
+        <div *ngIf="retornoTransacao && retornoTransacao.resposta">
+            <div *ngIf="retornoTransacao.resposta.referencia">
+                <h3 class="text-center">Pedido</h3>
+                <h6 class="text-center mb-5">{{ retornoTransacao.resposta.referencia }}</h6>
             </div>
-            <!-- FIM ERRO -->
+            <div class="text-center mt-5" *ngIf="retornoTransacao.resposta.mensagem">
+                <p>{{ retornoTransacao.resposta.mensagem }}</p>
+            </div>
+        </div>
 
-            <div *ngIf="!retornoTransacao.resposta.error">
+        <div *ngIf="retornoTransacao && retornoTransacao.status">
+            <div class="text-center mt-5" *ngIf="retornoTransacao.status === 201">
 
-                <!-- INICIO COM BOLETO-->
-                <div *ngIf="retornoTransacao.resposta.boleto" class="text-center mb-5">
-                    <a href="{{ retornoTransacao.resposta.boleto }}" class="btn btn-outline-primary">Clique aqui para visualiar seu boleto</a>
-                    <!--p class="mt-4">Em instantes, você receberá seu boleto por email.</p-->
-                    <br>
-                    <br><button type="button" class="btn btn-primary" (click)="toPage('meus-pedidos')">Minhas compras</button><br>
-                    <div class="mt-2 text-center">
-                        <div>link do boleto:</div> 
-                        <a href="{{ retornoTransacao.resposta.boleto }}">{{ retornoTransacao.resposta.boleto }}</a>
+                <!-- INICIO Erro -->
+                <div class="error-result" *ngIf="retornoTransacao.resposta.error">
+                    <div class="mt-2 mb-3" *ngIf="retornoTransacao.resposta.error.message">
+                        {{ retornoTransacao.resposta.error.message }}
+                    </div>
+                    <div *ngIf="retornoTransacao.mensagem">
+                        {{ retornoTransacao.mensagem }}
+                    </div>
+                    <button type="button" class="btn btn-outline-primary mt-5"
+                        (click)="toPage('convites')">Voltar</button>
+                </div>
+                <!-- FIM ERRO -->
+
+                <div *ngIf="!retornoTransacao.resposta.error">
+
+                    <!-- INICIO COM BOLETO-->
+                    <div *ngIf="retornoTransacao.resposta.boleto" class="text-center mb-5">
+                        <a href="{{ retornoTransacao.resposta.boleto }}" class="btn btn-outline-primary">Clique aqui
+                            para visualiar seu boleto</a>
+                        <!--p class="mt-4">Em instantes, você receberá seu boleto por email.</p-->
+                        <br>
+                        <br><button type="button" class="btn btn-primary" (click)="toPage('meus-pedidos')">Minhas
+                            compras</button><br>
+                        <div class="mt-2 text-center">
+                            <div>link do boleto:</div>
+                            <a href="{{ retornoTransacao.resposta.boleto }}">{{ retornoTransacao.resposta.boleto }}</a>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!retornoTransacao.resposta.boleto">
+                        <button type="button" class="btn btn-primary" (click)="toPage('meus-pedidos')">Minhas
+                            compras</button>
                     </div>
                 </div>
 
-                <div *ngIf="!retornoTransacao.resposta.boleto">
-                    <button type="button" class="btn btn-primary" (click)="toPage('meus-pedidos')">Minhas compras</button>
-                </div>
             </div>
 
+            <!-- Falha na transacao -->
+            <div class="text-center mt-5" *ngIf="retornoTransacao.status !== 201">
+                <h4 class="mt-5">Falha na transação de pagamento! Por favor, tente novamente mais tarde</h4>
+                <button type="button" class="btn btn-outline-primary" (click)="toPage('convites')">Voltar</button>
+            </div>
         </div>
 
         <!-- Falha na transacao -->
-        <div class="text-center mt-5" *ngIf="retornoTransacao.status !== 201">
-            <h4 class="mt-5">Falha na transação de pagamento! Por favor, tente novamente mais tarde</h4>
+        <div class="text-center mt-5" *ngIf="!retornoTransacao">
+            <h4 class="mt-5">Falha com a conexão dos servidores de pagamento! Por favor, tente novamente mais tarde</h4>
             <button type="button" class="btn btn-outline-primary" (click)="toPage('convites')">Voltar</button>
-        </div>        
+        </div>
+
+        <!--pre>{{ retornoTransacao | json }}</pre-->
     </div>
 
-    <!-- Falha na transacao -->
-    <div class="text-center mt-5" *ngIf="!retornoTransacao">
-        <h4 class="mt-5">Falha com a conexão dos servidores de pagamento! Por favor, tente novamente mais tarde</h4>
-        <button type="button" class="btn btn-outline-primary" (click)="toPage('convites')">Voltar</button>
+    <div *ngIf="passo === 6">
+        <!-- FALHA CRITICA -->
+        <div class="text-center">
+            <h4 class="mt-5">Falha na transação de pagamento! Por favor, tente novamente mais tarde</h4>
+            <button type="button" class="btn btn-outline-primary mt-5" (click)="toPage('convites')">Voltar</button>
+        </div>
     </div>
-  
-    <!--pre>{{ retornoTransacao | json }}</pre-->
-</div>
-
-<div *ngIf="passo === 6" >
-    <!-- FALHA CRITICA -->
-    <div class="text-center">
-        <h4 class="mt-5">Falha na transação de pagamento! Por favor, tente novamente mais tarde</h4>
-        <button type="button" class="btn btn-outline-primary mt-5" (click)="toPage('convites')">Voltar</button>
-    </div>
-</div>
 
 </ion-content>
