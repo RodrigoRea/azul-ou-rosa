@@ -88,6 +88,10 @@ const routes: Routes = [
     path: 'quem-somos',
     loadChildren: () => import('./pages/quem-somos/quem-somos.module').then( m => m.QuemSomosPageModule)
   },
+  {
+    path: 'audio/:file_name',
+    loadChildren: () => import('./pages/audio/audio.module').then( m => m.AudioPageModule)
+  },
 ];
 @NgModule({
   imports: [

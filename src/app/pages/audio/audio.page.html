@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Audio</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false"></ion-menu-button>  
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background">
+
+  <audio id="myAudio">
+    <source src="https://mybabeis.com.br/api/assets/audio/som-utero-amamentacao.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <div>
+    <br>
+    <div class="text-center">
+      <button (click)="play()" class="btn-play" [class.active]="status === 'play'"  type="button">
+        <ion-icon name="play"></ion-icon>
+      </button>
+      
+    </div>
+    <br>
+    <div class="text-center">
+      <button (click)="pause()" class="btn-pause" [class.active]="status === 'pause'" type="button">
+        <ion-icon name="pause"></ion-icon>
+      </button>
+    </div>
+  </div>
+
+  
+   
+
+
+</ion-content>

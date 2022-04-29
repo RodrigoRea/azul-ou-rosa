@@ -81,10 +81,15 @@ export class AdMobGoogleService {
             this._interstitial = new InterstitialAd({
                 adUnitId: this.AdMobIDs.InterstitialID,
             });
-            await this._interstitial.load();
+            // await this._interstitial.load();
+            await this._interstitial.load().then((r: any)=>{
+                //console.log('admob ok', r);
+            }, onrejected => { 
+                //console.log('admob is error');
+                setTimeout(() => { this.loadingOff(); },2000); 
+            });
             
-            setTimeout(() => { this.loadingOff(); },2000);
-
+            setTimeout(() => { this.loadingOff(); },6000);
             setTimeout(() => { this._interstitial.show(); },5000);
         })
     }
