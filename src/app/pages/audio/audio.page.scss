@@ -1,11 +1,16 @@
+.background{
+    color: #000 !important;
+    --background: #000 !important;
+}
+
 .btn-play{
     width: 200px;
     height: 100px;
     font-size: 4rem;
     border-radius: 10px;
     border: 2px solid transparent;
-    color: #4862ef;
-    background-color: #fff;
+    color: #ef48c5;
+    background-color: #4d4c4c;
 }
 
 .btn-pause{
@@ -15,10 +20,38 @@
     border-radius: 10px;    
     border: 2px solid transparent;
     color: #ef48c5;
-    background-color: #fff;
+    background-color: #4d4c4c;
 }
 
 .active{
     border: 2px solid #5e3d3d;
     opacity: 0.7;
+}
+
+#tag-audio{
+    width: 100%;
+    /*margin-top: 50px;*/
+}
+
+.area-anime{
+    height: 300px;
+    margin-top: 20px;
+    .box-gif{
+        opacity: 0;
+    }
+    img{
+        height: 100%;
+        opacity: 0.8;
+    }
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1 !important;
+  transition: opacity 2s linear !important;
+}
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 2s, opacity 2s linear;
 }
