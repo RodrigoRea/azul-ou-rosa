@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
-  cartStorage: 'cart',
-  templateStorage: 'template',
-  keytoken: 'mybabeis',
+  cartStorage: '_3_cart',
+  templateStorage: '_3_template',
+  keytoken: '_3_mybabeis',
 
   api: 'https://api.mybabeis.com.br',
   dominiosComToken: [

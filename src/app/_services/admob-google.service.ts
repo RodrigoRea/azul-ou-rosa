@@ -7,13 +7,13 @@ declare var $:any;
 // AndroidManifest.xml - app ID - ADS
 // <meta-data
 //      android:name="com.google.android.gms.ads.APPLICATION_ID"
-//      android:value="ca-app-pub-2124010802423434~5424089591" />
+//      android:value="ca-app-pub-2124010802423434~2089979665" />
 
 const AdMobPROD = {
     // AppID deve ser alterado em AndroidManifest.xml
-    AppID: 'ca-app-pub-2124010802423434~5424089591',
-    BannerID: 'ca-app-pub-2124010802423434/9315271137',
-    InterstitialID:'ca-app-pub-2124010802423434/2666102300',
+    AppID: 'ca-app-pub-2124010802423434~2089979665',
+    BannerID: 'ca-app-pub-2124010802423434/4260847431',
+    InterstitialID:'ca-app-pub-2124010802423434/1843116394',
 }
 
 const AdMobDEV = {
@@ -25,7 +25,7 @@ const AdMobDEV = {
 @Injectable({ providedIn: 'root' })
 export class AdMobGoogleService {
 
-    AdMobIDs = AdMobPROD; // AdMobDEV <-> AdMobPROD;
+    AdMobIDs = AdMobDEV; // AdMobDEV <-> AdMobPROD;
 
     private _banner: BannerAd;
     private _interstitial: InterstitialAd;
