@@ -4,6 +4,11 @@ import { AdMobPlus, BannerAd, InterstitialAd } from '@admob-plus/capacitor';
 
 declare var $:any;
 
+// AndroidManifest.xml - app ID - ADS
+// <meta-data
+//      android:name="com.google.android.gms.ads.APPLICATION_ID"
+//      android:value="ca-app-pub-2124010802423434~5424089591" />
+
 const AdMobPROD = {
     // AppID deve ser alterado em AndroidManifest.xml
     AppID: 'ca-app-pub-2124010802423434~5424089591',

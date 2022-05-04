@@ -31,45 +31,45 @@ export class HomePage implements OnInit, OnDestroy {
 
     this.items = [];
 
-      this.items.push({
-        title: this.text['maia'],
-        note: this.text['batimentos-txt'],
-        icon: "heart",
-        image:'tabela-maia.jpg',
-        component: null,
-        page: 'tab1',
-        class: ''
-      });
+      // this.items.push({
+      //   title: this.text['maia'],
+      //   note: this.text['batimentos-txt'],
+      //   icon: "heart",
+      //   image:'tabela-maia.jpg',
+      //   component: null,
+      //   page: 'tab1',
+      //   class: ''
+      // });
 
-      this.items.push({
-        title: this.text['chinesa'],
-        note: this.text['couve-txt'],
-        icon: "md-flower",
-        image:'tabela-chinesa.jpg',
-        component: null,
-        page: 'tab2',
-        class: ''
-      });
+      // this.items.push({
+      //   title: this.text['chinesa'],
+      //   note: this.text['couve-txt'],
+      //   icon: "md-flower",
+      //   image:'tabela-chinesa.jpg',
+      //   component: null,
+      //   page: 'tab2',
+      //   class: ''
+      // });
 
-      this.items.push({
-        title: this.text['cigana'],
-        note: this.text['laco-txt'],
-        icon: "ios-bowtie",
-        image:'cigana.jpg',
-        component: null,
-        page: 'tab3',
-        class: ''
-      }); 
+      // this.items.push({
+      //   title: this.text['cigana'],
+      //   note: this.text['laco-txt'],
+      //   icon: "ios-bowtie",
+      //   image:'cigana.jpg',
+      //   component: null,
+      //   page: 'tab3',
+      //   class: ''
+      // }); 
       
-      this.items.push({
-        title: this.text['numerologia'],
-        note: this.text['temperatura-txt'],
-        icon: "md-snow",
-        image:'numerologia.jpg',
-        component: null,
-        page: 'tab4',
-        class: ''
-      });
+      // this.items.push({
+      //   title: this.text['numerologia'],
+      //   note: this.text['temperatura-txt'],
+      //   icon: "md-snow",
+      //   image:'numerologia.jpg',
+      //   component: null,
+      //   page: 'tab4',
+      //   class: ''
+      // });
 
       this.items.push({
         title: this.text['calgravidez'],
@@ -89,6 +89,16 @@ export class HomePage implements OnInit, OnDestroy {
         component: null,
         page: 'convites',
         class: 'convites'
+      });
+
+      this.items.push({
+        title: 'Som Materno',
+        note: this.text['temperatura-txt'],
+        icon: "md-snow",
+        image:'som-icon-min.png',
+        component: null,
+        page: 'audio/amamentar',
+        class: ''
       });
   }
 
