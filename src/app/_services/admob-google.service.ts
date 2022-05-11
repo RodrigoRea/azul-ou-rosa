@@ -25,7 +25,7 @@ const AdMobDEV = {
 @Injectable({ providedIn: 'root' })
 export class AdMobGoogleService {
 
-    AdMobIDs = AdMobDEV; // AdMobDEV <-> AdMobPROD;
+    AdMobIDs = AdMobPROD; // AdMobDEV <-> AdMobPROD;
 
     private _banner: BannerAd;
     private _interstitial: InterstitialAd;
